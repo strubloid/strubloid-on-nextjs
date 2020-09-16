@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function buildingComponentsCss()
+{
+  componentsFolder=$1
+  filesPath=''
+  if [ -d $componentsFolder ]; then
+    for filepathScss in $(find ${componentsFolder} -name '*.scss'); do
+        filepathCss=${filepathScss/scss/css}
+        folder=${filepathScss%/*}
+        filesPath+="${filepathCss} "
+
+        node-sass --include-path $folder $filepathScss $filepathCss
+    done
+
+    # this is the command that will generate the Css file on the same path of the Scss
+    concat -o public/css/components.css ${filesPath}
+  fi
+}
+
+buildingComponentsCss "components"
