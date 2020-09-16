@@ -1,0 +1,18 @@
+{
+  "name": "next-netlify-starter",
+  "version": "0.1.1",
+  "private": true,
+  "scripts": {
+    "dev": "next -p 3333",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export",
+    "build-css": "./bin/build-css",
+    "watch-css": "./bin/watch-css"
+  },
+  "dependencies": {
+    "next": "9.5.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  }
+}
