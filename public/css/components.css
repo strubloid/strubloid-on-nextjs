@@ -462,7 +462,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 4.6em;
-    letter-spacing: 0.16em; }
+    letter-spacing: 0.16em;
+    margin-left: 36%; }
     @media (min-width: 768px) and (max-width: 1024px) {
       .presentation-page .rellax-text-container .h1-seo {
         font-size: 3.6em;

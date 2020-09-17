@@ -621,7 +621,6 @@
     text-align: center;
     position: relative;
     top: 24.5%;
-    //left: 17%;
 
     .h1-seo {
       text-transform: uppercase;
@@ -636,6 +635,7 @@
       -webkit-text-fill-color: transparent;
       font-size: 4.6em;
       letter-spacing: 0.16em;
+      margin-left: 36%;
 
       // Tablet  (portrait)
       @media (min-width: 768px) and (max-width: 1024px) {
