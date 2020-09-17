@@ -1,18 +1,21 @@
 .presentation-page {
 
-  .wrapper{
-    .page-header{
+  .wrapper {
+    .page-header {
       background: #83c1d8;
-      .rellax-header{
+
+      .rellax-header {
         position: absolute;
         height: 100%;
         width: 100%;
       }
-      .rellax-header-sky{
+
+      .rellax-header-sky {
         z-index: 0;
         height: 50%;
       }
-      .page-header-image{
+
+      .page-header-image {
         position: absolute;
         background-size: cover;
         background-position: center center;
@@ -21,6 +24,7 @@
         z-index: -1;
         background-image: url('~@img/sky.jpg');
       }
+
       .page-header-city {
         background-image: url('~@img/buildings.png');
         background-size: cover;
@@ -29,7 +33,7 @@
         background-repeat: no-repeat;
       }
 
-      .rellax-header-buildings{
+      .rellax-header-buildings {
         z-index: 2;
       }
     }
@@ -619,7 +623,7 @@
     top: 25%;
     left: 20%;
 
-    .h1-seo{
+    .h1-seo {
       text-transform: uppercase;
       font-weight: 700;
       font-family: 'Open Sans Condensed', sans-serif;
@@ -657,13 +661,11 @@
         font-size: 2em;
         letter-spacing: 0.16em;
         margin-left: 2%;
-        //CSS
-
       }
-
     }
   }
-  .h3-description{
+
+  .h3-description {
     z-index: 3;
     position: absolute;
     width: 100%;

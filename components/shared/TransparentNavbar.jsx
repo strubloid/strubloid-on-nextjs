@@ -22,11 +22,32 @@ class ScrollTransparentNavbar extends Component {
     collapseOpen : false,
     navbarColor : ""
   }
+
+  updateNavbarColor = () => {
+    console.log(document.documentElement.scrollTop);
+    // if (
+    //     document.documentElement.scrollTop > 499 ||
+    //     document.body.scrollTop > 499
+    // ) {
+    //
+    //   this.setState({ navbarColor : "" });
+    // } else if (
+    //     document.documentElement.scrollTop < 500 ||
+    //     document.body.scrollTop < 500
+    // ) {
+    //   setNavbarColor(" navbar-transparent");
+    //   this.setState({ navbarColor : " navbar-transparent"});
+    // }
+  }
+
   // fixed-top navbar-transparent navbar navbar-expand-lg bg-white
   // fixed-top navbar navbar-expand-lg bg-white
   componentDidMount = () => {
     this.state.navbarColor = (document.documentElement.scrollTop > 499 || document.body.scrollTop) > 499 ? "" :  " navbar-transparent";
     this.setState({ navbarColor : this.state.navbarColor});
+
+    this.updateNavbarColor();
+
   }
 
   render () {

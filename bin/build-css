@@ -5,11 +5,21 @@ function buildingComponentsCss()
   componentsFolder=$1
   filesPath=''
   if [ -d $componentsFolder ]; then
-    for filepathScss in $(find ${componentsFolder} -name '*.scss'); do
+
+      priorityFiles=$(find ${componentsFolder} -name '_*.scss' | sort -z )
+      componentsFiles=$(find ${componentsFolder} -name '*.scss' | sort -z )
+
+    for filepathScss in ${priorityFiles}; do
         filepathCss=${filepathScss/scss/css}
         folder=${filepathScss%/*}
         filesPath+="${filepathCss} "
+        node-sass --include-path $folder $filepathScss $filepathCss
+    done
 
+    for filepathScss in ${componentsFiles}; do
+        filepathCss=${filepathScss/scss/css}
+        folder=${filepathScss%/*}
+        filesPath+="${filepathCss} "
         node-sass --include-path $folder $filepathScss $filepathCss
     done
 
