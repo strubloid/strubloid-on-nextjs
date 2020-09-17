@@ -8,7 +8,7 @@
     "start": "next start",
     "export": "next export",
     "postbuild": "next-on-netlify",
-    "live-test": "npm run build && npm run export && next -p 4444",
+    "live-test" : "npm run build && npm run export && npm run start",
     "build-css": "./bin/build-css",
     "watch-css": "./bin/watch-css"
   },
