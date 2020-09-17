@@ -6,14 +6,14 @@
     "dev": "next -p 3333",
     "build": "next build",
     "start": "next start",
-    "live": "next start",
     "export": "next export",
-    "live-test": "npm run build && npm run export && npm run start",
+    "postbuild": "next-on-netlify",
     "build-css": "./bin/build-css",
     "watch-css": "./bin/watch-css"
   },
   "dependencies": {
     "next": "9.5.0",
+    "next-on-netlify": "^2.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "reactstrap": "^8.5.1",
