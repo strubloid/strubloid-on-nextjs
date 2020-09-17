@@ -450,7 +450,7 @@
   text-align: center;
   position: relative;
   top: 25%;
-  left: 20%; }
+  left: 23%; }
   .presentation-page .rellax-text-container .h1-seo {
     text-transform: uppercase;
     font-weight: 700;
@@ -589,8 +589,6 @@ body .wrapper .section-github .github-column .github-background-container {
   body .wrapper .section-github .github-column {
     display: none; } }
 
-nav.navbar-transparent .nav-item .btn-neutral {
-  background-color: white; }
 
 .footer {
   padding: 1.125rem 0;
