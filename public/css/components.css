@@ -449,8 +449,7 @@
   margin: 0 auto;
   text-align: center;
   position: relative;
-  top: 25%;
-  left: 23%; }
+  top: 24.5%; }
   .presentation-page .rellax-text-container .h1-seo {
     text-transform: uppercase;
     font-weight: 700;
@@ -468,22 +467,22 @@
       .presentation-page .rellax-text-container .h1-seo {
         font-size: 3.6em;
         letter-spacing: 0.16em;
-        margin-left: 15%; } }
+        margin-left: 29%; } }
     @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
       .presentation-page .rellax-text-container .h1-seo {
         font-size: 3.6em;
         letter-spacing: 0.16em;
-        margin-left: 21%; } }
+        margin-left: 36%; } }
     @media (min-width: 481px) and (max-width: 767px) {
       .presentation-page .rellax-text-container .h1-seo {
-        font-size: 2.5em;
+        font-size: 2.2em;
         letter-spacing: 0.16em;
-        margin-left: 26%; } }
+        margin-left: 40%; } }
     @media (min-width: 320px) and (max-width: 480px) {
       .presentation-page .rellax-text-container .h1-seo {
         font-size: 2em;
         letter-spacing: 0.16em;
-        margin-left: 2%; } }
+        margin-left: 16%; } }
 
 .presentation-page .h3-description {
   z-index: 3;
