@@ -4,7 +4,7 @@
 // import '@fortawesome/fontawesome-free/js/brands';
 
 import "@css/bootstrap.min.css";
-import "@css/basic.min.css";
+import "@css/strubloid.css";
 
 import "@scss-global/_variables.scss";
 import "@scss-global/_buttons.scss";
