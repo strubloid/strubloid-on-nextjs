@@ -6,6 +6,7 @@
     "dev": "next -p 3333",
     "build": "next build",
     "start": "next start",
+    "live": "next start",
     "export": "next export",
     "live-test": "npm run build && npm run export && npm run start",
     "build-css": "./bin/build-css",
