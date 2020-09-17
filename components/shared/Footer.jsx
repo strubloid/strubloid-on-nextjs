@@ -19,11 +19,11 @@ function Footer() {
                   <a>About me</a>
                 </Link>
               </li>
-              <li>
-                <Link href="/blog-posts">
-                  <a >Blog</a>
-                </Link>
-              </li>
+              {/*<li>*/}
+              {/*  <Link href="/blog-posts">*/}
+              {/*    <a >Blog</a>*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
             </ul>
           </nav>
           <div className="copyright" id="copyright">

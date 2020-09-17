@@ -17,8 +17,7 @@ export default function Home () {
             <ExternalImports />
             <TransparentNavbar />
             <div className="wrapper">
-                <Header />
-                <Github />
+
                 <AboutMe />
             </div>
             <Footer />

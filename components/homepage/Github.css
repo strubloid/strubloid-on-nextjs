@@ -30,16 +30,26 @@ body .wrapper .section-github .github-buttons a {
     background: linear-gradient(261deg, #009C3B, green, #ffdf00) 0px 0/20em 100%; }
 
 body .wrapper .section-github .card-background {
-  background: linear-gradient(150deg, #009C3B, #009c3b, #ffdf00) 697px 0/24em 100%;
-  max-height: 360px; }
+  background: white;
+  max-height: 360px;
+  -webkit-tap-highlight-color: white;
+  border: 16px solid transparent;
+  -moz-border-image: -moz-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
+  -webkit-border-image: -webkit-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
+  border-image: linear-gradient(to right, #009C3B 0%, #ffdf00 100%);
+  border-image-slice: 1; }
+  body .wrapper .section-github .card-background:after {
+    background: none; }
   body .wrapper .section-github .card-background:hover {
-    background: linear-gradient(150deg, #009C3B, #009c3b, #ffdf00) 697px 0/1em 100%; }
+    background: #ffc10761; }
   body .wrapper .section-github .card-background ul {
     margin: 10px auto 0px auto; }
     body .wrapper .section-github .card-background ul li {
-      padding: 6px 0; }
+      padding: 6px 0;
+      color: #666; }
   body .wrapper .section-github .card-background .card-title {
-    margin-top: 10px; }
+    margin-top: 10px;
+    color: #666; }
 
 body .wrapper .section-github .github-column .github-background-container {
   display: flex;

@@ -8,7 +8,7 @@
     "start": "next start",
     "export": "next export",
     "postbuild": "next-on-netlify",
-    "live-test" : "npm run build && npm run export && npm run start",
+    "live-test": "npm run build && npm run export && npm run start",
     "build-css": "./bin/build-css",
     "watch-css": "./bin/watch-css"
   },
@@ -17,8 +17,12 @@
     "next-on-netlify": "^2.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-google-maps": "^9.4.5",
     "reactstrap": "^8.5.1",
     "rellax": "^1.12.1",
     "sass": "^1.26.10"
+  },
+  "devDependencies": {
+    "dotenv-webpack": "^2.0.0"
   }
 }

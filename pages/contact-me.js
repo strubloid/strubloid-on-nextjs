@@ -2,26 +2,23 @@ import Head from 'next/head'
 import TransparentNavbar from '@components/shared/TransparentNavbar'
 import Footer from '@components/shared/Footer'
 import ExternalImports from '@components/shared/ExternalImports'
-import Header from '@components/homepage/Header'
-import Github from '@components/homepage/Github'
-import AboutMe from '@components/homepage/AboutMe'
+import ContactMe from '@components/contact-me/ContactMe'
 import React from 'react'
 
 export default function Home () {
     return (
         <>
             <Head>
-                <title>Its Strub...Loid!</title>
+                <title>Its time to contact... wait for it... ME!</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <ExternalImports />
             <TransparentNavbar />
             <div className="wrapper">
-                <Header />
-                <Github />
-                <AboutMe />
+                <ContactMe />
             </div>
             <Footer />
         </>
     )
 }
+

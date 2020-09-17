@@ -54,11 +54,21 @@ body {
       }
 
       .card-background {
-        background: linear-gradient(150deg, #009C3B, #009c3b, #ffdf00) 697px 0/24em 100%;
+        background: white;
         max-height: 360px;
+        -webkit-tap-highlight-color: white;
 
+        border: 16px solid transparent;
+        -moz-border-image: -moz-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
+        -webkit-border-image: -webkit-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
+        border-image: linear-gradient(to right, #009C3B 0%, #ffdf00 100%);
+        border-image-slice: 1;
+
+        &:after{
+          background: none;
+        }
         &:hover {
-          background: linear-gradient(150deg, #009C3B, #009c3b, #ffdf00) 697px 0/1em 100%
+          background: #ffc10761;
         }
 
         ul {
@@ -66,11 +76,13 @@ body {
 
           li {
             padding: 6px 0;
+            color: #666;
           }
         }
 
         .card-title {
           margin-top: 10px;
+          color: #666;
         }
       }
 
