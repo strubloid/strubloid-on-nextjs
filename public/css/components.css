@@ -579,7 +579,8 @@ body .wrapper .section-github .github-column .github-background-container {
     display: flex;
     justify-content: center;
     margin: 30px auto -10px auto;
-    max-width: 180px; }
+    max-width: 180px;
+    background: linear-gradient(166deg, #009C3B, green, #ffdf00) 525px 0/25em 10%; }
   body .wrapper .section-github .card-background {
     margin: 0px auto;
     max-width: 21em;
