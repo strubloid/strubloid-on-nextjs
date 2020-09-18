@@ -5,6 +5,9 @@ class Header extends Component {
 
   homepageName = 'Strubloid.com';
   firstMessage = 'A mix between lines of code and light!';
+  secondMessage = 'Import { positivism } from "proton.lib"';
+  thirdMessage = '$ Git push [your-code] me';
+  forthMessage = 'Give-me an idea, and I will transform into an alias';
 
   componentDidMount () {
     document.body.classList.add("presentation-page");
@@ -35,12 +38,31 @@ class Header extends Component {
             <div className="rellax-header rellax-header-buildings"data-rellax-speed="0">
               <div className="page-header-image page-header-city">&nbsp;</div>
             </div>
-            <div className="rellax-text-container rellax-text" data-rellax-speed="-5" >
+            <div className="rellax-text-container rellax-text" data-rellax-speed="-12">
               <h1 className="h1-seo" >{this.homepageName}</h1>
             </div>
-            <h3 className="h3-description rellax-text" data-rellax-speed="5">
-              {this.firstMessage}
-            </h3>
+            <div id="fly-container">
+              <div  className="fly-description rellax-text quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="12">
+                <blockquote className="text">
+                  <p>{this.firstMessage}</p>
+                </blockquote>
+              </div>
+              <div  className="fly-description rellax-text  quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="15">
+                <blockquote className="text">
+                  <p>{this.secondMessage}</p>
+                </blockquote>
+              </div>
+              <div  className="fly-description rellax-text  quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="13">
+                <blockquote className="text">
+                  <p>{this.thirdMessage}</p>
+                </blockquote>
+              </div>
+              <div  className="fly-description rellax-text quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="16">
+                <blockquote className="text">
+                  <p>{this.forthMessage}</p>
+                </blockquote>
+              </div>
+            </div>
           </div>
         </>
     );
