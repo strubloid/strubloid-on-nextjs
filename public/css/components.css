@@ -16,16 +16,16 @@ body .wrapper .homepage-about-me {
   .presentation-page .wrapper .page-header .page-header-image {
     position: absolute;
     background-size: cover;
-    background-position: center center;
+    background-position: bottom center;
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url("~@img/sky.jpg"); }
+    background-image: url("~@img/brasil-up.png"); }
   .presentation-page .wrapper .page-header .page-header-city {
-    background-image: url("~@img/buildings.png");
+    background-image: url("~@img/brasil-down.png");
     background-size: cover;
-    background-position: top;
-    top: 25.5%;
+    background-position: bottom;
+    top: 44.4%;
     background-repeat: no-repeat; }
   .presentation-page .wrapper .page-header .rellax-header-buildings {
     z-index: 2; }
@@ -455,41 +455,53 @@ body .wrapper .homepage-about-me {
   margin: 0 auto;
   text-align: center;
   position: relative;
-  top: 24.5%; }
+  top: 2%;
+  padding: 0px 200px; }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .presentation-page .rellax-text-container {
+      margin: 0 auto;
+      text-align: left;
+      position: relative;
+      padding: 0px 190px; } }
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .presentation-page .rellax-text-container {
+      margin: 0 auto;
+      text-align: left;
+      position: relative;
+      padding: 0px 180px; } }
+  @media (min-width: 481px) and (max-width: 767px) {
+    .presentation-page .rellax-text-container {
+      padding: 0px 150px;
+      left: 4%;
+      top: 4%; } }
+  @media (min-width: 320px) and (max-width: 480px) {
+    .presentation-page .rellax-text-container {
+      padding: 0px 30px;
+      top: 8%; } }
   .presentation-page .rellax-text-container .h1-seo {
-    text-transform: uppercase;
     font-weight: 700;
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Allyca monoline', sans-serif;
     z-index: 1;
     text-align: left;
-    background: -moz-linear-gradient(top, #FFFFFF 15%, #75a6c3 100%);
-    background: -webkit-linear-gradient(top, #FFFFFF 15%, #75a6c3 100%);
-    background: linear-gradient(to bottom, #FFFFFF 15%, #75a6c3 100%);
+    background: -moz-linear-gradient(to bottom, #BBB 20%, #30CFD0 90%);
+    background: -webkit-linear-gradient(to bottom, #BBB 20%, #30CFD0 90%);
+    background: linear-gradient(to bottom, #BBB 20%, #30CFD0 90%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 4.6em;
-    letter-spacing: 0.16em;
-    margin-left: 36%; }
+    font-size: 3em;
+    letter-spacing: 0.46em; }
     @media (min-width: 768px) and (max-width: 1024px) {
       .presentation-page .rellax-text-container .h1-seo {
-        font-size: 3.6em;
-        letter-spacing: 0.16em;
-        margin-left: 29%; } }
+        font-size: 2.6em; } }
     @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
       .presentation-page .rellax-text-container .h1-seo {
-        font-size: 3.6em;
-        letter-spacing: 0.16em;
-        margin-left: 36%; } }
+        font-size: 3.6em; } }
     @media (min-width: 481px) and (max-width: 767px) {
       .presentation-page .rellax-text-container .h1-seo {
-        font-size: 2.2em;
-        letter-spacing: 0.16em;
-        margin-left: 40%; } }
+        font-size: 2.2em; } }
     @media (min-width: 320px) and (max-width: 480px) {
       .presentation-page .rellax-text-container .h1-seo {
-        font-size: 2em;
-        letter-spacing: 0.16em;
-        margin-left: 16%; } }
+        font-size: 2em; } }
 
 .presentation-page .h3-description {
   z-index: 3;
