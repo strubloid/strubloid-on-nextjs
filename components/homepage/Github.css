@@ -31,7 +31,7 @@ body .wrapper .section-github .github-buttons a {
 
 body .wrapper .section-github .card-background {
   background: white;
-  max-height: 360px;
+  max-height: 380px;
   -webkit-tap-highlight-color: white;
   border: 16px solid transparent;
   -moz-border-image: -moz-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
@@ -84,7 +84,8 @@ body .wrapper .section-github .github-column .github-background-container {
 @media (min-width: 481px) and (max-width: 767px) {
   body .wrapper .section-github .card-background {
     margin: 0px auto;
-    max-width: 21em; }
+    max-width: 21em;
+    max-height: 400px; }
   body .wrapper .section-github .github-column {
     display: none; } }
 

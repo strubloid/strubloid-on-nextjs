@@ -55,7 +55,7 @@ body {
 
       .card-background {
         background: white;
-        max-height: 360px;
+        max-height: 380px;
         -webkit-tap-highlight-color: white;
 
         border: 16px solid transparent;
@@ -193,6 +193,7 @@ body {
         .card-background {
           margin: 0px auto;
           max-width: 21em;
+          max-height: 400px;
         }
 
         .github-column {

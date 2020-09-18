@@ -7,7 +7,7 @@ class Header extends Component {
   firstMessage = 'A mix between lines of code and light!';
   secondMessage = 'Import { positivism } from "proton.lib"';
   thirdMessage = '$ Git push [your-code] me';
-  forthMessage = 'Give-me an idea, and I will transform into an alias';
+  forthMessage = 'while (live) alias everywhere!';
 
   componentDidMount () {
     document.body.classList.add("presentation-page");
