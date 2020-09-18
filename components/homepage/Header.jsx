@@ -42,22 +42,22 @@ class Header extends Component {
               <h1 className="h1-seo" >{this.homepageName}</h1>
             </div>
             <div id="fly-container">
-              <div  className="fly-description rellax-text quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="12">
+              <div  className="fly-description rellax-text quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="15">
                 <blockquote className="text">
                   <p>{this.firstMessage}</p>
                 </blockquote>
               </div>
-              <div  className="fly-description rellax-text  quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="15">
+              <div  className="fly-description rellax-text  quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="14">
                 <blockquote className="text">
                   <p>{this.secondMessage}</p>
                 </blockquote>
               </div>
-              <div  className="fly-description rellax-text  quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="13">
+              <div  className="fly-description rellax-text  quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="15">
                 <blockquote className="text">
                   <p>{this.thirdMessage}</p>
                 </blockquote>
               </div>
-              <div  className="fly-description rellax-text quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="16">
+              <div  className="fly-description rellax-text quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed="14">
                 <blockquote className="text">
                   <p>{this.forthMessage}</p>
                 </blockquote>
