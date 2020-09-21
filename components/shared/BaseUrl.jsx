@@ -1,13 +1,12 @@
 import React from 'react';
 
 export function getBaseUrl(req) {
-    let protocol = 'https:'
 
-    let host = req ? req.headers.host : window.location.hostname
-    console.log(req);
-    if (host.indexOf('localhost') > -1) {
-        host = 'localhost:3333'
-        protocol = 'http:'
+    let protocol = 'https:'
+    const host = req ? req.headers.host : window.location.hostname;
+
+    if (process.env.NODE_ENV === 'development'){
+        return "http://localhost:3333"
     }
 
     return `${protocol}//${host}`;
