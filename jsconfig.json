@@ -6,7 +6,8 @@
       "@css/*": ["public/css/*"],
       "@scss-global/*": ["public/scss/global/*"],
       "@img/*": ["public/img/*"],
-      "@fonts/*": ["public/fonts/*"]
+      "@fonts/*": ["public/fonts/*"],
+      "@backend/*": ["backend/*"]
     }
   }
 }
