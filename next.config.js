@@ -12,9 +12,5 @@ module.exports = {
     env: {
         REACT_APP_GOOGLE_KEY: process.env.REACT_APP_GOOGLE_KEY,
         MONGO_URI: process.env.MONGO_URI,
-    },
-    publicRuntimeConfig: {
-        host: process.env.HOST,
-        port: process.env.PORT,
-    },
+    }
 };

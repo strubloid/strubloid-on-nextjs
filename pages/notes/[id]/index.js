@@ -2,7 +2,7 @@ import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { Confirm, Button, Loader } from 'semantic-ui-react';
-import BaseUrl from '@components/shared/BaseUrl'
+import { getBaseUrl } from '@components/shared/BaseUrl'
 import BasicHeader from '@components/shared/BasicHeader'
 
 const Note = ({ note }) => {
@@ -63,7 +63,9 @@ const Note = ({ note }) => {
 }
 
 Note.getInitialProps = async ({ req, query: { id }}) => {
-    const BASE_URL = BaseUrl(req);
+    const BASE_URL = getBaseUrl(req);
+
+    console.log()
     const res = await fetch(`${BASE_URL}/api/notes/${id}`)
     const { data } = await res.json();
     return { note: data };
