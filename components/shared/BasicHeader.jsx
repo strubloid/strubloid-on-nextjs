@@ -13,7 +13,7 @@ class BasicHeader extends Component {
   render() {
     return (
         <>
-          <div className="page-header page-header-small">
+          <div className="basic-page-header">
             <div className="page-header-image" ref={this.pageReference} ></div>
           </div>
         </>
