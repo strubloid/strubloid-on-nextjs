@@ -16,6 +16,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "mongoose": "^5.10.6",
     "next": "9.5.0",
+    "next-absolute-url": "^1.2.2",
     "next-on-netlify": "^2.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",

@@ -8,7 +8,6 @@ import "public/scss/global/_fonts.scss";
 import "public/scss/global/_cool_effects.scss";
 import "public/scss/global/_quote.scss";
 import "public/scss/global/_basic.scss";
-
 import Layout from '@components/Layout';
 
 // This default export is required in a new `pages/_app.js` file.

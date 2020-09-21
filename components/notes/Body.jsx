@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import fetch from 'isomorphic-unfetch';
 import { Button, Card} from 'semantic-ui-react';
 
 const Body = ({ notes }) => {
