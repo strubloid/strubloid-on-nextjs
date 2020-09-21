@@ -2,10 +2,10 @@ import React from 'react';
 
 export function getBaseUrl() {
 
-    let protocol = 'https:'
-    const host = window.location.hostname;
+    const protocol = 'https:'
+    const host = process.env.HOST;
     console.log('RAFA');
-    console.log(window.location.hostname);
+    console.log(host);
 
     if (process.env.NODE_ENV === 'development'){
         return "http://localhost:3333"
