@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function getBaseUrl(req) {
+export function getBaseUrl(req) {
     let protocol = 'https:'
     let host = req ? req.headers.host : window.location.hostname
     if (host.indexOf('localhost') > -1) {

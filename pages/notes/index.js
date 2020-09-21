@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-unfetch';
 import Body from '@components/notes/Body';
 import NotesHeader from '@components/notes/Header';
-import BaseUrl from '@components/shared/BaseUrl';
+import { getBaseUrl } from '@components/shared/BaseUrl'
 
 const Index = ({ notes }) => {
     return (
@@ -16,9 +16,7 @@ const Index = ({ notes }) => {
 
 Index.getInitialProps = async ({req, res}) => {
 
-    const BASE_URL = BaseUrl(req);
-
-    // const res  = await fetch(`${origin}/api/notes/`);
+    const BASE_URL = getBaseUrl(req);
     const fetchData  = await fetch(`${BASE_URL}/api/notes/`);
     const { data } = await fetchData.json();
 

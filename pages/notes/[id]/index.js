@@ -13,7 +13,7 @@ const Note = ({ note }) => {
     const deleteNote = async (req) => {
         const noteId = router.query.id;
         try {
-            const BASE_URL = BaseUrl(req);
+            const BASE_URL = getBaseUrl(req);
             const deleted = await fetch(`${BASE_URL}/api/notes/${noteId}`, {
                 method: "Delete"
             });
@@ -64,8 +64,6 @@ const Note = ({ note }) => {
 
 Note.getInitialProps = async ({ req, query: { id }}) => {
     const BASE_URL = getBaseUrl(req);
-
-    console.log()
     const res = await fetch(`${BASE_URL}/api/notes/${id}`)
     const { data } = await res.json();
     return { note: data };
