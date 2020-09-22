@@ -17,6 +17,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-google-maps": "^9.4.5",
+    "react-google-recaptcha": "^2.1.0",
     "reactstrap": "^8.5.1",
     "rellax": "^1.12.1",
     "sass": "^1.26.10",

@@ -21,6 +21,9 @@ import {
   Col,
 } from "reactstrap";
 
+// Reacptcha
+import ReCAPTCHA from "react-google-recaptcha"
+
 const MapWrapper = withScriptjs(
   withGoogleMap((props) => (
     <GoogleMap
@@ -222,6 +225,9 @@ function ContactMe(props) {
                         rows="6"
                         type="textarea"
                       ></Input>
+                    </FormGroup>
+                    <FormGroup>
+                      <ReCAPTCHA sitekey={process.env.SITE_RECAPTCHA_KEY} />
                     </FormGroup>
                     <div className="submit text-center">
                       <Button
