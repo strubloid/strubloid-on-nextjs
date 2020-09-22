@@ -4,6 +4,7 @@ import ContactMeHeader from '@components/contact-me/ContactMeHeader'
 
 export default function ContactMePage (props) {
     const googleKey = process.env.GOOGLE_KEY;
+    console.log(process.env);
     return (
         <>
             <ContactMeHeader />
