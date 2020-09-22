@@ -19,7 +19,7 @@ const Note = ({ note }) => {
 
             router.push("/notes");
         } catch (error) {
-            console.log(error)
+            console.log("error")
         }
     }
 

@@ -96,6 +96,8 @@ const ContactMe = (props) => {
         };
     }, []);
 
+    // console.log("FIIIIIII")
+    // console.log(props.googleKey)
     return (
         <>
             <div className="main">
@@ -181,7 +183,7 @@ const ContactMe = (props) => {
                                         ></Input>
                                     </FormGroup>
                                     <FormGroup>
-                                        {/*<ReCAPTCHA sitekey={process.env.SITE_RECAPTCHA_KEY} />*/}
+                                        <ReCAPTCHA sitekey={process.env.SITE_RECAPTCHA_KEY} />
                                     </FormGroup>
                                     <div className="submit text-center">
                                         <button className="btn-raised btn-round btn btn-info"
