@@ -109,7 +109,7 @@ const MapWrapper = withScriptjs(
   ))
 );
 
-function ContactMe() {
+function ContactMe(props) {
   const [nameFocus, setNameFocus] = React.useState(false);
   const [emailFocus, setEmailFocus] = React.useState(false);
   const [numberFocus, setNumberFocus] = React.useState(false);
@@ -247,7 +247,7 @@ function ContactMe() {
         </div>
         <div className="big-map" id="contactUs2Map">
           <MapWrapper
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_KEY}`}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${props.googleKey}`}
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `100%` }} />}
             mapElement={<div style={{ height: `100%` }} />}
