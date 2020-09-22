@@ -5,12 +5,9 @@
   "scripts": {
     "dev": "next -p 3333",
     "build": "next build",
-    "start": "next start",
-    "export": "next export",
     "postbuild": "next-on-netlify",
-    "live-test": "npm run build && npm run export && npm run start",
-    "build-css": "./bin/build-css",
-    "watch-css": "./bin/watch-css"
+    "generate-css-from-scss": "./bin/build-css",
+    "watch-css": "nodemon -e scss -x npm run generate-css-from-scss"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",

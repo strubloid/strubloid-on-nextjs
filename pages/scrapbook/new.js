@@ -1,6 +1,5 @@
-import fetch from 'isomorphic-unfetch';
-import NewNote from '@components/notes/NewNote';
-import NotesHeader from '@components/notes/Header';
+import NewNote from '@components/scrapbook/NewNote';
+import NotesHeader from '@components/scrapbook/Header';
 
 const NewNotePage = ({ notes }) => {
     return (

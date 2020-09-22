@@ -1,5 +1,5 @@
-import dbConnect from '@backend/utils/DatabaseConnection'
-import Note from '@backend/models/Note'
+import dbConnect from '@components/DatabaseConnection'
+import Note from '@components/scrapbook/models/Note'
 
 dbConnect();
 

@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import fetch from 'isomorphic-unfetch';
 import { Button, Form, Loader} from 'semantic-ui-react';
 import { useRouter } from 'next/router'
+import { server } from '@components/shared/Server';
 
 const NewNote = () => {
 
@@ -14,7 +14,8 @@ const NewNote = () => {
     const createNote = async () => {
         try
         {
-            const rest = await fetch(`http://localhost:3333/api/notes`,{
+            console.log(`${server}/api/notes/`);
+            const rest = await fetch(`${server}/api/notes/`,{
                 method: 'POST',
                 headers : {
                     "Accept" : "application/json",
@@ -23,7 +24,7 @@ const NewNote = () => {
                 body : JSON.stringify(form)
             });
 
-            await router.push('/notes');
+            await router.push('/scrapbook');
 
         } catch (e) {
             console.log(e);
@@ -32,6 +33,7 @@ const NewNote = () => {
 
     useEffect(() => {
         if (isSubmitting) {
+
             // checking if the errors state its equal to 0, meaning no errors
             if (Object.keys(errors).length === 0) {
                 createNote();

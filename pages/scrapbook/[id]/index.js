@@ -2,8 +2,8 @@ import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { Confirm, Button, Loader } from 'semantic-ui-react';
-import { getBaseUrl } from '@components/shared/BaseUrl'
 import BasicHeader from '@components/shared/BasicHeader'
+import { server } from '@components/shared/Server';
 
 const Note = ({ note }) => {
     const [confirm, setConfirm] = useState(false);
@@ -13,8 +13,7 @@ const Note = ({ note }) => {
     const deleteNote = async (req) => {
         const noteId = router.query.id;
         try {
-            const BASE_URL = getBaseUrl(req);
-            const deleted = await fetch(`${BASE_URL}/api/notes/${noteId}`, {
+            const deleted = await fetch(`${server}/api/notes/${noteId}`, {
                 method: "Delete"
             });
 
@@ -62,9 +61,8 @@ const Note = ({ note }) => {
     )
 }
 
-Note.getInitialProps = async ({ req, query: { id }}) => {
-    const BASE_URL = getBaseUrl(req);
-    const res = await fetch(`${BASE_URL}/api/notes/${id}`)
+Note.getInitialProps = async ({ query: { id }}) => {
+    const res = await fetch(`${server}/api/notes/${id}`)
     const { data } = await res.json();
     return { note: data };
 }

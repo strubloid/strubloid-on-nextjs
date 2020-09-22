@@ -131,8 +131,6 @@ function ContactMe() {
 
   return (
     <>
-      <div className="wrapper">
-        <ContactMeHeader />
         <div className="main">
           <div className="contact-content">
             <Container>
@@ -261,7 +259,6 @@ function ContactMe() {
             mapElement={<div style={{ height: `100%` }} />}
           />
         </div>
-      </div>
     </>
   );
 }

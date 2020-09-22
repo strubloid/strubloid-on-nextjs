@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import fetch from 'isomorphic-unfetch';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
-import { getBaseUrl } from '@components/shared/BaseUrl'
+import { server } from '@components/shared/Server';
 
 const EditNote = ({ note }) => {
     const [form, setForm] = useState({ title: note.title, description: note.description });
@@ -22,10 +22,9 @@ const EditNote = ({ note }) => {
         }
     }, [errors])
 
-    const updateNote = async (req) => {
+    const updateNote = async () => {
         try {
-            const BASE_URL = getBaseUrl(req);
-            const res = await fetch(`${BASE_URL}/api/notes/${router.query.id}`, {
+            const res = await fetch(`${server}/api/notes/${router.query.id}`, {
                 method: 'PUT',
                 headers: {
                     "Accept": "application/json",
@@ -98,10 +97,9 @@ const EditNote = ({ note }) => {
     )
 }
 
-EditNote.getInitialProps = async ({ req, query: { id } }) => {
+EditNote.getInitialProps = async ({ query: { id } }) => {
 
-    const BASE_URL = getBaseUrl(req);
-    const res = await fetch(`${BASE_URL}/api/notes/${id}`);
+    const res = await fetch(`${server}/api/notes/${id}`);
     const { data } = await res.json();
 
     return { note: data }

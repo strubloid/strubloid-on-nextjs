@@ -110,7 +110,7 @@ class ScrollTransparentNavbar extends Component {
                         <i className="now-ui-icons location_pin"></i>
                         Contact Me!
                       </DropdownItem>
-                      <DropdownItem href="/notes">
+                      <DropdownItem href="/scrapbook">
                         <i className="now-ui-icons location_pin"></i>
                         Leave me a note!
                       </DropdownItem>

@@ -1,4 +1,9 @@
 [build]
+  command   = "npm run build"
   functions = "out_functions"
   publish   = "out_publish"
-  command   = "npm run build"
+
+  [dev]
+    functions = "out_functions"
+    publish   = "out_publish"
+    framework = "#static"
