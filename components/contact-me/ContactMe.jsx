@@ -162,7 +162,7 @@ function ContactMe(props) {
                     Do you want to work with me? Cool! I just ask to add to the header <b>[job-offer]</b>,
                     so my robot can put you as priority in the queue!<br />
                   </p>
-                  <Form name="contact-form" method="POST" data-netlify="true">
+                  <Form name="contact-form" method="POST" data-netlify-recaptcha="true" data-netlify="true">
                     <label>Your name</label>
                     <InputGroup className={nameFocus ? "input-group-focus" : ""} >
                       <InputGroupAddon addonType="prepend">
@@ -222,10 +222,6 @@ function ContactMe(props) {
                         rows="6"
                         type="textarea"
                       ></Input>
-                    </FormGroup>
-                    <FormGroup>
-                      <label>Recaptcha</label>
-                      <div data-netlify-recaptcha="true"></div>
                     </FormGroup>
                     <div className="submit text-center">
                       <Button
