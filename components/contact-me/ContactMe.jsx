@@ -144,11 +144,9 @@ function ContactMe() {
                     Do you want to work with me? Cool! I just ask to add to the header <b>[job-offer]</b>,
                     so my robot can put you as priority in the queue!<br />
                   </p>
-                  <Form id="contact-form" name="contact-form" method="post" role="form" data-netlify="true" data-netlify-recaptcha="true">
+                  <Form name="contact-form" method="POST" data-netlify="true" data-netlify-recaptcha="true">
                     <label>Your name</label>
-                    <InputGroup
-                      className={nameFocus ? "input-group-focus" : ""}
-                    >
+                    <InputGroup className={nameFocus ? "input-group-focus" : ""} >
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons users_circle-08"></i>
@@ -165,9 +163,7 @@ function ContactMe() {
                       ></Input>
                     </InputGroup>
                     <label>Email address</label>
-                    <InputGroup
-                      className={emailFocus ? "input-group-focus" : ""}
-                    >
+                    <InputGroup className={emailFocus ? "input-group-focus" : ""} >
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons ui-1_email-85"></i>
@@ -178,7 +174,6 @@ function ContactMe() {
                         aria-label="Email Here..."
                         autoComplete="email"
                         placeholder="Email Here..."
-                        type="email"
                         onFocus={() => setEmailFocus(true)}
                         onBlur={() => setEmailFocus(false)}
                       ></Input>
