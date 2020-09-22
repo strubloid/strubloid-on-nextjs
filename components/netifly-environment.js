@@ -7,7 +7,7 @@ const keys = [
 ]
 
 const lineToWrite = keys.join('');
-console.log(lineToWrite)
+// console.log(lineToWrite)
 
 fs.writeFileSync('./.env', `${lineToWrite}`)
 
