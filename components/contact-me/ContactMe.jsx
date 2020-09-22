@@ -128,28 +128,28 @@ function ContactMe(props) {
   return (
     <>
         <div className="main">
-          <Container>
-            <form name="test-contact" method="POST" data-netlify="true">
-              <p>
-                <label>Your Name: <input type="text" name="name" /></label>
-              </p>
-              <p>
-                <label>Your Email: <input type="email" name="email" /></label>
-              </p>
-              <p>
-                <label>Your Role: <select name="role[]" multiple>
-                  <option value="leader">Leader</option>
-                  <option value="follower">Follower</option>
-                </select></label>
-              </p>
-              <p>
-                <label>Message: <textarea name="message"></textarea></label>
-              </p>
-              <p>
-                <button type="submit">Send</button>
-              </p>
-            </form>
-          </Container>
+          {/*<Container>*/}
+          {/*  <form name="test-contact" method="POST" data-netlify="true">*/}
+          {/*    <p>*/}
+          {/*      <label>Your Name: <input type="text" name="name" /></label>*/}
+          {/*    </p>*/}
+          {/*    <p>*/}
+          {/*      <label>Your Email: <input type="email" name="email" /></label>*/}
+          {/*    </p>*/}
+          {/*    <p>*/}
+          {/*      <label>Your Role: <select name="role[]" multiple>*/}
+          {/*        <option value="leader">Leader</option>*/}
+          {/*        <option value="follower">Follower</option>*/}
+          {/*      </select></label>*/}
+          {/*    </p>*/}
+          {/*    <p>*/}
+          {/*      <label>Message: <textarea name="message"></textarea></label>*/}
+          {/*    </p>*/}
+          {/*    <p>*/}
+          {/*      <button type="submit">Send</button>*/}
+          {/*    </p>*/}
+          {/*  </form>*/}
+          {/*</Container>*/}
           <div className="contact-content">
             <Container>
               <Row>
@@ -162,7 +162,7 @@ function ContactMe(props) {
                     Do you want to work with me? Cool! I just ask to add to the header <b>[job-offer]</b>,
                     so my robot can put you as priority in the queue!<br />
                   </p>
-                  <Form name="contact-form" method="POST" data-netlify="true" data-netlify-recaptcha="true">
+                  <Form name="contact-form" method="POST" data-netlify="true">
                     <label>Your name</label>
                     <InputGroup className={nameFocus ? "input-group-focus" : ""} >
                       <InputGroupAddon addonType="prepend">
@@ -222,6 +222,10 @@ function ContactMe(props) {
                         rows="6"
                         type="textarea"
                       ></Input>
+                    </FormGroup>
+                    <FormGroup>
+                      <label>Recaptcha</label>
+                      <div data-netlify-recaptcha="true"></div>
                     </FormGroup>
                     <div className="submit text-center">
                       <Button
