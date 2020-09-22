@@ -9,6 +9,6 @@ const keys = [
 const lineToWrite = keys.join('');
 console.log(lineToWrite)
 
-fs.writeFileSync('./.env-test', `${lineToWrite}`)
+fs.writeFileSync('./.env', `${lineToWrite}`)
 
 
