@@ -144,7 +144,7 @@ function ContactMe() {
                     Do you want to work with me? Cool! I just ask to add to the header <b>[job-offer]</b>,
                     so my robot can put you as priority in the queue!<br />
                   </p>
-                  <Form id="contact-form" name="contact-form" method="post" role="form" data-netlify="true">
+                  <Form id="contact-form" name="contact-form" method="post" role="form" data-netlify="true" data-netlify-recaptcha="true">
                     <label>Your name</label>
                     <InputGroup
                       className={nameFocus ? "input-group-focus" : ""}
