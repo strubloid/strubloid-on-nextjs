@@ -10,6 +10,7 @@
     "watch-css": "nodemon -e scss -x npm run generate-css-from-scss"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.2.6",
     "isomorphic-unfetch": "^3.0.0",
     "mongoose": "^5.10.6",
     "next": "9.5.0",

@@ -8,10 +8,7 @@ import { Container, Row, Col } from "reactstrap";
 function AboutMe() {
   return (
     <>
-      <div
-        className="section features-7 section-image homepage-about-me"
-
-      >
+      <div className="section features-7 section-image homepage-about-me">
         <Container fluid>
           <Row>
             <Col className="px-0" md="6">
@@ -72,7 +69,6 @@ function AboutMe() {
                 </div>
               </Col>
             </Col>
-
           </Row>
         </Container>
       </div>

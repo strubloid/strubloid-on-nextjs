@@ -7,6 +7,7 @@ const keys = [
     `SERVER_URL=${process.env.SERVER_URL}\n`,
     `SITE_RECAPTCHA_KEY=${process.env.SITE_RECAPTCHA_KEY}\n`,
     `SITE_RECAPTCHA_SECRET=${process.env.SITE_RECAPTCHA_SECRET}\n`,
+    `SENDGRID_API_KEY=${process.env.SENDGRID_API_KEY}\n`,
 ]
 
 // Tranforming into a string
