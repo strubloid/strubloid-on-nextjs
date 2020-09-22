@@ -18,7 +18,7 @@ Index.getInitialProps = async () => {
 
     const fetchData  = await fetch(`${server}/api/notes/`);
     const { data } = await fetchData.json();
-    const notes = data.length > 0 ?  data : []
+    const notes = data !== undefined || data.length > 0 ?  data : []
 
     return { notes: notes };
 }
