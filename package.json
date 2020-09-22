@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "dev": "next -p 3333",
+    "dev": "next -p 8888",
     "build": "next build",
     "postbuild": "next-on-netlify",
     "generate-css-from-scss": "./bin/build-css",

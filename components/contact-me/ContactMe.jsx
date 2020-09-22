@@ -144,7 +144,7 @@ function ContactMe() {
                     Do you want to work with me? Cool! I just ask to add to the header <b>[job-offer]</b>,
                     so my robot can put you as priority in the queue!<br />
                   </p>
-                  <Form id="contact-form" method="post" role="form">
+                  <Form id="contact-form" name="contact-form" method="post" role="form" data-netlify="true">
                     <label>Your name</label>
                     <InputGroup
                       className={nameFocus ? "input-group-focus" : ""}
@@ -155,6 +155,7 @@ function ContactMe() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        name="name"
                         aria-label="Your Name..."
                         autoComplete="name"
                         placeholder="Your Name..."
@@ -173,6 +174,7 @@ function ContactMe() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        name="email"
                         aria-label="Email Here..."
                         autoComplete="email"
                         placeholder="Email Here..."
@@ -191,6 +193,7 @@ function ContactMe() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        name="phone"
                         autoComplete="number"
                         placeholder="Number Here..."
                         type="text"
