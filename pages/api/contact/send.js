@@ -6,8 +6,10 @@ export default async (req, res) => {
     const to = process.env.EMAIL;
     const sendgridApiKey = process.env.SENDGRID_API_KEY;
 
-    // console.log(email);
-    // console.log(sendgridApiKey);
+    console.log('===== LIVE CHECK =====');
+    console.log(email);
+    console.log(sendgridApiKey);
+    console.log('===== LIVE CHECK =====');
 
     sgMail.setApiKey(sendgridApiKey);
     const html = `<h3>${subject}</h3><p>F: ${name}</p>
