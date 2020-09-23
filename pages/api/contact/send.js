@@ -9,6 +9,9 @@ const Send = async (req, res) => {
     const strubloidMail = process.env.MAIL;
     const sendgridApiKey = process.env.SENDGRID_API_KEY;
 
+    console.log('trying to see if the keys are sent on live');
+    console.log(process.env);
+
     sgMail.setApiKey(sendgridApiKey);
 
     const html = `<h2>The craic mate: ${subject}</h2>
