@@ -1,1 +1,1 @@
-export const server = process.env.SERVER_URL ? process.env.SERVER_URL : 'https://strubloid.netlify.app';
+export const server = process.env.SERVER_URL ? process.env.SERVER_URL : 'https://strubloid.com';
