@@ -204,7 +204,7 @@ const ContactMe = (props) => {
                                     so my robot can put you as priority in the queue!<br />
                                 </p>
                                 {
-                                    false && isSubmitting ? <Loader active inline="centered" /> :
+                                    isSubmitting ? <Loader active inline="centered" /> :
                                         <Form id="contact-me" onSubmit={handleOnSubmit}>
                                             <label>Your name</label>
                                             <InputGroup className={nameFocus ? "input-group-focus" : ""}>
