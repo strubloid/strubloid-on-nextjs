@@ -14,8 +14,148 @@ body .wrapper .grid {
 body .wrapper .notes-header {
   background-image: url("~@img/dublin-contact.jpg"); }
 
+/*     brand Colors              */
+/*      light colors         */
+body .wrapper #contact-me .input-group-focus input:focus {
+  -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  border: 1px solid #f96332;
+  border-left: none;
+  box-shadow: none;
+  outline: 0 !important;
+  color: #2c2c2c; }
+
+body .wrapper #contact-me .form-control {
+  background-color: transparent;
+  border: 1px solid #E3E3E3;
+  border-radius: 30px;
+  color: #2c2c2c;
+  height: auto;
+  line-height: normal;
+  font-size: 0.8571em;
+  -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 80%; }
+
 body .wrapper .contact-me-header {
   background-image: url("~@img/dublin-contact.jpg"); }
+
+@-webkit-keyframes fontgradient {
+  0% {
+    background-position: 0% 0%; }
+  50% {
+    background-position: 100% 100%; }
+  750% {
+    background-position: 50% 50%; }
+  100% {
+    background-position: 100% 100%; } }
+
+@-moz-keyframes fontgradient {
+  0% {
+    background-position: 0% 92%; }
+  50% {
+    background-position: 100% 9%; }
+  100% {
+    background-position: 0% 92%; } }
+
+@keyframes fontgradient {
+  0% {
+    background-position: 0% 92%; }
+  50% {
+    background-position: 100% 9%; }
+  100% {
+    background-position: 0% 92%; } }
+
+body .wrapper .section-github .github-buttons a {
+  background: linear-gradient(166deg, #009C3B, green, #ffdf00) 481px 0/25em 10%; }
+  body .wrapper .section-github .github-buttons a:hover {
+    background: linear-gradient(261deg, #009C3B, green, #ffdf00) 0px 0/20em 100%; }
+
+body .wrapper .section-github .card-background {
+  background: white;
+  max-height: 380px;
+  -webkit-tap-highlight-color: white;
+  border: 16px solid transparent;
+  -moz-border-image: -moz-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
+  -webkit-border-image: -webkit-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
+  border-image: linear-gradient(to right, #009C3B 0%, #ffdf00 100%);
+  border-image-slice: 1; }
+  body .wrapper .section-github .card-background:after {
+    background: none; }
+  body .wrapper .section-github .card-background:hover {
+    background: #ffc10761; }
+  body .wrapper .section-github .card-background ul {
+    margin: 10px auto 0px auto; }
+    body .wrapper .section-github .card-background ul li {
+      padding: 6px 0;
+      color: #666; }
+  body .wrapper .section-github .card-background .card-title {
+    margin-top: 10px;
+    color: #666; }
+
+body .wrapper .section-github .github-column .github-background-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: end; }
+  body .wrapper .section-github .github-column .github-background-container .fa-github {
+    font-size: 40rem;
+    padding: 0px 0px 0px 20px;
+    float: left;
+    background: linear-gradient(225deg, #009c3b, #009c3b, #ffdf00) 0 0/3em 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    width: auto;
+    text-align: center;
+    -webkit-text-fill-color: transparent;
+    animation: fontgradient 4s ease infinite; }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  body .wrapper .section-github .github-column {
+    display: none; } }
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  body .wrapper .section-github .card-background .card-body {
+    max-height: 435px; }
+  body .wrapper .section-github .github-column {
+    display: flex; }
+    body .wrapper .section-github .github-column .github-background-container {
+      align-items: center; }
+      body .wrapper .section-github .github-column .github-background-container .fa-github {
+        font-size: 20rem; } }
+
+@media (min-width: 481px) and (max-width: 767px) {
+  body .wrapper .section-github .card-background {
+    margin: 0px auto;
+    max-width: 21em;
+    max-height: 400px; }
+  body .wrapper .section-github .github-column {
+    display: none; } }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  body .wrapper .section-github .github-buttons a {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto -10px auto;
+    max-width: 180px;
+    background: linear-gradient(166deg, #009C3B, green, #ffdf00) 525px 0/25em 10%; }
+  body .wrapper .section-github .card-background {
+    margin: 0px auto;
+    max-width: 21em;
+    display: flex;
+    justify-content: center; }
+  body .wrapper .section-github .github-column {
+    display: none; } }
 
 body .wrapper .homepage-about-me {
   background-image: url("~@img/rafael-mendes.jpg"); }
@@ -580,112 +720,6 @@ body .wrapper .homepage-about-me {
     @media (min-width: 320px) and (max-width: 480px) {
       .presentation-page .rellax-text-container .h1-seo {
         font-size: 2em; } }
-
-@-webkit-keyframes fontgradient {
-  0% {
-    background-position: 0% 0%; }
-  50% {
-    background-position: 100% 100%; }
-  750% {
-    background-position: 50% 50%; }
-  100% {
-    background-position: 100% 100%; } }
-
-@-moz-keyframes fontgradient {
-  0% {
-    background-position: 0% 92%; }
-  50% {
-    background-position: 100% 9%; }
-  100% {
-    background-position: 0% 92%; } }
-
-@keyframes fontgradient {
-  0% {
-    background-position: 0% 92%; }
-  50% {
-    background-position: 100% 9%; }
-  100% {
-    background-position: 0% 92%; } }
-
-body .wrapper .section-github .github-buttons a {
-  background: linear-gradient(166deg, #009C3B, green, #ffdf00) 481px 0/25em 10%; }
-  body .wrapper .section-github .github-buttons a:hover {
-    background: linear-gradient(261deg, #009C3B, green, #ffdf00) 0px 0/20em 100%; }
-
-body .wrapper .section-github .card-background {
-  background: white;
-  max-height: 380px;
-  -webkit-tap-highlight-color: white;
-  border: 16px solid transparent;
-  -moz-border-image: -moz-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
-  -webkit-border-image: -webkit-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
-  border-image: linear-gradient(to right, #009C3B 0%, #ffdf00 100%);
-  border-image-slice: 1; }
-  body .wrapper .section-github .card-background:after {
-    background: none; }
-  body .wrapper .section-github .card-background:hover {
-    background: #ffc10761; }
-  body .wrapper .section-github .card-background ul {
-    margin: 10px auto 0px auto; }
-    body .wrapper .section-github .card-background ul li {
-      padding: 6px 0;
-      color: #666; }
-  body .wrapper .section-github .card-background .card-title {
-    margin-top: 10px;
-    color: #666; }
-
-body .wrapper .section-github .github-column .github-background-container {
-  display: flex;
-  align-items: flex-end;
-  justify-content: end; }
-  body .wrapper .section-github .github-column .github-background-container .fa-github {
-    font-size: 40rem;
-    padding: 0px 0px 0px 20px;
-    float: left;
-    background: linear-gradient(225deg, #009c3b, #009c3b, #ffdf00) 0 0/3em 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    width: auto;
-    text-align: center;
-    -webkit-text-fill-color: transparent;
-    animation: fontgradient 4s ease infinite; }
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  body .wrapper .section-github .github-column {
-    display: none; } }
-
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  body .wrapper .section-github .card-background .card-body {
-    max-height: 435px; }
-  body .wrapper .section-github .github-column {
-    display: flex; }
-    body .wrapper .section-github .github-column .github-background-container {
-      align-items: center; }
-      body .wrapper .section-github .github-column .github-background-container .fa-github {
-        font-size: 20rem; } }
-
-@media (min-width: 481px) and (max-width: 767px) {
-  body .wrapper .section-github .card-background {
-    margin: 0px auto;
-    max-width: 21em;
-    max-height: 400px; }
-  body .wrapper .section-github .github-column {
-    display: none; } }
-
-@media (min-width: 320px) and (max-width: 480px) {
-  body .wrapper .section-github .github-buttons a {
-    display: flex;
-    justify-content: center;
-    margin: 30px auto -10px auto;
-    max-width: 180px;
-    background: linear-gradient(166deg, #009C3B, green, #ffdf00) 525px 0/25em 10%; }
-  body .wrapper .section-github .card-background {
-    margin: 0px auto;
-    max-width: 21em;
-    display: flex;
-    justify-content: center; }
-  body .wrapper .section-github .github-column {
-    display: none; } }
 
 body .wrapper .basic-page-header {
   min-height: 8vh;

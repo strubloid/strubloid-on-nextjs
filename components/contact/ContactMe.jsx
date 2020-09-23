@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // reactstrap components
 import {
-    Button,
     FormGroup,
-    Form,
     Input,
     InputGroupAddon,
     InputGroupText,
@@ -13,6 +11,8 @@ import {
     Row,
     Col,
 } from "reactstrap";
+
+import { Button, Form, Loader} from 'semantic-ui-react';
 
 // Reacptcha
 import ReCAPTCHA from "react-google-recaptcha"
@@ -25,6 +25,8 @@ const ContactMe = (props) => {
     const [nameFocus, setNameFocus] = React.useState(false);
     const [emailFocus, setEmailFocus] = React.useState(false);
     const [numberFocus, setNumberFocus] = React.useState(false);
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [status, setStatus] = useState({
         submitted: false,
@@ -36,7 +38,8 @@ const ContactMe = (props) => {
         name: '',
         email: '',
         subject: '',
-        message: ''
+        message: '',
+        captcha: false,
     });
 
     const handleResponse = (status, msg) => {
@@ -46,17 +49,18 @@ const ContactMe = (props) => {
                 submitted: true,
                 submitting: false,
                 info: {error: false, msg: msg}
-            })
-            setInputs({
-                name: '',
-                email: '',
-                subject: '',
-                message: ''
-            })
+            });
+            // setInputs({
+            //     name: '',
+            //     email: '',
+            //     subject: '',
+            //     message: '',
+            //     captcha: false
+            // });
         } else {
             setStatus({
                 info: {error: true, msg: msg}
-            })
+            });
         }
     };
 
@@ -73,19 +77,85 @@ const ContactMe = (props) => {
         })
     };
 
+    const validate = () => {
+        let error = {}
+
+        //     name: '',
+        //     email: '',
+        //     subject: '',
+        //     message: '',
+        //     captcha: false
+
+        if (!inputs.name){
+            error.name = 'Name is required';
+        }
+
+        if (!inputs.email){
+            error.email = 'Email is required';
+        }
+
+        if (!inputs.subject){
+            error.subject = 'Subject is required';
+        }
+
+        if (!inputs.message){
+            error.message = 'Message is required';
+        }
+
+        return error;
+    }
+
+    useEffect(() => {
+        if (isSubmitting) {
+
+            // checking if the errors state its equal to 0, meaning no errors
+            if (Object.keys(errors).length === 0) {
+                sendMail();
+            } else {
+                setIsSubmitting(false);
+            }
+
+        }
+    }, [errors]);
+
+    const onChangeRecaptcha = value => {
+
+        setInputs(prev => ({
+            ...prev,
+            captcha: value
+        }))
+    }
+
+    const sendMail = async () => {
+        try
+        {
+            console.log('sending');
+
+            setStatus(prevStatus => ({...prevStatus, submitting: true}))
+            const res = await fetch(`${server}/api/contact/send/`, {
+                method: 'POST',
+                headers : {
+                    "Accept" : "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(inputs)
+            })
+            const text = await res.text()
+            handleResponse(res.status, text)
+
+        } catch (e) {
+            // console.log(e);
+            console.log("Error");
+        }
+    }
+
     const handleOnSubmit = async e => {
-        e.preventDefault()
-        setStatus(prevStatus => ({...prevStatus, submitting: true}))
-        const res = await fetch(`${server}/api/contact/send/`, {
-            method: 'POST',
-            headers : {
-                "Accept" : "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(inputs)
-        })
-        const text = await res.text()
-        handleResponse(res.status, text)
+        e.preventDefault();
+        let errors = validate();
+        console.log("errors");
+        console.log(errors);
+        setErrors(errors);
+        setIsSubmitting(true);
     };
 
     React.useEffect(() => {
@@ -118,89 +188,110 @@ const ContactMe = (props) => {
                                     header <b>[job-offer]</b>,
                                     so my robot can put you as priority in the queue!<br />
                                 </p>
-                                <Form onSubmit={handleOnSubmit}>
-                                    <label>Your name</label>
-                                    <InputGroup className={nameFocus ? "input-group-focus" : ""}>
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText>
-                                                <i className="now-ui-icons users_circle-08"></i>
-                                            </InputGroupText>
-                                        </InputGroupAddon>
-                                        <Input
-                                            id="name"
-                                            aria-label="Your Name..."
-                                            autoComplete="name"
-                                            placeholder="Your Name..."
-                                            type="text"
-                                            onFocus={() => setNameFocus(true)}
-                                            onBlur={() => setNameFocus(false)}
-                                            onChange={handleOnChange}
-                                            value={inputs.name}
-                                        ></Input>
-                                    </InputGroup>
-                                    <label>Email address</label>
-                                    <InputGroup className={emailFocus ? "input-group-focus" : ""}>
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText>
-                                                <i className="now-ui-icons ui-1_email-85"></i>
-                                            </InputGroupText>
-                                        </InputGroupAddon>
-                                        <Input
-                                            id="email"
-                                            aria-label="Email Here..."
-                                            autoComplete="email"
-                                            placeholder="Email Here..."
-                                            onFocus={() => setEmailFocus(true)}
-                                            onBlur={() => setEmailFocus(false)}
-                                            onChange={handleOnChange}
-                                            value={inputs.email}
-                                        ></Input>
-                                    </InputGroup>
-                                    <label>Subject</label>
-                                    <InputGroup className={numberFocus ? "input-group-focus" : ""}>
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText>
-                                                <i className="now-ui-icons tech_mobile"></i>
-                                            </InputGroupText>
-                                        </InputGroupAddon>
-                                        <Input
-                                            id="subject"
-                                            autoComplete="subject"
-                                            placeholder="What's the craic mate?"
-                                            type="text"
-                                            onFocus={() => setNumberFocus(true)}
-                                            onBlur={() => setNumberFocus(false)}
-                                            onChange={handleOnChange}
-                                            value={inputs.subject}
-                                        ></Input>
-                                    </InputGroup>
-                                    <FormGroup>
-                                        <label>Your message</label>
-                                        <Input
-                                            id="message"
-                                            rows="6"
-                                            type="textarea"
-                                            onChange={handleOnChange}
-                                            value={inputs.message}
-                                        ></Input>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <ReCAPTCHA sitekey={process.env.SITE_RECAPTCHA_KEY} />
-                                    </FormGroup>
-                                    <div className="submit text-center">
-                                        <button className="btn-raised btn-round btn btn-info"
-                                                defaultValue="Contact Us"
-                                                type="submit" disabled={status.submitting}>
-                                            {
-                                                !status.submitting
-                                                    ? !status.submitted
-                                                    ? 'Submit'
-                                                    : 'Submitted'
-                                                    : 'Submitting...'
-                                            }
-                                        </button>
-                                    </div>
-                                </Form>
+                                {
+                                    isSubmitting ? <Loader active inline="centered" /> :
+                                        <Form id="contact-me" onSubmit={handleOnSubmit}>
+                                            <label>Your name</label>
+                                            {/*<div className="input-group">*/}
+                                            {/*    <div className="input-group-prepend">*/}
+                                            {/*        <span className="input-group-text">*/}
+                                            {/*            <i className="now-ui-icons users_circle-08"></i>*/}
+                                            {/*        </span>*/}
+                                            {/*    </div>*/}
+                                            {/*    <input type="text" id="name" aria-label="Your Name..."*/}
+                                            {/*           autoComplete="name" placeholder="Your Name..." value=""*/}
+                                            {/*           className="form-control">*/}
+                                            {/*    </input>*/}
+                                            {/*</div>*/}
+
+                                            <InputGroup className={nameFocus ? "input-group-focus" : ""}>
+                                                <InputGroupAddon addonType="prepend">
+                                                    <InputGroupText>
+                                                        <i className="now-ui-icons users_circle-08"></i>
+                                                    </InputGroupText>
+                                                </InputGroupAddon>
+                                                <Input
+                                                    id="name"
+                                                    aria-label="Your Name..."
+                                                    autoComplete="name"
+                                                    placeholder="Your Name..."
+                                                    type="text"
+                                                    onFocus={() => setNameFocus(true)}
+                                                    onBlur={() => setNameFocus(false)}
+                                                    onChange={handleOnChange}
+                                                    value={inputs.name}
+                                                    error={errors.name ? { content: 'please enter a name', pointing : 'below'} : null}
+                                                />
+                                            </InputGroup>
+                                            <label>Email address</label>
+                                            <InputGroup className={emailFocus ? "input-group-focus" : ""}>
+                                                <InputGroupAddon addonType="prepend">
+                                                    <InputGroupText>
+                                                        <i className="now-ui-icons ui-1_email-85"></i>
+                                                    </InputGroupText>
+                                                </InputGroupAddon>
+                                                <Input
+                                                    id="email"
+                                                    aria-label="Email Here..."
+                                                    autoComplete="email"
+                                                    placeholder="Email Here..."
+                                                    onFocus={() => setEmailFocus(true)}
+                                                    onBlur={() => setEmailFocus(false)}
+                                                    onChange={handleOnChange}
+                                                    value={inputs.email}
+                                                    error={errors.email ? { content: 'please enter a email', pointing : 'below'} : null}
+                                                />
+                                            </InputGroup>
+                                            <label>Subject</label>
+                                            <InputGroup className={numberFocus ? "input-group-focus" : ""}>
+                                                <InputGroupAddon addonType="prepend">
+                                                    <InputGroupText>
+                                                        <i className="now-ui-icons tech_mobile"></i>
+                                                    </InputGroupText>
+                                                </InputGroupAddon>
+                                                <Input
+                                                    id="subject"
+                                                    autoComplete="subject"
+                                                    placeholder="What's the craic mate?"
+                                                    type="text"
+                                                    onFocus={() => setNumberFocus(true)}
+                                                    onBlur={() => setNumberFocus(false)}
+                                                    onChange={handleOnChange}
+                                                    value={inputs.subject}
+                                                    error={errors.subject ? { content: 'please enter a subject', pointing : 'below'} : null}
+                                                />
+                                            </InputGroup>
+                                            <FormGroup>
+                                                <label>Your message</label>
+                                                <Input
+                                                    id="message"
+                                                    rows="6"
+                                                    type="textarea"
+                                                    onChange={handleOnChange}
+                                                    value={inputs.message}
+                                                    error={errors.message ? { content: 'please enter a message', pointing : 'below'} : null}
+                                                />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <ReCAPTCHA sitekey={process.env.SITE_RECAPTCHA_KEY}
+                                                           onChange={onChangeRecaptcha}
+                                                />
+                                            </FormGroup>
+                                            <div className="submit text-center">
+                                                <Button className="btn-raised btn-round btn btn-info"
+                                                        defaultValue="Contact Us"
+                                                        type="submit" disabled={status.submitting}>
+                                                    {
+                                                        !status.submitting
+                                                            ? !status.submitted
+                                                            ? 'Submit'
+                                                            : 'Submitted'
+                                                            : 'Submitting...'
+                                                    }
+                                                </Button>
+                                            </div>
+                                        </Form>
+                                }
                                 {status.info.error && (
                                     <div className="error">Error: {status.info.msg}</div>
                                 )}

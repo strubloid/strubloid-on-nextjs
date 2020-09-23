@@ -1,0 +1,72 @@
+@import "public/scss/global/mixin/_vendor-prefixes.scss";
+@import "public/scss/global/variables";
+
+body {
+  .wrapper {
+    #contact-me {
+      .input-group-focus{
+        input{
+          &:focus {
+
+            @include transition-input-focus-color();
+
+            border: 1px solid #f96332;
+            border-left: none;
+
+            box-shadow: none;
+            outline: 0!important;
+            color: #2c2c2c;
+
+          }
+        }
+      }
+      .form-control{
+        background-color: $transparent-bg;
+        border: 1px solid $light-gray;
+        border-radius: $btn-round-radius;
+        color: $black-color;
+        height: auto;
+        line-height: normal;
+        font-size: $font-size-small;
+        @include transition-input-focus-color();
+        @include box-shadow(none);
+        border-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        width: 80%;
+      }
+    }
+  }
+}
+
+// Tablet  (portrait)
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    .wrapper {
+    }
+  }
+}
+
+// Tablet  (landscape)
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  body {
+    .wrapper {
+    }
+  }
+}
+
+// Mobile Landscaoe
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    .wrapper {
+    }
+  }
+}
+
+// Mobile Portrait
+@media (min-width: 320px) and (max-width: 480px) {
+  body {
+    .wrapper {
+    }
+  }
+}
