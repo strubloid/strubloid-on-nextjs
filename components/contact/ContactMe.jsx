@@ -17,6 +17,8 @@ import {
 // Reacptcha
 import ReCAPTCHA from "react-google-recaptcha"
 import { MapWrapper } from "@components/contact/MapWrapper"
+import { server } from '@components/shared/Server';
+import fetch from 'isomorphic-unfetch';
 
 const ContactMe = (props) => {
 
@@ -77,10 +79,11 @@ const ContactMe = (props) => {
     const handleOnSubmit = async e => {
         e.preventDefault()
         setStatus(prevStatus => ({...prevStatus, submitting: true}))
-        const res = await fetch('/api/contact/send', {
+        const res = await fetch(`${server}/api/contact/send/`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(inputs)
         })

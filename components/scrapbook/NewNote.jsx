@@ -14,7 +14,6 @@ const NewNote = () => {
     const createNote = async () => {
         try
         {
-            // console.log(`${server}/api/notes/`);
             const rest = await fetch(`${server}/api/notes/`,{
                 method: 'POST',
                 headers : {
@@ -46,7 +45,7 @@ const NewNote = () => {
 
     const validate = () => {
         let error = {}
-        // console.log(form)
+
         if (!form.title){
             error.title = 'Title is required';
         }
