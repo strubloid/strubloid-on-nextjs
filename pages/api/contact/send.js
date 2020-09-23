@@ -5,7 +5,8 @@ import React from 'react';
 const Send = async (req, res) => {
 
     const {name, email, subject, message} = req.body
-    const strubloidGmail = process.env.EMAIL;
+    const strubloidGmail = process.env.GMAIL;
+    const strubloidMail = process.env.MAIL;
     const sendgridApiKey = process.env.SENDGRID_API_KEY;
 
     sgMail.setApiKey(sendgridApiKey);
@@ -17,7 +18,7 @@ const Send = async (req, res) => {
         <div>${message}</div>`;
 
     const content = {
-        to: "mail@strubloid.com",
+        to: strubloidMail,
         from: strubloidGmail,
         subject: subject,
         text: message,
