@@ -9,9 +9,6 @@ const Send = async (req, res) => {
     const strubloidMail = process.env.MAIL;
     const sendgridApiKey = process.env.SENDGRID_API_KEY;
 
-    console.log('trying to see if the keys are sent on live');
-    console.log(process.env);
-
     sgMail.setApiKey(sendgridApiKey);
 
     const html = `<h2>The craic mate: ${subject}</h2>
@@ -32,7 +29,6 @@ const Send = async (req, res) => {
         await sgMail.send(content)
         res.status(200).send('Message sent successfully.')
     } catch (error) {
-        // console.log('ERROR', error)
         res.status(400).send('Message not sent.')
     }
 

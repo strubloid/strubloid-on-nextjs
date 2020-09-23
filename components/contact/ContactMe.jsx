@@ -40,10 +40,7 @@ const ContactMe = (props) => {
     });
 
     const handleResponse = (status, msg) => {
-        console.log('== RESPONSE ==');
-        console.log(status);
-        console.log(msg);
-        console.log('== RESPONSE ==');
+
         if (status === 200) {
             setStatus({
                 submitted: true,

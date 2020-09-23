@@ -26,7 +26,8 @@ const NewNote = () => {
             await router.push('/scrapbook');
 
         } catch (e) {
-            console.log(e);
+            // console.log(e);
+            console.log("Error");
         }
     }
 
