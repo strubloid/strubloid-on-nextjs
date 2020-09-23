@@ -7,8 +7,7 @@ const Send = async (req, res) => {
     const {name, email, subject, message} = req.body
     const strubloidGmail = process.env.EMAIL;
     const sendgridApiKey = process.env.SENDGRID_API_KEY;
-    console.log(strubloidGmail);
-    console.log(email);
+
     sgMail.setApiKey(sendgridApiKey);
 
     const html = `<h2>The craic mate: ${subject}</h2>
