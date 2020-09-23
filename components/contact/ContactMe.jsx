@@ -257,7 +257,7 @@ const ContactMe = (props) => {
                                             <InputGroup className={numberFocus ? "input-group-focus" : ""}>
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
-                                                        <i className="now-ui-icons ui-1_email-85"></i>
+                                                        <i className="now-ui-icons design-2_ruler-pencil"></i>
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Form.Field
@@ -274,7 +274,6 @@ const ContactMe = (props) => {
                                                     error={errors.subject ? { content: 'please enter a subject', pointing : 'left'} : null}
                                                 />
                                             </InputGroup>
-
                                             <FormGroup className={messageFocus ? "input-group-focus" : ""}>
                                                 <label>Your message</label>
                                                 <Form.Field
