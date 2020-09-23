@@ -1,22 +1,9 @@
-import React, { useEffect, useState } from 'react'
-
-// reactstrap components
-import {
-    FormGroup,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    Container,
-    Row,
-    Col,
-} from "reactstrap";
-
-import { Button, Form, Loader} from 'semantic-ui-react';
-
-// Reacptcha
-import ReCAPTCHA from "react-google-recaptcha"
-import { MapWrapper } from "@components/contact/MapWrapper"
+import React, { useEffect, useState } from 'react';
+import { FormGroup, InputGroupAddon, InputGroupText, InputGroup,
+    Container, Row, Col } from "reactstrap";
+import { Button, Input, TextArea, Form, Loader, Message } from 'semantic-ui-react';
+import ReCAPTCHA from "react-google-recaptcha";
+import { MapWrapper } from "@components/contact/MapWrapper";
 import { server } from '@components/shared/Server';
 import fetch from 'isomorphic-unfetch';
 
@@ -25,6 +12,8 @@ const ContactMe = (props) => {
     const [nameFocus, setNameFocus] = React.useState(false);
     const [emailFocus, setEmailFocus] = React.useState(false);
     const [numberFocus, setNumberFocus] = React.useState(false);
+    const [messageFocus, setMessageFocus] = React.useState(false);
+
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -42,6 +31,12 @@ const ContactMe = (props) => {
         captcha: false,
     });
 
+    /**
+     * Response handler, this will set between success request (200)
+     *  or any other else as a failure.
+     * @param status status from the fetch call
+     * @param msg message response from the fetch call
+     */
     const handleResponse = (status, msg) => {
 
         if (status === 200) {
@@ -50,13 +45,13 @@ const ContactMe = (props) => {
                 submitting: false,
                 info: {error: false, msg: msg}
             });
-            // setInputs({
-            //     name: '',
-            //     email: '',
-            //     subject: '',
-            //     message: '',
-            //     captcha: false
-            // });
+            setInputs({
+                name: '',
+                email: '',
+                subject: '',
+                message: '',
+                captcha: false
+            });
         } else {
             setStatus({
                 info: {error: true, msg: msg}
@@ -64,6 +59,10 @@ const ContactMe = (props) => {
         }
     };
 
+    /**
+     * Update of input value trigger.
+     * @param e
+     */
     const handleOnChange = e => {
         e.persist()
         setInputs(prev => ({
@@ -77,14 +76,12 @@ const ContactMe = (props) => {
         })
     };
 
+    /**
+     * Validation method, for all inputs.
+     * @returns {{}}
+     */
     const validate = () => {
         let error = {}
-
-        //     name: '',
-        //     email: '',
-        //     subject: '',
-        //     message: '',
-        //     captcha: false
 
         if (!inputs.name){
             error.name = 'Name is required';
@@ -105,6 +102,10 @@ const ContactMe = (props) => {
         return error;
     }
 
+    /**
+     * This is the trigger to send the message,
+     * wont be possible if has any error set.
+     */
     useEffect(() => {
         if (isSubmitting) {
 
@@ -118,19 +119,25 @@ const ContactMe = (props) => {
         }
     }, [errors]);
 
+    /**
+     * Set of the captcha value, so its possible to check
+     * if was set the recaptcha response
+     * @param value ReCaptcha response
+     */
     const onChangeRecaptcha = value => {
-
         setInputs(prev => ({
             ...prev,
             captcha: value
         }))
-    }
+    };
 
+    /**
+     * Method that will send the mail
+     * @returns {Promise<void>}
+     */
     const sendMail = async () => {
         try
         {
-            console.log('sending');
-
             setStatus(prevStatus => ({...prevStatus, submitting: true}))
             const res = await fetch(`${server}/api/contact/send/`, {
                 method: 'POST',
@@ -144,20 +151,28 @@ const ContactMe = (props) => {
             handleResponse(res.status, text)
 
         } catch (e) {
-            // console.log(e);
             console.log("Error");
         }
     }
 
+    /**
+     * Submit handle that only check if exists any error
+     * if erros are empty the useEffect function
+     * will trigger as errors are set and IsSubmiting is set to true.
+     *
+     * @param e
+     * @returns {Promise<void>}
+     */
     const handleOnSubmit = async e => {
         e.preventDefault();
         let errors = validate();
-        console.log("errors");
-        console.log(errors);
         setErrors(errors);
         setIsSubmitting(true);
     };
 
+    /**
+     * Layout changes
+     */
     React.useEffect(() => {
         document.body.classList.add("contact-page");
         document.body.classList.add("sidebar-collapse");
@@ -189,33 +204,22 @@ const ContactMe = (props) => {
                                     so my robot can put you as priority in the queue!<br />
                                 </p>
                                 {
-                                    isSubmitting ? <Loader active inline="centered" /> :
+                                    false && isSubmitting ? <Loader active inline="centered" /> :
                                         <Form id="contact-me" onSubmit={handleOnSubmit}>
                                             <label>Your name</label>
-                                            {/*<div className="input-group">*/}
-                                            {/*    <div className="input-group-prepend">*/}
-                                            {/*        <span className="input-group-text">*/}
-                                            {/*            <i className="now-ui-icons users_circle-08"></i>*/}
-                                            {/*        </span>*/}
-                                            {/*    </div>*/}
-                                            {/*    <input type="text" id="name" aria-label="Your Name..."*/}
-                                            {/*           autoComplete="name" placeholder="Your Name..." value=""*/}
-                                            {/*           className="form-control">*/}
-                                            {/*    </input>*/}
-                                            {/*</div>*/}
-
                                             <InputGroup className={nameFocus ? "input-group-focus" : ""}>
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
                                                         <i className="now-ui-icons users_circle-08"></i>
                                                     </InputGroupText>
                                                 </InputGroupAddon>
-                                                <Input
+                                                <Form.Field
                                                     id="name"
+                                                    control={Input}
+                                                    className="form-control"
                                                     aria-label="Your Name..."
                                                     autoComplete="name"
                                                     placeholder="Your Name..."
-                                                    type="text"
                                                     onFocus={() => setNameFocus(true)}
                                                     onBlur={() => setNameFocus(false)}
                                                     onChange={handleOnChange}
@@ -230,8 +234,10 @@ const ContactMe = (props) => {
                                                         <i className="now-ui-icons ui-1_email-85"></i>
                                                     </InputGroupText>
                                                 </InputGroupAddon>
-                                                <Input
+                                                <Form.Field
                                                     id="email"
+                                                    control={Input}
+                                                    className="form-control"
                                                     aria-label="Email Here..."
                                                     autoComplete="email"
                                                     placeholder="Email Here..."
@@ -239,21 +245,23 @@ const ContactMe = (props) => {
                                                     onBlur={() => setEmailFocus(false)}
                                                     onChange={handleOnChange}
                                                     value={inputs.email}
-                                                    error={errors.email ? { content: 'please enter a email', pointing : 'below'} : null}
+                                                    error={errors.email ? { content: 'please enter a email', pointing : 'left'} : null}
                                                 />
                                             </InputGroup>
                                             <label>Subject</label>
                                             <InputGroup className={numberFocus ? "input-group-focus" : ""}>
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
-                                                        <i className="now-ui-icons tech_mobile"></i>
+                                                        <i className="now-ui-icons ui-1_email-85"></i>
                                                     </InputGroupText>
                                                 </InputGroupAddon>
-                                                <Input
+                                                <Form.Field
                                                     id="subject"
+                                                    control={Input}
+                                                    className="form-control"
+                                                    aria-label="Subject Here..."
                                                     autoComplete="subject"
                                                     placeholder="What's the craic mate?"
-                                                    type="text"
                                                     onFocus={() => setNumberFocus(true)}
                                                     onBlur={() => setNumberFocus(false)}
                                                     onChange={handleOnChange}
@@ -261,13 +269,18 @@ const ContactMe = (props) => {
                                                     error={errors.subject ? { content: 'please enter a subject', pointing : 'below'} : null}
                                                 />
                                             </InputGroup>
-                                            <FormGroup>
+
+                                            <FormGroup className={messageFocus ? "input-group-focus" : ""}>
                                                 <label>Your message</label>
-                                                <Input
+                                                <Form.Field
                                                     id="message"
+                                                    className="form-control form-textarea"
                                                     rows="6"
-                                                    type="textarea"
+                                                    autoComplete="message"
+                                                    control={TextArea}
                                                     onChange={handleOnChange}
+                                                    onFocus={() => setMessageFocus(true)}
+                                                    onBlur={() => setMessageFocus(false)}
                                                     value={inputs.message}
                                                     error={errors.message ? { content: 'please enter a message', pointing : 'below'} : null}
                                                 />
@@ -293,10 +306,18 @@ const ContactMe = (props) => {
                                         </Form>
                                 }
                                 {status.info.error && (
-                                    <div className="error">Error: {status.info.msg}</div>
+                                    <Message
+                                        error
+                                        header='Error'
+                                        content={status.info.msg}
+                                    />
                                 )}
                                 {!status.info.error && status.info.msg && (
-                                    <div className="success">{status.info.msg}</div>
+                                    <Message
+                                        success
+                                        header='Success'
+                                        content={status.info.msg}
+                                    />
                                 )}
                             </Col>
                             <Col className="ml-auto mr-auto" md="5">
