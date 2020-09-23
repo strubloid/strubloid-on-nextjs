@@ -1,23 +1,25 @@
 import sgMail from '@sendgrid/mail'
 
-export default async (req, res) => {
+import React from 'react';
+
+const Send = async (req, res) => {
 
     const {name, email, subject, message} = req.body
-    const to = process.env.EMAIL;
+    const strubloidGmail = process.env.EMAIL;
     const sendgridApiKey = process.env.SENDGRID_API_KEY;
-
-    console.log('===== LIVE CHECK =====');
+    console.log(strubloidGmail);
     console.log(email);
-    console.log(sendgridApiKey);
-    console.log('===== LIVE CHECK =====');
-
     sgMail.setApiKey(sendgridApiKey);
-    const html = `<h3>${subject}</h3><p>F: ${name}</p>
-    <p>E: ${email}</p><div>${message}</div>`;
+
+    const html = `<h2>The craic mate: ${subject}</h2>
+        <p>Good person's name: ${name}</p>
+        <p>How can you reach: ${email}</p>
+        <h3>Sweet message below</h3>
+        <div>${message}</div>`;
 
     const content = {
-        to: to,
-        from: email,
+        to: "mail@strubloid.com",
+        from: strubloidGmail,
         subject: subject,
         text: message,
         html: html
@@ -28,7 +30,9 @@ export default async (req, res) => {
         res.status(200).send('Message sent successfully.')
     } catch (error) {
         // console.log('ERROR', error)
-        // res.status(400).send('Message not sent.')
-        res.status(400).send(error)
+        res.status(400).send('Message not sent.')
     }
-}
+
+};
+
+export default Send;
