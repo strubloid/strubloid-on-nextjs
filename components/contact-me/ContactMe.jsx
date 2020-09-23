@@ -96,8 +96,8 @@ const ContactMe = (props) => {
         };
     }, []);
 
-    // console.log("FIIIIIII")
-    // console.log(props.googleKey)
+    console.log("FIIIIIII")
+    console.log(props.googleKey)
     return (
         <>
             <div className="main">
