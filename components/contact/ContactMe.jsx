@@ -16,7 +16,7 @@ import {
 
 // Reacptcha
 import ReCAPTCHA from "react-google-recaptcha"
-import { MapWrapper } from "@components/contact-me/MapWrapper"
+import { MapWrapper } from "@components/contact/MapWrapper"
 
 const ContactMe = (props) => {
 
@@ -38,6 +38,10 @@ const ContactMe = (props) => {
     });
 
     const handleResponse = (status, msg) => {
+        console.log('== RESPONSE ==');
+        console.log(status);
+        console.log(msg);
+        console.log('== RESPONSE ==');
         if (status === 200) {
             setStatus({
                 submitted: true,
