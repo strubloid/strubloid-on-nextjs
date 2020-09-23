@@ -32,7 +32,14 @@ body .wrapper #contact-me .form-textarea {
 body .wrapper #contact-me div.form-control {
   padding: 0px; }
   body .wrapper #contact-me div.form-control div[id*='error-message'] {
-    float: left; }
+    float: left;
+    position: absolute;
+    right: 10%;
+    margin: 0px 0px;
+    line-height: 18px;
+    vertical-align: middle; }
+  body .wrapper #contact-me div.form-control div#message-error-message {
+    bottom: 6%; }
   body .wrapper #contact-me div.form-control:focus {
     border: none !important; }
 

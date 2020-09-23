@@ -56,6 +56,7 @@ const ContactMe = (props) => {
             setStatus({
                 info: {error: true, msg: msg}
             });
+            setIsSubmitting(false);
         }
     };
 
@@ -204,7 +205,11 @@ const ContactMe = (props) => {
                                     so my robot can put you as priority in the queue!<br />
                                 </p>
                                 {
-                                    isSubmitting ? <Loader active inline="centered" /> :
+                                    isSubmitting ?
+                                        !status.submitted
+                                            ? <Loader active inline="centered" />
+                                            : <Loader inactive inline="centered" />
+                                        :
                                         <Form id="contact-me" onSubmit={handleOnSubmit}>
                                             <label>Your name</label>
                                             <InputGroup className={nameFocus ? "input-group-focus" : ""}>
@@ -224,7 +229,7 @@ const ContactMe = (props) => {
                                                     onBlur={() => setNameFocus(false)}
                                                     onChange={handleOnChange}
                                                     value={inputs.name}
-                                                    error={errors.name ? { content: 'please enter a name', pointing : 'below'} : null}
+                                                    error={errors.name ? { content: 'please enter a name', pointing : 'left'} : null}
                                                 />
                                             </InputGroup>
                                             <label>Email address</label>
@@ -266,7 +271,7 @@ const ContactMe = (props) => {
                                                     onBlur={() => setNumberFocus(false)}
                                                     onChange={handleOnChange}
                                                     value={inputs.subject}
-                                                    error={errors.subject ? { content: 'please enter a subject', pointing : 'below'} : null}
+                                                    error={errors.subject ? { content: 'please enter a subject', pointing : 'left'} : null}
                                                 />
                                             </InputGroup>
 
@@ -282,7 +287,7 @@ const ContactMe = (props) => {
                                                     onFocus={() => setMessageFocus(true)}
                                                     onBlur={() => setMessageFocus(false)}
                                                     value={inputs.message}
-                                                    error={errors.message ? { content: 'please enter a message', pointing : 'below'} : null}
+                                                    error={errors.message ? { content: 'please enter a message', pointing : 'left'} : null}
                                                 />
                                             </FormGroup>
                                             <FormGroup>
@@ -297,8 +302,8 @@ const ContactMe = (props) => {
                                                     {
                                                         !status.submitting
                                                             ? !status.submitted
-                                                            ? 'Submit'
-                                                            : 'Submitted'
+                                                                ? 'Submit'
+                                                                : 'Submitted'
                                                             : 'Submitting...'
                                                     }
                                                 </Button>
