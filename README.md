@@ -15,7 +15,7 @@ Basically this project contains:
 | Backend                                | NextJs - API                                     |
 | Styles                                 | Sass with bashscript generation (/bin)           |
 | Parallax                               | Rellax                                           |
-| Google API                             | Google MAps, Google ReCaptcha                    |
+| Google API                             | Google Maps, Google ReCaptcha                    |
 | Database                               | MongoDb                                          |
 | Mail                                   | Sendgrid                                         |
 | Live Environment                       | Netlify                                          |
