@@ -1,5 +1,5 @@
-import NewNote from '@components/scrapbook/NewNote';
-import NotesHeader from '@components/scrapbook/Header';
+import NewNote from '../../components/scrapbook/NewNote';
+import NotesHeader from '../../components/scrapbook/Header';
 
 const NewNotePage = ({ notes }) => {
     return (

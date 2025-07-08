@@ -1,13 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@components/*": ["components/*"],
-      "@css/*": ["public/css/*"],
-      "@scss-global/*": ["public/scss/global/*"],
-      "@img/*": ["public/img/*"],
-      "@fonts/*": ["public/fonts/*"],
-      "@backend/*": ["backend/*"]
-    }
+    "baseUrl": "./"
   }
 }

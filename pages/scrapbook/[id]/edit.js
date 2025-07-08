@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import fetch from 'isomorphic-unfetch';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
-import { server } from '@components/shared/Server';
+import { server } from '../../../components/shared/Server';
 
 const EditNote = ({ note }) => {
     const [form, setForm] = useState({ title: note.title, description: note.description });

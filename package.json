@@ -10,22 +10,22 @@
     "watch-css": "nodemon -e scss -x npm run generate-css-from-scss"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.2.6",
-    "isomorphic-unfetch": "^3.0.0",
-    "mongoose": "^5.10.6",
-    "next": "9.5.0",
+    "@googlemaps/react-wrapper": "^1.2.0",
+    "@sendgrid/mail": "^7.7.0",
+    "isomorphic-unfetch": "^4.0.2",
+    "mongoose": "^8.0.0",
+    "next": "^15.3.5",
     "next-on-netlify": "^2.4.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-google-maps": "^9.4.5",
-    "react-google-recaptcha": "^2.1.0",
-    "reactstrap": "^8.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-google-recaptcha": "^3.1.0",
+    "reactstrap": "^9.2.0",
     "rellax": "^1.12.1",
-    "sass": "^1.26.10",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^1.2.1"
+    "sass": "^1.69.0",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.0"
   },
   "devDependencies": {
-    "dotenv-webpack": "^2.0.0"
+    "dotenv-webpack": "^8.0.0"
   }
 }

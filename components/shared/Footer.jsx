@@ -11,12 +11,12 @@ function Footer() {
             <ul>
               <li>
                 <Link href="/">
-                  <a>Strubloid.com</a>
+                  Strubloid.com
                 </Link>
               </li>
               <li>
                 <Link href="/about-me">
-                  <a>About me</a>
+                  About me
                 </Link>
               </li>
               {/*<li>*/}

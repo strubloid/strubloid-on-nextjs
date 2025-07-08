@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-unfetch';
-import Body from '@components/scrapbook/Body';
-import NotesHeader from '@components/scrapbook/Header';
-import { server } from '@components/shared/Server';
+import Body from '../../components/scrapbook/Body';
+import NotesHeader from '../../components/scrapbook/Header';
+import { server } from '../../components/shared/Server';
 
 const Index = ({ notes }) => {
     return (

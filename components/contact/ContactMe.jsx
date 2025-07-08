@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FormGroup, InputGroupAddon, InputGroupText, InputGroup,
+import { FormGroup, InputGroup, InputGroupText,
     Container, Row, Col } from "reactstrap";
 import { Button, Input, TextArea, Form, Loader, Message } from 'semantic-ui-react';
 import ReCAPTCHA from "react-google-recaptcha";
-import { MapWrapper } from "@components/contact/MapWrapper";
-import { server } from '@components/shared/Server';
+import { MapWrapper } from "./MapWrapper";
+import { server } from '../shared/Server';
 import fetch from 'isomorphic-unfetch';
 
 const ContactMe = (props) => {
@@ -211,69 +211,69 @@ const ContactMe = (props) => {
                                             : <Loader inactive inline="centered" />
                                         :
                                         <Form id="contact-me" onSubmit={handleOnSubmit}>
-                                            <label>Your name</label>
-                                            <InputGroup className={nameFocus ? "input-group-focus" : ""}>
-                                                <InputGroupAddon addonType="prepend">
+                                            <FormGroup>
+                                                <label>Your name</label>
+                                                <InputGroup className={nameFocus ? "input-group-focus" : ""}>
                                                     <InputGroupText>
                                                         <i className="now-ui-icons users_circle-08"></i>
                                                     </InputGroupText>
-                                                </InputGroupAddon>
-                                                <Form.Field
-                                                    id="name"
-                                                    control={Input}
-                                                    className="form-control"
-                                                    aria-label="Your Name..."
-                                                    autoComplete="name"
-                                                    placeholder="Your Name..."
-                                                    onFocus={() => setNameFocus(true)}
-                                                    onBlur={() => setNameFocus(false)}
-                                                    onChange={handleOnChange}
-                                                    value={inputs.name}
-                                                    error={errors.name ? { content: 'please enter a name', pointing : 'left'} : null}
-                                                />
-                                            </InputGroup>
-                                            <label>Email address</label>
-                                            <InputGroup className={emailFocus ? "input-group-focus" : ""}>
-                                                <InputGroupAddon addonType="prepend">
+                                                    <Form.Field
+                                                        id="name"
+                                                        control={Input}
+                                                        className="form-control"
+                                                        aria-label="Your Name..."
+                                                        autoComplete="name"
+                                                        placeholder="Your Name..."
+                                                        onFocus={() => setNameFocus(true)}
+                                                        onBlur={() => setNameFocus(false)}
+                                                        onChange={handleOnChange}
+                                                        value={inputs.name}
+                                                        error={errors.name ? { content: 'please enter a name', pointing : 'left'} : null}
+                                                    />
+                                                </InputGroup>
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <label>Email address</label>
+                                                <InputGroup className={emailFocus ? "input-group-focus" : ""}>
                                                     <InputGroupText>
                                                         <i className="now-ui-icons ui-1_email-85"></i>
                                                     </InputGroupText>
-                                                </InputGroupAddon>
-                                                <Form.Field
-                                                    id="email"
-                                                    control={Input}
-                                                    className="form-control"
-                                                    aria-label="Email Here..."
-                                                    autoComplete="email"
-                                                    placeholder="Email Here..."
-                                                    onFocus={() => setEmailFocus(true)}
-                                                    onBlur={() => setEmailFocus(false)}
-                                                    onChange={handleOnChange}
-                                                    value={inputs.email}
-                                                    error={errors.email ? { content: 'please enter a email', pointing : 'left'} : null}
-                                                />
-                                            </InputGroup>
-                                            <label>Subject</label>
-                                            <InputGroup className={numberFocus ? "input-group-focus" : ""}>
-                                                <InputGroupAddon addonType="prepend">
+                                                    <Form.Field
+                                                        id="email"
+                                                        control={Input}
+                                                        className="form-control"
+                                                        aria-label="Email Here..."
+                                                        autoComplete="email"
+                                                        placeholder="Email Here..."
+                                                        onFocus={() => setEmailFocus(true)}
+                                                        onBlur={() => setEmailFocus(false)}
+                                                        onChange={handleOnChange}
+                                                        value={inputs.email}
+                                                        error={errors.email ? { content: 'please enter a email', pointing : 'left'} : null}
+                                                    />
+                                                </InputGroup>
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <label>Subject</label>
+                                                <InputGroup className={numberFocus ? "input-group-focus" : ""}>
                                                     <InputGroupText>
                                                         <i className="now-ui-icons design-2_ruler-pencil"></i>
                                                     </InputGroupText>
-                                                </InputGroupAddon>
-                                                <Form.Field
-                                                    id="subject"
-                                                    control={Input}
-                                                    className="form-control"
-                                                    aria-label="Subject Here..."
-                                                    autoComplete="subject"
-                                                    placeholder="What's the craic mate?"
-                                                    onFocus={() => setNumberFocus(true)}
-                                                    onBlur={() => setNumberFocus(false)}
-                                                    onChange={handleOnChange}
-                                                    value={inputs.subject}
-                                                    error={errors.subject ? { content: 'please enter a subject', pointing : 'left'} : null}
-                                                />
-                                            </InputGroup>
+                                                    <Form.Field
+                                                        id="subject"
+                                                        control={Input}
+                                                        className="form-control"
+                                                        aria-label="Subject Here..."
+                                                        autoComplete="subject"
+                                                        placeholder="What's the craic mate?"
+                                                        onFocus={() => setNumberFocus(true)}
+                                                        onBlur={() => setNumberFocus(false)}
+                                                        onChange={handleOnChange}
+                                                        value={inputs.subject}
+                                                        error={errors.subject ? { content: 'please enter a subject', pointing : 'left'} : null}
+                                                    />
+                                                </InputGroup>
+                                            </FormGroup>
                                             <FormGroup className={messageFocus ? "input-group-focus" : ""}>
                                                 <label>Your message</label>
                                                 <Form.Field
@@ -290,7 +290,7 @@ const ContactMe = (props) => {
                                                 />
                                             </FormGroup>
                                             <FormGroup>
-                                                <ReCAPTCHA sitekey={process.env.SITE_RECAPTCHA_KEY}
+                                                <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_SITE_RECAPTCHA_KEY}
                                                            onChange={onChangeRecaptcha}
                                                 />
                                             </FormGroup>
@@ -357,12 +357,7 @@ const ContactMe = (props) => {
                 </div>
             </div>
             <div className="big-map" id="contactUs2Map">
-                <MapWrapper
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${props.googleKey}`}
-                    loadingElement={<div style={{height: `100%`}} />}
-                    containerElement={<div style={{height: `100%`}} />}
-                    mapElement={<div style={{height: `100%`}} />}
-                />
+                <MapWrapper googleKey={props.googleKey} />
             </div>
         </>
     );

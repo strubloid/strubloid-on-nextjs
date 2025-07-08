@@ -2,8 +2,8 @@ import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { Confirm, Button, Loader } from 'semantic-ui-react';
-import BasicHeader from '@components/shared/BasicHeader'
-import { server } from '@components/shared/Server';
+import BasicHeader from '../../../components/shared/BasicHeader'
+import { server } from '../../../components/shared/Server';
 
 const Note = ({ note }) => {
     const [confirm, setConfirm] = useState(false);

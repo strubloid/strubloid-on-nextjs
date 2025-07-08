@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button, Card} from 'semantic-ui-react';
+import { Button, Card } from 'semantic-ui-react';
 
 const Body = ({ notes }) => {
     return (
@@ -13,7 +13,7 @@ const Body = ({ notes }) => {
                                 <Card.Content>
                                     <Card.Header>
                                         <Link href={`/scrapbook/${note._id}`}>
-                                            <a>{note.title}</a>
+                                            {note.title}
                                         </Link>
                                     </Card.Header>
                                 </Card.Content>

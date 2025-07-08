@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import TransparentNavbar from '@components/shared/TransparentNavbar'
-import ExternalImports from '@components/shared/ExternalImports'
-import Footer from '@components/shared/Footer'
+import TransparentNavbar from './shared/TransparentNavbar'
+import ExternalImports from './shared/ExternalImports'
+import Footer from './shared/Footer'
 import React from 'react'
 
 const Layout = ({ children }) => (
