@@ -3,6 +3,9 @@
   functions = "out_functions"
   publish   = "out_publish"
 
+[build.environment]
+  NODE_VERSION = "18"
+
   [dev]
     functions = "out_functions"
     publish   = "out_publish"
