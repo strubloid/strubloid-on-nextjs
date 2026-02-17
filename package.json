@@ -4,9 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next -p 8888",
-    "build": "next build",
-    "generate-css-from-scss": "./bin/build-css",
-    "watch-css": "nodemon -e scss -x npm run generate-css-from-scss"
+    "build": "next build"
   },
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.2.0",
@@ -23,6 +21,11 @@
     "semantic-ui-react": "^2.1.0"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.0.0"
+    "@netlify/plugin-nextjs": "^5.0.0",
+    "@types/node": "^25.2.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/react-google-recaptcha": "^2.1.9",
+    "typescript": "^5.9.3"
   }
 }

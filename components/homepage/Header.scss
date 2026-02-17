@@ -22,11 +22,11 @@
         width: 100%;
         height: 100%;
         z-index: -1;
-        background-image: url('~@img/brasil-up.png');
+        background-image: url('/img/brasil-up.png');
       }
 
       .page-header-city {
-        background-image: url('~@img/brasil-down.png');
+        background-image: url('/img/brasil-down.png');
         background-size: cover;
         background-position: bottom;
         top: 44.4%;

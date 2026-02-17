@@ -1,3 +1,47 @@
+// Bootstrap 4 navbar-expand-lg responsive rules (missing from Now UI Kit)
+@media (min-width: 992px) {
+  .navbar-expand-lg {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+
+    > .container,
+    > .container-fluid {
+      display: flex;
+      flex-wrap: nowrap;
+
+      > * {
+        flex: 1;
+      }
+    }
+
+    .navbar-nav {
+      flex-direction: row;
+
+      .dropdown-menu {
+        position: absolute;
+      }
+
+      .nav-link {
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+      }
+    }
+
+    .navbar-translate {
+      width: auto;
+    }
+
+    .navbar-collapse {
+      display: flex !important;
+      flex-basis: auto;
+    }
+
+    .navbar-toggler {
+      display: none;
+    }
+  }
+}
+
 #__next{
   .wrapper{
     .container{
