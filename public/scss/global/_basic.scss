@@ -4,8 +4,7 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
 
-    > .container,
-    > .container-fluid {
+    > .container {
       display: flex;
       flex-wrap: nowrap;
 
