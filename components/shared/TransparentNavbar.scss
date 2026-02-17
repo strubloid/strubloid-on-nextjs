@@ -461,6 +461,12 @@ fieldset[disabled]
 .dropdown-menu.dropdown-menu-right:before {
     left: auto;
     right: 10px; }
+.dropdown-menu.dropdown-menu-end {
+    right: 0;
+    left: auto; }
+.dropdown-menu.dropdown-menu-end:before {
+    left: auto;
+    right: 10px; }
 .dropdown .dropdown-menu {
     -webkit-transform: translate3d(0, -25px, 0) !important;
     -moz-transform: translate3d(0, -25px, 0) !important;
