@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { Confirm, Button, Loader } from 'semantic-ui-react';
@@ -23,9 +22,9 @@ const Note = ({ note }) => {
         }
     }
 
-    useEffect((req) => {
+    useEffect(() => {
         if (isDeleting) {
-            deleteNote(req);
+            deleteNote();
         }
     }, [isDeleting])
 
@@ -61,10 +60,10 @@ const Note = ({ note }) => {
     )
 }
 
-Note.getInitialProps = async ({ query: { id }}) => {
-    const res = await fetch(`${server}/api/notes/${id}`)
+export async function getServerSideProps({ query: { id } }) {
+    const res = await fetch(`${server}/api/notes/${id}`);
     const { data } = await res.json();
-    return { note: data };
+    return { props: { note: data } };
 }
 
 export default Note;

@@ -5,7 +5,6 @@ import { Button, Input, TextArea, Form, Loader, Message } from 'semantic-ui-reac
 import ReCAPTCHA from "react-google-recaptcha";
 import { MapWrapper } from "./MapWrapper";
 import { server } from '../shared/Server';
-import fetch from 'isomorphic-unfetch';
 
 const ContactMe = (props) => {
 
@@ -65,7 +64,6 @@ const ContactMe = (props) => {
      * @param e
      */
     const handleOnChange = e => {
-        e.persist()
         setInputs(prev => ({
             ...prev,
             [e.target.id]: e.target.value

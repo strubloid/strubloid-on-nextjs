@@ -5,17 +5,14 @@
   "scripts": {
     "dev": "next -p 8888",
     "build": "next build",
-    "postbuild": "next-on-netlify",
     "generate-css-from-scss": "./bin/build-css",
     "watch-css": "nodemon -e scss -x npm run generate-css-from-scss"
   },
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.2.0",
-    "@sendgrid/mail": "^7.7.0",
-    "isomorphic-unfetch": "^4.0.2",
+    "@sendgrid/mail": "^8.1.0",
     "mongoose": "^8.0.0",
     "next": "^15.3.5",
-    "next-on-netlify": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-recaptcha": "^3.1.0",
@@ -26,6 +23,6 @@
     "semantic-ui-react": "^2.1.0"
   },
   "devDependencies": {
-    "dotenv-webpack": "^8.0.0"
+    "@netlify/plugin-nextjs": "^5.0.0"
   }
 }

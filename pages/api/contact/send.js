@@ -1,7 +1,5 @@
 import sgMail from '@sendgrid/mail'
 
-import React from 'react';
-
 const Send = async (req, res) => {
 
     const {name, email, subject, message, captcha} = req.body

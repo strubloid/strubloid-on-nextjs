@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import fetch from 'isomorphic-unfetch';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 import { server } from '../../../components/shared/Server';
@@ -11,10 +10,10 @@ const EditNote = ({ note }) => {
     const [errors, setErrors] = useState({});
     const router = useRouter();
 
-    useEffect((req) => {
+    useEffect(() => {
         if (isSubmitting) {
             if (Object.keys(errors).length === 0) {
-                updateNote(req);
+                updateNote();
             }
             else {
                 setIsSubmitting(false);
@@ -98,12 +97,11 @@ const EditNote = ({ note }) => {
     )
 }
 
-EditNote.getInitialProps = async ({ query: { id } }) => {
-
+export async function getServerSideProps({ query: { id } }) {
     const res = await fetch(`${server}/api/notes/${id}`);
     const { data } = await res.json();
 
-    return { note: data }
+    return { props: { note: data } };
 }
 
 export default EditNote;
