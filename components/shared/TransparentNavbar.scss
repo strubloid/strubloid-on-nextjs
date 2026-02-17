@@ -252,12 +252,15 @@ fieldset[disabled]
 .navbar .navbar-nav .nav-link:not(.btn) i.now-ui-icons {
     font-size: 18px;
     position: relative;
-    top: 3px;
     text-align: center;
-    width: 21px; }
+    width: 21px;
+    display: inline-flex;
+    align-items: center; 
+}
 .navbar .navbar-nav .nav-link:not(.btn) i.now-ui-icons {
-    top: 4px;
-    font-size: 16px; }
+    top: 0;
+    font-size: 16px; 
+}
 .navbar .navbar-nav .nav-link:not(.btn).profile-photo .profile-photo-small {
     width: 27px;
     height: 27px; }
@@ -288,7 +291,8 @@ fieldset[disabled]
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 0.7rem; }
+    padding: 0.5rem 0.7rem;
+}
 
 // Transparent navbar: white text, subtle white bg on hover
 .navbar.navbar-transparent .navbar-nav .nav-item .nav-link,
