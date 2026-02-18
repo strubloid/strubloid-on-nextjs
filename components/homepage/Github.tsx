@@ -13,7 +13,7 @@ const PROJECTS: GithubProject[] = [
     {
         name: "My Resume",
         url: "https://github.com/strubloid/resume",
-        description: "This is a collection of explanations that I'd to do for co-workers",
+        description: "A collection of explanations and documentation for co-workers",
         items: [
             { icon: "now-ui-icons design_app", label: "TSQL" },
             { icon: "now-ui-icons shopping_credit-card", label: "Shell" },
@@ -25,12 +25,9 @@ const PROJECTS: GithubProject[] = [
     {
         name: ".bash_aliases",
         url: "https://github.com/strubloid/.bash_aliases",
-        description: "This is mainly a new way to create your ~/.bash_aliases",
+        description: "A structured way to create your ~/.bash_aliases using classes",
         items: [
-            {
-                icon: "now-ui-icons design_bullet-list-67",
-                label: ".bash_aliases in classes",
-            },
+            { icon: "now-ui-icons design_bullet-list-67", label: ".bash_aliases in classes" },
             {
                 icon: "now-ui-icons arrows-1_refresh-69",
                 label: (
@@ -42,6 +39,50 @@ const PROJECTS: GithubProject[] = [
             },
             { icon: "now-ui-icons tech_laptop", label: "Linux & Mac" },
             { icon: "now-ui-icons shopping_credit-card", label: "Shellscript" },
+        ],
+    },
+    {
+        name: "Cardgame",
+        url: "https://github.com/strubloid/cardgame",
+        description: "A card game built with Unity featuring fireball mechanics and card dealing systems",
+        items: [
+            { icon: "now-ui-icons education_atom", label: "C# 51.5%" },
+            { icon: "now-ui-icons design_palette", label: "ShaderLab 31.5%" },
+            { icon: "now-ui-icons media-1_button-play", label: "Unity Engine" },
+            { icon: "now-ui-icons design_app", label: "HLSL Shaders" },
+        ],
+    },
+    {
+        name: "Python Music",
+        url: "https://github.com/strubloid/py-music",
+        description: "Full-stack music theory app with interactive piano, guitar fretboard, and chord progressions",
+        items: [
+            { icon: "now-ui-icons education_atom", label: "Python Flask" },
+            { icon: "now-ui-icons design-2_html5", label: "React 18 + Vite" },
+            { icon: "now-ui-icons media-1_button-play", label: "Piano & Guitar Fretboard" },
+            { icon: "now-ui-icons ui-2_settings-90", label: "Music Theory Engine" },
+        ],
+    },
+    {
+        name: "Sperm Whale",
+        url: "https://github.com/strubloid/spermwhale",
+        description: "Real-time transcription and translation system using OpenAI Whisper with CUDA GPU support",
+        items: [
+            { icon: "now-ui-icons education_atom", label: "Python 97.6%" },
+            { icon: "now-ui-icons ui-2_chat-round", label: "OpenAI Whisper" },
+            { icon: "now-ui-icons arrows-1_refresh-69", label: "Multi-Engine Translation" },
+            { icon: "now-ui-icons tech_laptop", label: "CUDA GPU Support" },
+        ],
+    },
+    {
+        name: "React & Java",
+        url: "https://github.com/strubloid/ReactAndJava",
+        description: "Book Manager application with a React TypeScript frontend and Java Spring backend",
+        items: [
+            { icon: "now-ui-icons design-2_html5", label: "TypeScript 52.8%" },
+            { icon: "now-ui-icons ui-2_settings-90", label: "Java 33.3%" },
+            { icon: "now-ui-icons design_app", label: "React Frontend" },
+            { icon: "now-ui-icons shopping_credit-card", label: "Spring Backend" },
         ],
     },
 ];
