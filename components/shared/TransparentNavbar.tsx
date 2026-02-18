@@ -35,7 +35,7 @@ const ScrollTransparentNavbar: React.FC = () => {
                     </NavbarBrand>
                     <StrubloidTooltip target="navbar-brand">
                         If you want to know more, keep checking the whole progress of the website on:{" "}
-                        <a href="https://github.com/strubloid/strubloid.com" target="_blank" rel="noopener noreferrer">
+                        <a href="https://github.com/strubloid/strubloid-on-nextjs" target="_blank" rel="noopener noreferrer">
                             click here
                         </a>
                     </StrubloidTooltip>

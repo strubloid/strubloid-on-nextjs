@@ -43,52 +43,114 @@
 body {
   .wrapper {
     .section-github {
+      background: var(--surface-primary);
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+
+      // Organic wave separator at top
+      &::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -5%;
+        width: 110%;
+        height: 80px;
+        background: linear-gradient(135deg, #2B5876 0%, #4E4376 50%, #6B5B4E 100%);
+        border-radius: 0 0 50% 50%;
+        z-index: 1;
+      }
+
+      .section-description {
+        .title {
+          color: var(--color-espresso);
+          font-family: var(--font-heading);
+          font-size: 2.8em;
+          font-weight: 700; }
+        .title + .category {
+          margin-top: 0; }
+        .category {
+          color: var(--color-accent);
+          font-weight: 600;
+          letter-spacing: 0.1em; }
+        .description {
+          color: var(--text-secondary);
+          line-height: 1.8; }
+      }
+
       .github-buttons {
         a {
-          background: linear-gradient(166deg, #009C3B, green, #ffdf00) 481px 0/25em 10%;
+          background: linear-gradient(135deg, var(--color-brazil-green), var(--color-brazil-gold));
+          border: none;
+          border-radius: var(--radius-full);
+          padding: 12px 32px;
+          font-weight: 600;
+          letter-spacing: 0.03em;
+          box-shadow: 0 4px 15px rgba(45, 155, 85, 0.3);
+          transition: all 0.4s var(--ease-spring);
 
           &:hover {
-            background: linear-gradient(261deg, #009C3B, green, #ffdf00) 0px 0/20em 100%
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 155, 85, 0.4);
+            background: linear-gradient(135deg, var(--color-brazil-emerald), var(--color-brazil-gold));
           }
         }
       }
 
       .card-background {
-        background: white;
+        background: var(--surface-elevated);
         max-height: 380px;
         -webkit-tap-highlight-color: white;
+        border: none;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s var(--ease-spring);
 
-        border: 16px solid transparent;
-        -moz-border-image: -moz-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
-        -webkit-border-image: -webkit-linear-gradient(left, #009C3B 0%, #ffdf00 100%);
-        border-image: linear-gradient(to right, #009C3B 0%, #ffdf00 100%);
-        border-image-slice: 1;
+        // Brazilian accent gradient strip at top
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, var(--color-brazil-green), var(--color-brazil-gold));
+          border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
 
         &:after{
           background: none;
         }
         &:hover {
-          background: #ffc10761;
+          transform: translateY(-6px);
+          box-shadow: var(--shadow-card-hover);
         }
 
         ul {
           margin: 10px auto 0px auto;
 
           li {
-            padding: 6px 0;
-            color: #666;
+            padding: 8px 0;
+            color: var(--text-secondary);
+            transition: transform 0.3s var(--ease-spring);
+
+            i {
+              color: var(--color-accent);
+              margin-right: 4px;
+            }
+          }
+
+          li:hover {
+            transform: translateX(4px);
           }
         }
 
         .card-title {
           margin-top: 10px;
-          color: #666;
-        }
-      }
-
-      .section-description {
-        .title + .category {
-          margin-top: 0;
+          color: var(--color-espresso);
+          font-weight: 700;
         }
       }
 
@@ -102,13 +164,19 @@ body {
             font-size: 18rem;
             padding: 0px 0px 0px 20px;
             float: left;
-            background: linear-gradient(225deg, #009c3b, #009c3b, #ffdf00) 0 0 / 3em 100%;
+            background: linear-gradient(135deg, var(--color-brazil-green), var(--color-brazil-gold));
             -webkit-background-clip: text;
             background-clip: text;
             width: auto;
             text-align: center;
             -webkit-text-fill-color: transparent;
             animation: fontgradient 4s ease infinite;
+            opacity: 0.15;
+            transition: opacity 0.5s ease;
+          }
+
+          &:hover .fa-github {
+            opacity: 0.3;
           }
         }
       }

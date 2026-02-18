@@ -1,4 +1,9 @@
+import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
+
+// Design System (2025 Organic & Warm)
+import "../public/scss/global/_design-system.scss";
 
 // Global SCSS (extracted from Now UI Kit Pro v1.3.0)
 import "../public/scss/global/_variables.scss";
@@ -41,9 +46,32 @@ import "../public/scss/global/_basic.scss";
 import Layout from "../components/Layout";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+    const router = useRouter();
+    const [isTransitioning, setIsTransitioning] = useState(false);
+
+    useEffect(() => {
+        const handleStart = () => setIsTransitioning(true);
+        const handleComplete = () => {
+            setIsTransitioning(false);
+            window.scrollTo(0, 0);
+        };
+
+        router.events.on("routeChangeStart", handleStart);
+        router.events.on("routeChangeComplete", handleComplete);
+        router.events.on("routeChangeError", handleComplete);
+
+        return () => {
+            router.events.off("routeChangeStart", handleStart);
+            router.events.off("routeChangeComplete", handleComplete);
+            router.events.off("routeChangeError", handleComplete);
+        };
+    }, [router]);
+
     return (
         <Layout>
-            <Component {...pageProps} />
+            <div className={`page-content${isTransitioning ? " page-transitioning" : ""}`}>
+                <Component {...pageProps} />
+            </div>
         </Layout>
     );
 }

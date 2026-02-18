@@ -2,6 +2,94 @@ body {
   .wrapper {
     .homepage-about-me{
       background-image: url("/img/rafael-mendes.jpg");
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      padding: 100px 0;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg,
+          rgba(61, 46, 34, 0.92) 0%,
+          rgba(26, 20, 18, 0.88) 100%);
+        z-index: 0;
+      }
+
+      .container-fluid {
+        position: relative;
+        z-index: 1;
+      }
+
+      .about-me-header {
+        margin-bottom: 40px;
+        padding-left: 15px;
+
+        .category {
+          color: var(--color-accent-light);
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          font-size: 0.85em;
+          margin-bottom: 8px;
+        }
+
+        .title {
+          color: var(--color-cream);
+          font-family: var(--font-heading);
+          font-size: 2.5em;
+          font-weight: 700;
+          padding-top: 0;
+        }
+      }
+
+      .skill-card {
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        margin-bottom: 16px;
+        transition: all 0.4s var(--ease-spring);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateX(8px);
+          border-color: rgba(224, 123, 76, 0.3);
+        }
+
+        .icon i {
+          color: var(--color-accent-light) !important;
+          font-size: 24px;
+        }
+
+        .info-title {
+          color: var(--color-cream) !important;
+          font-weight: 700;
+          font-size: 1.2em;
+        }
+
+        .description {
+          color: rgba(255, 248, 240, 0.75) !important;
+          font-weight: 300;
+          line-height: 1.7;
+
+          a {
+            color: var(--color-accent-light) !important;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+
+            &:hover {
+              color: var(--color-brazil-gold) !important;
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -10,6 +98,17 @@ body {
 @media (min-width: 768px) and (max-width: 1024px) {
   body {
     .wrapper {
+      .homepage-about-me {
+        padding: 70px 0;
+
+        .about-me-header .title {
+          font-size: 2em;
+        }
+
+        .skill-card {
+          padding: 20px;
+        }
+      }
     }
   }
 }
@@ -18,6 +117,11 @@ body {
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
   body {
     .wrapper {
+      .homepage-about-me {
+        .about-me-header .title {
+          font-size: 2.2em;
+        }
+      }
     }
   }
 }
@@ -26,6 +130,26 @@ body {
 @media (min-width: 481px) and (max-width: 767px) {
   body {
     .wrapper {
+      .homepage-about-me {
+        padding: 50px 0;
+
+        .about-me-header {
+          text-align: center;
+          padding-left: 0;
+
+          .title {
+            font-size: 1.8em;
+          }
+        }
+
+        .skill-card {
+          padding: 18px;
+
+          &:hover {
+            transform: translateX(0) translateY(-4px);
+          }
+        }
+      }
     }
   }
 }
@@ -34,6 +158,36 @@ body {
 @media (min-width: 320px) and (max-width: 480px) {
   body {
     .wrapper {
+      .homepage-about-me {
+        padding: 40px 0;
+
+        .about-me-header {
+          text-align: center;
+          padding-left: 0;
+          margin-bottom: 24px;
+
+          .title {
+            font-size: 1.6em;
+          }
+
+          .category {
+            font-size: 0.75em;
+          }
+        }
+
+        .skill-card {
+          padding: 16px;
+          margin-bottom: 12px;
+
+          .info-title {
+            font-size: 1.05em !important;
+          }
+
+          &:hover {
+            transform: translateX(0) translateY(-4px);
+          }
+        }
+      }
     }
   }
 }

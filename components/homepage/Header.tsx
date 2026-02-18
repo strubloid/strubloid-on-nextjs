@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Rellax from "rellax";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 const RELLAX_INIT_DELAY_MS = 5000;
 const MIN_DESKTOP_WIDTH = 991;
@@ -13,6 +14,8 @@ const MESSAGES = {
 } as const;
 
 const Header: React.FC = () => {
+    const revealRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+
     useEffect(() => {
         document.body.classList.add("presentation-page", "sidebar-collapse");
         document.documentElement.classList.remove("nav-open");
@@ -31,7 +34,12 @@ const Header: React.FC = () => {
     }, []);
 
     return (
-        <div className="page-header page-header-homepage clear-filter">
+        <div className="page-header page-header-homepage clear-filter" ref={revealRef}>
+            {/* Organic background blobs */}
+            <div className="organic-blob hero-blob-1" />
+            <div className="organic-blob hero-blob-2" />
+            <div className="organic-blob hero-blob-3" />
+
             <div className="rellax-header rellax-header-sky" data-rellax-speed="-4">
                 <div className="page-header-image page-header-top">&nbsp;</div>
             </div>
@@ -39,7 +47,12 @@ const Header: React.FC = () => {
                 <div className="page-header-image page-header-city">&nbsp;</div>
             </div>
             <div className="rellax-text-container rellax-text" data-rellax-speed="-12">
-                <h1 className="h1-seo">{MESSAGES.siteName}</h1>
+                <h1 className="h1-seo" data-reveal="fade-up" data-reveal-delay="200">
+                    {MESSAGES.siteName}
+                </h1>
+                <p className="hero-tagline" data-reveal="fade-up" data-reveal-delay="400">
+                    Software Engineer &middot; Linux Enthusiast &middot; Photographer &middot; Painter
+                </p>
             </div>
             <div id="fly-container">
                 {[
@@ -47,13 +60,25 @@ const Header: React.FC = () => {
                     { text: MESSAGES.second, speed: "14" },
                     { text: MESSAGES.third, speed: "15" },
                     { text: MESSAGES.fourth, speed: "14" },
-                ].map(({ text, speed }) => (
-                    <div key={text} className="fly-description rellax-text quote-wrapper hovicon auto-width effect-4 sub-b" data-rellax-speed={speed}>
+                ].map(({ text, speed }, idx) => (
+                    <div
+                        key={text}
+                        className="fly-description rellax-text quote-wrapper hovicon auto-width effect-4 sub-b"
+                        data-rellax-speed={speed}
+                        data-reveal="fade-scale"
+                        data-reveal-delay={String(600 + idx * 150)}
+                    >
                         <blockquote className="text">
                             <p>{text}</p>
                         </blockquote>
                     </div>
                 ))}
+            </div>
+
+            {/* Scroll indicator */}
+            <div className="scroll-indicator" data-reveal="fade-up" data-reveal-delay="1000">
+                <div className="scroll-indicator-dot" />
+                <span>Scroll to explore</span>
             </div>
         </div>
     );

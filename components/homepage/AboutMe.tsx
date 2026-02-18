@@ -1,16 +1,19 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 interface SkillSection {
     icon: string;
     title: string;
     description: React.ReactNode;
+    accent?: string;
 }
 
 const SKILLS: SkillSection[] = [
     {
         icon: "now-ui-icons users_single-02",
         title: "A little bit about me",
+        accent: "var(--color-accent)",
         description: (
             <>
                 A Brazilian Software Engineer, well-rounded (+10 Yrs) in IT. You should expect a person with agile behaviour, design patterns in the mindset that loves Linux that
@@ -21,6 +24,7 @@ const SKILLS: SkillSection[] = [
     {
         icon: "now-ui-icons users_single-02",
         title: "PHP",
+        accent: "var(--color-brazil-green)",
         description: (
             <>
                 PHP its a serious relationship, that started in 2007 and continue in a few applications. In may 8 2010 I said to Rasmus Lerdoff on IV ENSOL that I will be using
@@ -32,6 +36,7 @@ const SKILLS: SkillSection[] = [
     {
         icon: "now-ui-icons text_bold",
         title: "Bash scripting",
+        accent: "var(--color-brazil-gold)",
         description: (
             <>
                 Bash scripting its pure Linux love, I got this from the GNU/Linux community with old friends: Victor, Anahuac and Rodrigo.
@@ -50,6 +55,7 @@ const SKILLS: SkillSection[] = [
     {
         icon: "now-ui-icons education_paper",
         title: "React",
+        accent: "var(--color-info)",
         description: (
             <>
                 This was my digi-evolution from Node.Js, I could change the way that I was scripting with Javascript. I follow the SOLID principles and always try to use as much as
@@ -59,28 +65,36 @@ const SKILLS: SkillSection[] = [
     },
 ];
 
-const AboutMe: React.FC = () => (
-    <div className="section features-7 section-image homepage-about-me">
-        <Container fluid>
-            <Row>
-                <Col className="px-0" md="6">
-                    <Col sm="12">
-                        {SKILLS.map((skill) => (
-                            <div key={skill.title} className="info info-horizontal">
-                                <div className="icon">
-                                    <i className={skill.icon} />
+const AboutMe: React.FC = () => {
+    const revealRef = useScrollReveal<HTMLDivElement>({ threshold: 0.08, staggerDelay: 150 });
+
+    return (
+        <div className="section features-7 section-image homepage-about-me" ref={revealRef}>
+            <Container fluid>
+                <Row>
+                    <Col className="px-0" md="6">
+                        <div className="about-me-header" data-reveal="fade-right">
+                            <h6 className="category">Skills & Experience</h6>
+                            <h2 className="title">Who Am I</h2>
+                        </div>
+                        <Col sm="12">
+                            {SKILLS.map((skill, idx) => (
+                                <div key={skill.title} className="info info-horizontal skill-card" data-reveal="fade-up" data-reveal-delay={String(200 + idx * 150)}>
+                                    <div className="icon">
+                                        <i className={skill.icon} />
+                                    </div>
+                                    <div className="description">
+                                        <h5 className="info-title">{skill.title}</h5>
+                                        <p className="description">{skill.description}</p>
+                                    </div>
                                 </div>
-                                <div className="description">
-                                    <h5 className="info-title">{skill.title}</h5>
-                                    <p className="description">{skill.description}</p>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </Col>
                     </Col>
-                </Col>
-            </Row>
-        </Container>
-    </div>
-);
+                </Row>
+            </Container>
+        </div>
+    );
+};
 
 export default AboutMe;

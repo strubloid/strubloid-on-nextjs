@@ -646,3 +646,174 @@
     }
   }
 }
+
+/* ──────────────────────────────────────────────
+   SECTION: Modern Organic & Warm Footer (2025)
+   ────────────────────────────────────────────── */
+
+.footer.footer-modern {
+  background: var(--color-charcoal, #1A1412);
+  padding: 4rem 0 0;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+
+  // subtle organic texture
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      var(--color-brazil-green, #2D9B55) 0%,
+      var(--color-brazil-gold, #E8B631) 50%,
+      var(--color-accent, #E07B4C) 100%
+    );
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+  }
+
+  .footer-brand-section {
+    .footer-brand-name {
+      font-family: var(--font-display, 'Montserrat', sans-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-cream, #FFF8F0);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-tagline {
+      color: rgba(255, 248, 240, 0.5);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      max-width: 320px;
+
+      @media (max-width: 768px) {
+        max-width: none;
+      }
+    }
+  }
+
+  .footer-nav-section {
+    .footer-nav-title {
+      font-family: var(--font-display, 'Montserrat', sans-serif);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-brazil-gold, #E8B631);
+      margin-bottom: 1.25rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 0.65rem;
+
+        a {
+          color: rgba(255, 248, 240, 0.6);
+          text-decoration: none;
+          font-size: 0.95rem;
+          transition: color 0.3s var(--ease-out-expo, ease),
+                      transform 0.3s var(--ease-out-expo, ease);
+          display: inline-block;
+
+          &:hover {
+            color: var(--color-cream, #FFF8F0);
+            transform: translateX(4px);
+          }
+        }
+      }
+    }
+  }
+
+  .footer-social-section {
+    .footer-nav-title {
+      font-family: var(--font-display, 'Montserrat', sans-serif);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-brazil-gold, #E8B631);
+      margin-bottom: 1.25rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+
+      @media (max-width: 768px) {
+        justify-content: center;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-md, 12px);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(255, 248, 240, 0.6);
+        font-size: 1.2rem;
+        transition: all 0.4s var(--ease-out-expo, ease);
+        text-decoration: none;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: var(--color-brazil-gold, #E8B631);
+          color: var(--color-brazil-gold, #E8B631);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 24px rgba(232, 182, 49, 0.15);
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1.5rem 0;
+
+    .copyright {
+      color: rgba(255, 248, 240, 0.35);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-accent-line {
+      width: 60px;
+      height: 3px;
+      border-radius: var(--radius-full, 9999px);
+      background: linear-gradient(
+        90deg,
+        var(--color-brazil-green, #2D9B55),
+        var(--color-brazil-gold, #E8B631)
+      );
+      margin-top: 1rem;
+      opacity: 0.6;
+    }
+  }
+}
