@@ -35,7 +35,13 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
             onClick={skill.link ? () => handleCardClick(skill.link!.url) : undefined}
             role={skill.link ? "link" : undefined}
             tabIndex={skill.link ? 0 : undefined}
-            onKeyDown={skill.link ? (e) => { if (e.key === "Enter") handleCardClick(skill.link!.url); } : undefined}
+            onKeyDown={
+                skill.link
+                    ? (e) => {
+                          if (e.key === "Enter") handleCardClick(skill.link!.url);
+                      }
+                    : undefined
+            }
         >
             <div className="skill-card__icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
                 <i className={skill.icon} />
@@ -46,7 +52,8 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
                     {skill.description}
                     {skill.link && (
                         <span className="skill-card__link-label">
-                            {" "}{skill.link.text} <i className="now-ui-icons ui-1_send" />
+                            {" "}
+                            {skill.link.text} <i className="now-ui-icons ui-1_send" />
                         </span>
                     )}
                 </p>
