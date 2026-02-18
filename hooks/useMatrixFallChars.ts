@@ -55,8 +55,8 @@ export function useMatrixFallChars() {
 
                 const startAnimationTimer = setTimeout(() => {
                     const startTime = performance.now();
-                    const duration = 2000;
-                    const fallDistance = 40;
+                    const duration = 3000; // Slower fall for visible trail
+                    const fallDistance = 80; // Longer fall distance
 
                     const animate = (currentTime: number) => {
                         const elapsed = currentTime - startTime;
@@ -88,10 +88,10 @@ export function useMatrixFallChars() {
             // Create first wave immediately
             createCharacterWave(target);
 
-            // Create continuous waves while hovering (every 300ms)
+            // Create continuous waves while hovering (every 150ms for cascading effect)
             const waveInterval = setInterval(() => {
                 createCharacterWave(target);
-            }, 300);
+            }, 800);
 
             // Store interval ID on the target for cleanup
             (target as any).__waveIntervalId = waveInterval;
