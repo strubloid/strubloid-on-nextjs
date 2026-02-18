@@ -1,12 +1,30 @@
 import { useEffect } from "react";
 
 /**
- * Matrix falling characters (0 and 1) on hover
- * Creates and animates text elements that fall 10px below the hovered element
+ * Advanced Matrix Effect - Inspired by iconic Matrix movie with cyberpunk aesthetics
+ * Features:
+ * - Multiple vibrant neon colors (cyan, magenta, purple, yellow, green)
+ * - Glowing bloom effect with text-shadow
+ * - Randomized vertical starting positions
+ * - Horizontal drift/wave motion as characters fall
+ * - Dynamic opacity and pulsing glow
  */
 export function useMatrixFallChars() {
     useEffect(() => {
         const chars = ["0", "1"];
+
+        // Cyberpunk neon color palette with glow intensity mapping
+        const colorPalette = [
+            { color: "#00ff00", glow: "rgba(0, 255, 0, 0.8)" }, // Matrix green
+            { color: "#00ffff", glow: "rgba(0, 255, 255, 0.8)" }, // Cyan
+            { color: "#ff00ff", glow: "rgba(255, 0, 255, 0.8)" }, // Magenta
+            { color: "#ffff00", glow: "rgba(255, 255, 0, 0.7)" }, // Yellow
+            { color: "#0080ff", glow: "rgba(0, 128, 255, 0.8)" }, // Blue
+            { color: "#ff0080", glow: "rgba(255, 0, 128, 0.8)" }, // Hot pink
+            { color: "#00ff80", glow: "rgba(0, 255, 128, 0.8)" }, // Neon green
+            { color: "#ff8000", glow: "rgba(255, 128, 0, 0.7)" }, // Orange
+        ];
+
         const interactiveSelectors = "a, button, .btn, .nav-link, .dropdown-toggle, .card, input[type='button'], input[type='submit']";
 
         const createCharacterWave = (target: HTMLElement) => {
@@ -21,6 +39,7 @@ export function useMatrixFallChars() {
 
             for (let i = 0; i < count; i++) {
                 const char = chars[Math.floor(Math.random() * chars.length)];
+                const colorData = colorPalette[Math.floor(Math.random() * colorPalette.length)];
 
                 // Create character element
                 const charEl = document.createElement("span");
@@ -35,36 +54,63 @@ export function useMatrixFallChars() {
                 const offsetX = Math.cos(angle) * radiusX;
                 const offsetY = Math.sin(angle) * radiusY;
 
+                // Random starting Y offset (characters don't all start from the same line)
+                const randomYStart = (Math.random() - 0.5) * height;
+
                 // Set initial position around the element's perimeter
-                charEl.style.position = "absolute";
+                charEl.style.position = "fixed";
                 charEl.style.left = `${centerX + offsetX}px`;
-                charEl.style.top = `${centerY + offsetY}px`;
+                charEl.style.top = `${centerY + offsetY + randomYStart}px`;
                 charEl.style.pointerEvents = "none";
                 charEl.style.fontSize = "12px";
                 charEl.style.fontFamily = "monospace";
                 charEl.style.fontWeight = "bold";
-                charEl.style.color = Math.random() > 0.6 ? "#2d9b55" : "#e8b631";
-                charEl.style.opacity = "0.8";
-                charEl.style.zIndex = "10000";
+                charEl.style.color = colorData.color;
+                charEl.style.opacity = "0.35";
+                charEl.style.zIndex = "1";
                 charEl.style.whiteSpace = "nowrap";
+                charEl.style.letterSpacing = "1px";
+                charEl.style.mixBlendMode = "screen";
+
+                // Apply subtle glowing bloom effect - less intense for background
+                const glowColor = colorData.glow;
+                charEl.style.textShadow = `
+                    0 0 3px ${glowColor},
+                    0 0 8px ${glowColor}
+                `;
 
                 document.body.appendChild(charEl);
 
-                // Random delay before animation starts (0-200ms)
-                const randomDelay = Math.random() * 200;
+                // Random delay before animation starts (0-300ms for more stagger)
+                const randomDelay = Math.random() * 500;
 
                 const startAnimationTimer = setTimeout(() => {
                     const startTime = performance.now();
-                    const duration = 3000; // Slower fall for visible trail
-                    const fallDistance = 80; // Longer fall distance
+                    const duration = 1100; // Slightly longer for visible trail
+                    const fallDistance = 30; // Longer fall for impressive effect
+
+                    // Random horizontal drift amplitude (characters wave as they fall)
+                    const driftAmplitude = (Math.random() - 0.5) * 40;
+                    const driftFrequency = Math.random() * 0.005 + 0.002;
 
                     const animate = (currentTime: number) => {
                         const elapsed = currentTime - startTime;
                         const progress = Math.min(elapsed / duration, 1);
+
+                        // Ease-in for falling effect
                         const easeProgress = progress * progress;
 
-                        charEl.style.transform = `translateY(${easeProgress * fallDistance}px)`;
-                        charEl.style.opacity = String(Math.max(0, 0.8 - progress * 0.8));
+                        // Calculate vertical position
+                        const verticalPos = easeProgress * fallDistance;
+
+                        // Add horizontal drift (wave motion)
+                        const driftOffset = Math.sin(elapsed * driftFrequency) * driftAmplitude;
+
+                        // Pulsing opacity - glow gets brighter/dimmer
+                        const pulseOpacity = 0.9 - progress * 0.9 + Math.sin(elapsed * 0.003) * 0.1;
+
+                        charEl.style.transform = `translate(${driftOffset}px, ${verticalPos}px)`;
+                        charEl.style.opacity = String(Math.max(0, pulseOpacity));
 
                         if (progress < 1) {
                             requestAnimationFrame(animate);
@@ -88,10 +134,10 @@ export function useMatrixFallChars() {
             // Create first wave immediately
             createCharacterWave(target);
 
-            // Create continuous waves while hovering (every 150ms for cascading effect)
+            // Create continuous waves while hovering (every 150ms for dense cascading)
             const waveInterval = setInterval(() => {
                 createCharacterWave(target);
-            }, 800);
+            }, 150);
 
             // Store interval ID on the target for cleanup
             (target as any).__waveIntervalId = waveInterval;
