@@ -1,0 +1,197 @@
+{
+  "profile": {
+    "name": "Rafael Mendes",
+    "title": "Senior Software Engineer",
+    "location": "Cork, Ireland",
+    "yearsOfExperience": 16,
+    "summary": "Experienced Brazilian Software Engineer with 16+ years in agile development. Known for clean code, strong documentation, and a passion for learning. Seeking new challenges with a great team at an exceptional company.",
+    "website": "https://strubloid.com",
+    "github": "https://github.com/strubloid",
+    "email": "joserafaelmb@gmail.com",
+    "languages": [
+      { "name": "Portuguese", "level": "Native" },
+      { "name": "English", "level": "Native" },
+      { "name": "Italian", "level": "Intermediate" },
+      { "name": "French", "level": "Beginner" },
+      { "name": "Japanese", "level": "Beginner" }
+    ]
+  },
+  "skills": [
+    {
+      "id": "about",
+      "icon": "now-ui-icons users_single-02",
+      "title": "A little bit about me",
+      "accent": "accent",
+      "description": "A Brazilian Software Engineer with 16+ years of experience in agile development. I bring a mindset rooted in design patterns, clean architecture, and Linux. I build user-centred applications with strong documentation, always driven by a passion for learning and continuous improvement."
+    },
+    {
+      "id": "react",
+      "icon": "now-ui-icons education_paper",
+      "title": "React & Next.js",
+      "accent": "info",
+      "description": "React has been my frontend evolution, starting from Node.js and maturing through React 18, React Native 0.74, Next.js 13/14, and Expo. I follow SOLID principles, build reusable component architectures, and manage state with React Query, TanStack Table, React Hook Form, and Context API. I deliver pixel-perfect Figma-to-code implementations with consistent typography, spacing, and theming."
+    },
+    {
+      "id": "typescript",
+      "icon": "now-ui-icons design-2_html5",
+      "title": "TypeScript",
+      "accent": "info",
+      "description": "TypeScript 5+ is my standard for all frontend and backend work. I enforce type safety across monorepos, migrate legacy JavaScript codebases, and build typed interfaces for REST APIs, GraphQL schemas, and component libraries. Strong typing has been essential in maintaining quality across large-scale applications."
+    },
+    {
+      "id": "php",
+      "icon": "now-ui-icons education_atom",
+      "title": "PHP",
+      "accent": "brazil-green",
+      "description": "PHP has been a serious relationship since 2007, spanning pure PHP, Yii, Zend Framework I & II, Magento 1 & 2, and Laravel. In May 2010, I told Rasmus Lerdorf at IV ENSOL that I'd keep using PHP — 16 years later, it remains a core part of my backend expertise."
+    },
+    {
+      "id": "python",
+      "icon": "now-ui-icons education_atom",
+      "title": "Python",
+      "accent": "brazil-gold",
+      "description": "Python has been with me since university, where I built 20+ 2D games with Pygame as part of the Firestorm team. Today I use it for backend services with FastAPI, AI integrations via the OpenAI API, critical backup systems, and automation tools. My Sperm Whale project demonstrates real-time transcription and translation using Whisper and multi-engine AI."
+    },
+    {
+      "id": "bash",
+      "icon": "now-ui-icons text_bold",
+      "title": "Bash & Linux",
+      "accent": "brazil-gold",
+      "description": "Bash scripting is pure Linux love, inherited from the GNU/Linux community. Since 2005, I've written scripts for server automation, AWS management, CI/CD pipelines, rollback procedures, and AI-powered diagnostics. My .bash_aliases project evolved into a cross-platform toolkit integrating Python and OpenAI for intelligent scripting.",
+      "link": {
+        "text": "Check it out",
+        "url": "https://github.com/strubloid/.bash_aliases"
+      }
+    },
+    {
+      "id": "angular",
+      "icon": "now-ui-icons ui-2_settings-90",
+      "title": "Angular",
+      "accent": "accent",
+      "description": "Led frontend development with Angular 19 at Blocworx, building a high-performance no-code platform. I introduced standardised testing with Jest and Puppeteer, migrated codebases to TypeScript, and developed reusable npm packages. Implemented charting libraries like Chart.js and D3.js for complex workflow visualisation in admin dashboards."
+    },
+    {
+      "id": "java",
+      "icon": "now-ui-icons ui-2_settings-90",
+      "title": "Java",
+      "accent": "brazil-green",
+      "description": "My Java journey includes optimising backend processing for Brazil's BGSD supercomputer at Dataprev, cutting batch times from 0.01s to 0.00001s. I refactored legacy academic models into high-performance big data solutions. As an OSUM Leader, I organised events promoting Java best practices across Brazil."
+    },
+    {
+      "id": "devops",
+      "icon": "now-ui-icons tech_laptop",
+      "title": "DevOps & Tools",
+      "accent": "accent",
+      "description": "Docker, Git-flow, CI/CD pipelines, and Linux server administration are core to my workflow. I build containerised development environments, manage AWS scripting, and enforce code quality through ESLint, Prettier, and thorough code reviews. I use Turborepo for monorepo management and Webpack 5 for build optimisation."
+    },
+    {
+      "id": "databases",
+      "icon": "now-ui-icons shopping_credit-card",
+      "title": "Databases & APIs",
+      "accent": "info",
+      "description": "Experience across Firebase, MongoDB, MySQL, PostgreSQL, Redis, and Oracle. I design and consume REST APIs and GraphQL endpoints, integrate blockchain wallets via thirdweb SDK (ERC-20/721), and work with DatoCMS, OAuth 2.0 providers (Google, Microsoft, Yahoo), and the OpenAI API."
+    }
+  ],
+  "experience": [
+    {
+      "company": "Konvi",
+      "location": "Dublin",
+      "role": "Software Engineer",
+      "period": "2025 to present",
+      "technologies": ["React 18", "React Native", "Next.js 13/14", "Expo", "TypeScript 5+", "GraphQL", "Firebase", "thirdweb", "DatoCMS"]
+    },
+    {
+      "company": "Blocworx",
+      "location": "Cork",
+      "role": "Senior Angular Developer",
+      "period": "Nov 2020 to May 2024",
+      "technologies": ["Angular 19", "React", "Laravel", "Node.js", "Python", "Bash", "Docker", "Jest", "Puppeteer", "Chart.js"]
+    },
+    {
+      "company": "Monsoon Consulting",
+      "location": "Dublin",
+      "role": "Fullstack Developer, Magento I and II",
+      "period": "Apr 2019 to May 2020",
+      "technologies": ["Magento 1", "Magento 2", "PHP", "Docker", "Webpack", "REST APIs"]
+    },
+    {
+      "company": "StudioForty9",
+      "location": "Cork",
+      "role": "Full-stack Developer, Magento I",
+      "period": "Sep 2016 to Dec 2018",
+      "technologies": ["Magento 1", "PHP", "Docker", "Google Analytics", "SEO"]
+    },
+    {
+      "company": "Captura.Me",
+      "location": "João Pessoa",
+      "role": "Full Stack Zend and React",
+      "period": "Dec 2012 to Sep 2016",
+      "technologies": ["Zend Framework II", "React", "React Router", "Context API", "REST APIs", "Axios"]
+    },
+    {
+      "company": "Vox Technology",
+      "location": "João Pessoa",
+      "role": "Backend Developer",
+      "period": "Aug 2011 to Nov 2012",
+      "technologies": ["Zend Framework I", "PHP", "jQuery", "Git"]
+    },
+    {
+      "company": "Dantel",
+      "location": "João Pessoa",
+      "role": "Full-stack YII Developer",
+      "period": "Aug 2011 to Nov 2012",
+      "technologies": ["YII", "Ext JS", "JavaScript", "PHP"]
+    },
+    {
+      "company": "Dataprev",
+      "location": "João Pessoa",
+      "role": "Full Stack Java Developer",
+      "period": "Apr 2009 to Apr 2010",
+      "technologies": ["Java", "Netuno Framework", "Big Data"]
+    }
+  ],
+  "education": {
+    "institution": "IESP",
+    "location": "João Pessoa",
+    "degree": "Bachelor's degree: Information Technology",
+    "period": "Oct 2007 - Oct 2011",
+    "highlights": ["Built 20+ 2D games with Python/Pygame (Firestorm team)", "Active in Free Software groups (GLUGPB & CETI)", "Promoted open-source culture through tech talks"]
+  },
+  "concepts": [
+    "Architecture",
+    "Code Review",
+    "Component Development",
+    "Design Patterns",
+    "Object-Oriented Programming",
+    "Performance Optimisation",
+    "Refactoring",
+    "REST & GraphQL",
+    "Agile Practices",
+    "CI/CD Pipelines",
+    "Cross-platform Development",
+    "Blockchain Integrations",
+    "Responsive Design Systems",
+    "Figma-to-Code",
+    "Type Safety",
+    "Test-Driven Development",
+    "Package Maintenance (Monorepos)"
+  ],
+  "programmingLanguages": [
+    { "name": "TypeScript", "color": "#3178c6" },
+    { "name": "JavaScript", "color": "#f1e05a" },
+    { "name": "Python", "color": "#3572A5" },
+    { "name": "PHP", "color": "#4F5D95" },
+    { "name": "Java", "color": "#b07219" },
+    { "name": "Bash", "color": "#89e051" },
+    { "name": "Ruby", "color": "#701516" },
+    { "name": "C#", "color": "#178600" }
+  ],
+  "managedWebsites": [
+    "https://www.centralbank.ie",
+    "https://store.liverpoolfc.com",
+    "https://www.blocworx.com",
+    "https://www.mcelhinneys.com",
+    "https://www.strubloid.com",
+    "https://www.monsoonconsulting.com"
+  ]
+}
