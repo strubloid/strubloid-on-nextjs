@@ -1,6 +1,5 @@
 import React from "react";
 import type { GetStaticProps, NextPage } from "next";
-import { Container } from "reactstrap";
 import Art from "../components/homepage/Art";
 import { getFlickrData } from "../lib/flickr";
 import type { FlickrPhoto, FlickrAlbum } from "../lib/flickr";
@@ -18,17 +17,29 @@ const Artistic: NextPage<ArtisticProps> = ({ flickrPhotos, flickrAlbums }) => {
 
     return (
         <>
-            <div className="artistic-hero" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
-                <div className="artistic-hero__background" />
-                <div className="artistic-hero__content">
-                    <h1 className="artistic-hero__title">Artistic Of Me</h1>
-                    <p className="artistic-hero__subtitle">Photography &amp; Digital Art</p>
+            <div className="artistic-page">
+                {/* Background portrait matrix */}
+                <div className="artistic-bg-matrix">
+                    {flickrPhotos.slice(0, 12).map((photo) => (
+                        <div key={photo.id} className="artistic-bg-matrix__item" style={{
+                            backgroundImage: `url(${photo.url_z})`,
+                        }} />
+                    ))}
                 </div>
-            </div>
-            <div className="section artistic-section">
-                <Container>
+
+                {/* Hero section */}
+                <div className="artistic-hero" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
+                    <div className="artistic-hero__background" />
+                    <div className="artistic-hero__content">
+                        <h1 className="artistic-hero__title">Artistic Of Me</h1>
+                        <p className="artistic-hero__subtitle">Photography &amp; Digital Art</p>
+                    </div>
+                </div>
+
+                {/* Gallery section - full width */}
+                <div className="artistic-gallery">
                     <Art photos={flickrPhotos} albums={flickrAlbums} />
-                </Container>
+                </div>
             </div>
         </>
     );
