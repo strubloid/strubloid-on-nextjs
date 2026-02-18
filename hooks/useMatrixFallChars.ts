@@ -25,7 +25,7 @@ export function useMatrixFallChars() {
             { color: "#ff8000", glow: "rgba(255, 128, 0, 0.7)" }, // Orange
         ];
 
-        const interactiveSelectors = "a, button, .btn, .nav-link, .dropdown-toggle, .card, input[type='button'], input[type='submit']";
+        const interactiveSelectors = "button:not(.scroll-to-top):not(.flickr-gallery__arrow--next):not(.flickr-gallery__arrow--prev):not(.flickr-gallery__thumb), .btn, .nav-link, .dropdown-toggle";
 
         const createCharacterWave = (target: HTMLElement) => {
             const rect = target.getBoundingClientRect();
