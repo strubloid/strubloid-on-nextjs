@@ -25,6 +25,7 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
     // True only when the user explicitly clicked the pause button.
     // Hover and scroll-back will NOT resume if this is true.
     const manuallyPausedRef = useRef(false);
+    const isInitialMountRef = useRef(true);
 
     const total = photos.length;
     const current = photos[activeIndex] ?? null;
@@ -118,6 +119,10 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
 
     // ── Scroll thumbnail strip to keep active thumb visible ──
     useEffect(() => {
+        if (isInitialMountRef.current) {
+            isInitialMountRef.current = false;
+            return;
+        }
         if (!thumbStripRef.current) return;
         const thumb = thumbStripRef.current.children[activeIndex] as HTMLElement | undefined;
         if (thumb) {

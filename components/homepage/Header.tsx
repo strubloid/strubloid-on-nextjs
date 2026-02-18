@@ -15,6 +15,7 @@ const MESSAGES = {
 
 const Header: React.FC = () => {
     const revealRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+    const scrollIndicatorRef = React.useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         document.body.classList.add("presentation-page", "sidebar-collapse");
@@ -31,6 +32,28 @@ const Header: React.FC = () => {
 
             return () => clearTimeout(timer);
         }
+    }, []);
+
+    // Show/hide scroll indicator based on header visibility
+    useEffect(() => {
+        const indicator = scrollIndicatorRef.current;
+        if (!indicator) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    indicator.style.opacity = "1";
+                    indicator.style.pointerEvents = "auto";
+                } else {
+                    indicator.style.opacity = "0";
+                    indicator.style.pointerEvents = "none";
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        observer.observe(revealRef.current!);
+        return () => observer.disconnect();
     }, []);
 
     return (
@@ -76,7 +99,7 @@ const Header: React.FC = () => {
             </div>
 
             {/* Scroll indicator */}
-            <div className="scroll-indicator" data-reveal="fade-up" data-reveal-delay="1000">
+            <div className="scroll-indicator" ref={scrollIndicatorRef}>
                 <div className="scroll-indicator-dot" />
                 <span>Scroll to explore</span>
             </div>

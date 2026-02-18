@@ -51,6 +51,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     useEffect(() => {
+        // Disable automatic scroll restoration to prevent browser from remembering scroll position
+        if ("scrollRestoration" in window.history) {
+            window.history.scrollRestoration = "manual";
+        }
+
+        // Reset scroll position on mount and after a small delay to ensure it takes effect
+        window.scrollTo(0, 0);
+        const timer = setTimeout(() => window.scrollTo(0, 0), 0);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
         const handleStart = () => setIsTransitioning(true);
         const handleComplete = () => {
             setIsTransitioning(false);

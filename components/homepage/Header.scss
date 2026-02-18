@@ -51,6 +51,7 @@
     }
 
     .page-header-homepage {
+      min-height: 100vh;
 
       #fly-container {
         display: flex;
@@ -622,6 +623,8 @@
     align-items: center;
     gap: 8px;
     z-index: 5;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
 
     .scroll-indicator-dot {
       width: 24px;
