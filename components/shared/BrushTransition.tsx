@@ -48,31 +48,6 @@ function loadImage(url: string): Promise<HTMLImageElement> {
     });
 }
 
-/**
- * Draw a single organic brush "dab" at (x, y).
- * Combines multiple offset ellipses to look like a real bristle brush.
- */
-function drawBrushDab(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, angle: number) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(angle);
-
-    // Main dab
-    const bristles = 3 + Math.floor(Math.random() * 4);
-    for (let i = 0; i < bristles; i++) {
-        const ox = (Math.random() - 0.5) * size * 0.6;
-        const oy = (Math.random() - 0.5) * size * 0.3;
-        const w = size * (0.5 + Math.random() * 0.6);
-        const h = size * (0.15 + Math.random() * 0.25);
-
-        ctx.beginPath();
-        ctx.ellipse(ox, oy, w, h, Math.random() * Math.PI, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    ctx.restore();
-}
-
 const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", width, height, duration = 1200, className = "", onComplete }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const bgCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -120,72 +95,126 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
             offCtx.scale(dpr, dpr);
             offCtx.drawImage(newImg, 0, 0, w, h);
 
-            // Draw old on main
-            ctx.drawImage(bgCanvas, 0, 0, w, h);
+            // ── 4 Japanese calligraphy ink brushstrokes ─────────────
+            // Each stroke: thick body with fast-press start, ink-tip taper
+            // at the end, heavy bristle jitter on both edges, and small
+            // ink-drop splats that burst out near the edges.
+            const STROKE_COUNT = 5;
+            const STEPS = 10; // spine resolution
 
-            // Prepare brush strokes — pre-generate random paths
-            const strokes: Array<{
-                x: number;
-                y: number;
-                size: number;
-                angle: number;
-                t: number;
-            }> = [];
-
-            const totalStrokes = 120 + Math.floor(Math.random() * 60);
-            for (let i = 0; i < totalStrokes; i++) {
-                // Strokes sweep from a random edge to create a painterly feel
-                const t = (i / totalStrokes) * 0.85 + Math.random() * 0.15;
-                strokes.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    size: 30 + Math.random() * 60,
-                    angle: Math.random() * Math.PI * 2,
-                    t, // normalised time (0-1) when this stroke should be revealed
-                });
+            interface InkStroke {
+                topEdge: { x: number; y: number }[];
+                bottomEdge: { x: number; y: number }[];
+                splats: { t: number; x: number; y: number; rx: number; ry: number; rot: number }[];
+                startT: number;
+                endT: number;
             }
 
-            // Sort by time
-            strokes.sort((a, b) => a.t - b.t);
+            // Width profile: rapid press at left, wide body, ink-tip taper at right
+            const strokeWidth = (t: number, maxW: number) => {
+                const rise = Math.min(1, t / 0.08); // very fast press
+                const fall = Math.max(0, 1 - Math.pow(Math.max(0, t - 0.82) / 0.18, 0.45)); // organic ink-tip taper
+                return maxW * rise * fall;
+            };
 
-            const start = performance.now();
-            let lastStrokeIdx = 0;
+            const strokes: InkStroke[] = Array.from({ length: STROKE_COUNT }, (_, i) => {
+                const bandH = h / STROKE_COUNT;
+                const cy = bandH * i + bandH * 0.5;
+                const maxW = bandH * 1.45; // bold — overlaps neighbours
+                // Slight diagonal so each stroke feels hand-done
+                const tilt = (Math.random() - 0.5) * bandH * 0.35;
+                const y1 = cy + tilt;
+                const y2 = cy - tilt;
 
-            const animate = (now: number) => {
-                const elapsed = now - start;
-                const progress = Math.min(elapsed / duration, 1);
+                const topEdge: InkStroke["topEdge"] = [];
+                const bottomEdge: InkStroke["bottomEdge"] = [];
 
-                // Draw strokes up to current progress
-                ctx.globalCompositeOperation = "source-over";
+                for (let j = 0; j <= STEPS; j++) {
+                    const t = j / STEPS;
+                    const x = t * w;
+                    const sy = y1 + (y2 - y1) * t;
+                    const hw = strokeWidth(t, maxW) / 2;
 
-                while (lastStrokeIdx < strokes.length && strokes[lastStrokeIdx].t <= progress) {
-                    const s = strokes[lastStrokeIdx];
+                    // Three layers of jitter: large bristle clumps, medium splay, fine grain
+                    const topJ = (Math.random() - 0.5) * hw * 0.55 + (Math.random() - 0.5) * hw * 0.2 + (Math.random() - 0.5) * hw * 0.06;
+                    const botJ = (Math.random() - 0.5) * hw * 0.55 + (Math.random() - 0.5) * hw * 0.2 + (Math.random() - 0.5) * hw * 0.06;
 
-                    // Use the new image as the fill via clip
-                    ctx.save();
-                    ctx.beginPath();
-
-                    // Create clip region shaped like brush dab
-                    const bristles = 3 + Math.floor(Math.random() * 3);
-                    for (let i = 0; i < bristles; i++) {
-                        const ox = s.x + (Math.random() - 0.5) * s.size * 0.6;
-                        const oy = s.y + (Math.random() - 0.5) * s.size * 0.3;
-                        const bw = s.size * (0.5 + Math.random() * 0.6);
-                        const bh = s.size * (0.15 + Math.random() * 0.25);
-                        ctx.ellipse(ox, oy, bw, bh, s.angle + Math.random() * 0.5, 0, Math.PI * 2);
-                    }
-
-                    ctx.clip();
-                    ctx.drawImage(offscreen, 0, 0, w * dpr, h * dpr, 0, 0, w, h);
-                    ctx.restore();
-
-                    lastStrokeIdx++;
+                    topEdge.push({ x, y: sy - hw + topJ });
+                    bottomEdge.push({ x, y: sy + hw + botJ });
                 }
 
-                // After all strokes: draw full new image to fill any gaps
+                // Ink-drop splats: small elongated blobs that burst off the stroke edges
+                const splats: InkStroke["splats"] = Array.from({ length: 22 }, () => {
+                    const t = 0.04 + Math.random() * 0.92;
+                    const j = Math.floor(t * STEPS);
+                    const hw = strokeWidth(t, maxW) / 2;
+                    const sy = y1 + (y2 - y1) * t;
+                    const sign = Math.random() > 0.5 ? -1 : 1;
+                    return {
+                        t,
+                        x: topEdge[j].x + (Math.random() - 0.5) * 18,
+                        y: sy + sign * hw + sign * Math.random() * hw * 0.45,
+                        rx: 4 + Math.random() * 11,
+                        ry: 2 + Math.random() * 5,
+                        rot: Math.random() * Math.PI,
+                    };
+                });
+
+                // Sequential timing: fast sweeps with visible gaps between strokes
+                const startT = i * 0.22;
+                const endT = startT + 0.32; // each stroke is quick & decisive
+
+                return { topEdge, bottomEdge, splats, startT, endT };
+            });
+
+            const start = performance.now();
+
+            const animate = (now: number) => {
+                const progress = Math.min((now - start) / duration, 1);
+
+                // Every frame: reset to old image, then paint completed stroke regions
+                ctx.clearRect(0, 0, w, h);
+                ctx.drawImage(bgCanvas, 0, 0, w, h);
+
+                for (const stroke of strokes) {
+                    if (progress <= stroke.startT) continue;
+
+                    const strokeP = Math.min((progress - stroke.startT) / (stroke.endT - stroke.startT), 1);
+                    const stepsDone = Math.ceil(strokeP * STEPS);
+                    if (stepsDone < 1) continue;
+
+                    const revealX = stroke.topEdge[Math.min(stepsDone, STEPS)].x;
+
+                    // ── Draw main stroke body ─────────────────────────────
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.moveTo(stroke.topEdge[0].x, stroke.topEdge[0].y);
+                    for (let i = 1; i <= stepsDone; i++) {
+                        ctx.lineTo(stroke.topEdge[i].x, stroke.topEdge[i].y);
+                    }
+                    ctx.lineTo(stroke.bottomEdge[stepsDone].x, stroke.bottomEdge[stepsDone].y);
+                    for (let i = stepsDone - 1; i >= 0; i--) {
+                        ctx.lineTo(stroke.bottomEdge[i].x, stroke.bottomEdge[i].y);
+                    }
+                    ctx.closePath();
+                    ctx.clip();
+                    ctx.drawImage(offscreen, 0, 0, w, h);
+                    ctx.restore();
+
+                    // ── Draw ink-drop splats within the revealed region ───
+                    for (const splat of stroke.splats) {
+                        if (splat.x > revealX) continue;
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.ellipse(splat.x, splat.y, splat.rx, splat.ry, splat.rot, 0, Math.PI * 2);
+                        ctx.clip();
+                        ctx.drawImage(offscreen, 0, 0, w, h);
+                        ctx.restore();
+                    }
+                }
+
                 if (progress >= 1) {
                     ctx.globalCompositeOperation = "source-over";
-                    ctx.globalAlpha = 1;
                     ctx.drawImage(newImg, 0, 0, w, h);
                     onComplete?.();
                 } else {
@@ -255,10 +284,7 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
     }, []);
 
     return (
-        <div
-            className={`brush-transition ${className}`.trim()}
-            style={{ position: "relative", width: "100%", aspectRatio: `${width} / ${height}`, overflow: "hidden" }}
-        >
+        <div className={`brush-transition ${className}`.trim()} style={{ position: "relative", width: "100%", aspectRatio: `${width} / ${height}`, overflow: "hidden" }}>
             {/* Background canvas (old image) */}
             <canvas
                 ref={bgCanvasRef}

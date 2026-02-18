@@ -9,17 +9,27 @@ interface FlickrGalleryProps {
 /**
  * FlickrGallery — manages the photostream slideshow with brushstroke
  * transitions between images, thumbnail strip, and keyboard navigation.
+ *
+ * Play/pause behaviour:
+ *  - Auto-pauses when the gallery scrolls out of view (IntersectionObserver).
+ *  - Resumes on mouse-enter ONLY if the user never manually paused it.
+ *  - A manual pause (clicking the pause button) is sticky — scroll-back and
+ *    hover will not resume it; only clicking play again will.
  */
 const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(true);
-    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-    const thumbStripRef = useRef<HTMLDivElement>(null);
+    const [isPlaying, setIsPlaying]     = useState(true);
+    const intervalRef        = useRef<ReturnType<typeof setInterval> | null>(null);
+    const thumbStripRef      = useRef<HTMLDivElement>(null);
+    const galleryRef         = useRef<HTMLDivElement>(null);
+    // True only when the user explicitly clicked the pause button.
+    // Hover and scroll-back will NOT resume if this is true.
+    const manuallyPausedRef  = useRef(false);
 
-    const total = photos.length;
+    const total   = photos.length;
     const current = photos[activeIndex] ?? null;
 
-    // ── Auto-play ────────────────────────────────────────────
+    // ── Auto-play interval ───────────────────────────────────
     const startAutoPlay = useCallback(() => {
         if (intervalRef.current) clearInterval(intervalRef.current);
         intervalRef.current = setInterval(() => {
@@ -30,41 +40,83 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
     useEffect(() => {
         if (isPlaying && total > 1) {
             startAutoPlay();
+        } else {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            intervalRef.current = null;
         }
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
     }, [isPlaying, startAutoPlay, total]);
 
+    // ── Scroll-away pause (IntersectionObserver) ─────────────
+    // When the gallery leaves the viewport → pause.
+    // When it comes back → do NOT auto-resume (hover is required).
+    useEffect(() => {
+        const el = galleryRef.current;
+        if (!el || total <= 1) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (!entry.isIntersecting) {
+                    // Scrolled out — pause without marking as manually paused
+                    setIsPlaying(false);
+                }
+                // Scrolled back in → intentionally do nothing;
+                // the user must hover to resume (see handleMouseEnter).
+            },
+            { threshold: 0.15 },
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [total]);
+
+    // ── Hover → resume (only if not manually paused) ─────────
+    const handleMouseEnter = useCallback(() => {
+        if (!manuallyPausedRef.current && total > 1) {
+            setIsPlaying(true);
+        }
+    }, [total]);
+
+    // ── Play / Pause button ───────────────────────────────────
+    // Clicking pause marks it as manually paused (sticky).
+    // Clicking play clears the sticky flag.
+    const handleTogglePlay = useCallback(() => {
+        setIsPlaying((prev) => {
+            const next = !prev;
+            manuallyPausedRef.current = !next; // pausing → sticky; playing → clear
+            return next;
+        });
+    }, []);
+
     // ── Navigation ───────────────────────────────────────────
     const goTo = useCallback(
         (idx: number) => {
             setActiveIndex(idx);
-            // Reset auto-play timer so full interval after manual nav
-            if (isPlaying) startAutoPlay();
+            if (isPlaying) startAutoPlay(); // reset timer after manual nav
         },
         [isPlaying, startAutoPlay],
     );
 
     const prev = useCallback(() => goTo((activeIndex - 1 + total) % total), [activeIndex, total, goTo]);
-    const next = useCallback(() => goTo((activeIndex + 1) % total), [activeIndex, total, goTo]);
+    const next = useCallback(() => goTo((activeIndex + 1) % total),         [activeIndex, total, goTo]);
 
     // ── Keyboard ─────────────────────────────────────────────
     useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
-            if (e.key === "ArrowLeft") prev();
+            if (e.key === "ArrowLeft")       prev();
             else if (e.key === "ArrowRight") next();
             else if (e.key === " ") {
                 e.preventDefault();
-                setIsPlaying((p) => !p);
+                handleTogglePlay();
             }
         };
-        // Only listen when the gallery section is somewhat in view
         window.addEventListener("keydown", handleKey);
         return () => window.removeEventListener("keydown", handleKey);
-    }, [prev, next]);
+    }, [prev, next, handleTogglePlay]);
 
-    // ── Scroll thumbnail strip to keep active visible ────────
+    // ── Scroll thumbnail strip to keep active thumb visible ──
     useEffect(() => {
         if (!thumbStripRef.current) return;
         const thumb = thumbStripRef.current.children[activeIndex] as HTMLElement | undefined;
@@ -85,10 +137,17 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
     }
 
     return (
-        <div className="flickr-gallery">
+        <div className="flickr-gallery" ref={galleryRef} onMouseEnter={handleMouseEnter}>
             {/* ── Main viewer ──────────────────────────────── */}
             <div className="flickr-gallery__viewer">
-                <BrushTransition src={current!.url_l || current!.url_c} alt={current!.title} width={900} height={600} duration={1300} className="flickr-gallery__canvas-wrap" />
+                <BrushTransition
+                    src={current!.url_l || current!.url_c}
+                    alt={current!.title}
+                    width={900}
+                    height={600}
+                    duration={1300}
+                    className="flickr-gallery__canvas-wrap"
+                />
 
                 {/* Navigation arrows */}
                 <button className="flickr-gallery__arrow flickr-gallery__arrow--prev" onClick={prev} aria-label="Previous photo">
@@ -99,7 +158,11 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
                 </button>
 
                 {/* Play / Pause */}
-                <button className="flickr-gallery__play-btn" onClick={() => setIsPlaying((p) => !p)} aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}>
+                <button
+                    className="flickr-gallery__play-btn"
+                    onClick={handleTogglePlay}
+                    aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
+                >
                     <i className={`now-ui-icons media-1_button-${isPlaying ? "pause" : "play"}`} />
                 </button>
 
