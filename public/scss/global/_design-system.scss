@@ -122,9 +122,60 @@
     transform: rotate(-3deg) translateY(20px);
 }
 
+// --- Extended card reveal animations ---
+
+[data-reveal="scatter-in"] {
+    transform: scale(0) rotate(15deg);
+    filter: blur(8px);
+    transition:
+        opacity 1s var(--ease-out-expo),
+        transform 1s var(--ease-out-back),
+        filter 0.8s var(--ease-out-expo);
+}
+
+[data-reveal="flip-in"] {
+    transform: perspective(800px) rotateY(-90deg);
+    transform-origin: left center;
+    transition:
+        opacity 0.9s var(--ease-out-expo),
+        transform 1.1s var(--ease-out-back);
+}
+
+[data-reveal="slide-up-spring"] {
+    transform: translateY(100px) scale(0.85);
+    transition:
+        opacity 0.8s var(--ease-out-expo),
+        transform 1.2s var(--ease-spring);
+}
+
+[data-reveal="zoom-burst"] {
+    transform: scale(0.3);
+    filter: blur(12px);
+    transition:
+        opacity 0.6s var(--ease-out-expo),
+        transform 0.9s var(--ease-out-back),
+        filter 0.7s var(--ease-out-expo);
+}
+
+[data-reveal="swing-in"] {
+    transform: perspective(600px) rotateX(-60deg) translateY(30px);
+    transform-origin: top center;
+    transition:
+        opacity 0.8s var(--ease-out-expo),
+        transform 1.1s var(--ease-out-back);
+}
+
+[data-reveal="slide-right-spin"] {
+    transform: translateX(-80px) rotate(-8deg);
+    transition:
+        opacity 0.9s var(--ease-out-expo),
+        transform 1s var(--ease-out-back);
+}
+
 [data-reveal].revealed {
     opacity: 1;
-    transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+    transform: translateY(0) translateX(0) scale(1) rotate(0deg) rotateY(0deg) rotateX(0deg);
+    filter: blur(0);
 }
 
 // --------------------------------------------------

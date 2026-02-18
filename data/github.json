@@ -1,0 +1,127 @@
+{
+  "timestamp": 1771408280772,
+  "projects": [
+    {
+      "name": ".bash_aliases",
+      "url": "https://github.com/strubloid/.bash_aliases",
+      "description": "My idea of a good bash aliases",
+      "stars": 1,
+      "languages": [
+        {
+          "name": "Shell",
+          "percentage": "99.6"
+        },
+        {
+          "name": "Python",
+          "percentage": "0.4"
+        }
+      ]
+    },
+    {
+      "name": "Cardgame",
+      "url": "https://github.com/strubloid/cardgame",
+      "description": "Unity-Based Digital Card Game , strubloid/cardgame is a digital card game project built with Unity and developed using modern gameplay systems and visual effects. It’s structured as a Unity project with gameplay logic, rendering assets, and shaders, and designed as a foundation you can expand over time.",
+      "stars": 0,
+      "languages": [
+        {
+          "name": "C#",
+          "percentage": "51.4"
+        },
+        {
+          "name": "ShaderLab",
+          "percentage": "31.5"
+        },
+        {
+          "name": "HLSL",
+          "percentage": "6.5"
+        },
+        {
+          "name": "HTML",
+          "percentage": "5.5"
+        },
+        {
+          "name": "Wolfram Language",
+          "percentage": "5.0"
+        }
+      ]
+    },
+    {
+      "name": "Python Music",
+      "url": "https://github.com/strubloid/py-music",
+      "description": "Project in python to show anyone that I can build anything even in languages that I dont use very much all the time, this time the language is python.",
+      "stars": 1,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "percentage": "36.0"
+        },
+        {
+          "name": "CSS",
+          "percentage": "31.0"
+        },
+        {
+          "name": "TypeScript",
+          "percentage": "17.8"
+        },
+        {
+          "name": "Python",
+          "percentage": "14.5"
+        },
+        {
+          "name": "Shell",
+          "percentage": "0.3"
+        }
+      ]
+    },
+    {
+      "name": "Sperm Whale",
+      "url": "https://github.com/strubloid/spermwhale",
+      "description": "Real-time transcription and translation system",
+      "stars": 0,
+      "languages": []
+    },
+    {
+      "name": "React & Java",
+      "url": "https://github.com/strubloid/ReactAndJava",
+      "description": "This is a codebase demonstrating a very basic full-stack architecture using a Java backend and a React frontend.",
+      "stars": 0,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "percentage": "52.9"
+        },
+        {
+          "name": "Java",
+          "percentage": "33.3"
+        },
+        {
+          "name": "CSS",
+          "percentage": "12.2"
+        },
+        {
+          "name": "HTML",
+          "percentage": "1.7"
+        }
+      ]
+    },
+    {
+      "name": "My Resume",
+      "url": "https://github.com/strubloid/resume",
+      "description": "A collection of explanations and documentation",
+      "stars": 0,
+      "languages": []
+    },
+    {
+      "name": "Fixing SD Card",
+      "url": "https://github.com/strubloid/fix-sd",
+      "description": "Safe recovery tool for .nef (Nikon RAW) images from unmountable SD cards.",
+      "stars": 0,
+      "languages": [
+        {
+          "name": "Shell",
+          "percentage": "100.0"
+        }
+      ]
+    }
+  ]
+}

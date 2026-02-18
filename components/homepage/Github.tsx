@@ -1,99 +1,59 @@
 import React from "react";
 import { Button, Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useCardReveal } from "../../hooks/useCardReveal";
+import type { CachedProject } from "../../lib/github";
 
-interface GithubProject {
-    name: string;
-    url: string;
-    items: { icon: string; label: React.ReactNode }[];
-    description: string;
+/* ------------------------------------------------------------------ */
+/*  Language → icon mapping                                            */
+/* ------------------------------------------------------------------ */
+
+const LANGUAGE_ICONS: Record<string, string> = {
+    TypeScript: "now-ui-icons design-2_html5",
+    JavaScript: "now-ui-icons education_atom",
+    Python: "now-ui-icons education_atom",
+    Java: "now-ui-icons ui-2_settings-90",
+    "C#": "now-ui-icons education_atom",
+    HTML: "now-ui-icons design-2_html5",
+    CSS: "now-ui-icons design_palette",
+    Shell: "now-ui-icons shopping_credit-card",
+    ShaderLab: "now-ui-icons design_palette",
+    HLSL: "now-ui-icons design_app",
+    Dockerfile: "now-ui-icons tech_laptop",
+    PowerShell: "now-ui-icons shopping_credit-card",
+    "Wolfram Language": "now-ui-icons education_atom",
+};
+
+/** Map language names to warm accent hues for the language bar */
+const LANGUAGE_COLORS: Record<string, string> = {
+    TypeScript: "#3178c6",
+    JavaScript: "#f1e05a",
+    Python: "#3572A5",
+    Java: "#b07219",
+    "C#": "#178600",
+    HTML: "#e34c26",
+    CSS: "#563d7c",
+    Shell: "#89e051",
+    ShaderLab: "#222c37",
+    HLSL: "#aace60",
+    Dockerfile: "#384d54",
+    PowerShell: "#012456",
+    "Wolfram Language": "#dd1100",
+};
+
+interface GithubProps {
+    projects: CachedProject[];
 }
 
-const PROJECTS: GithubProject[] = [
-    {
-        name: "My Resume",
-        url: "https://github.com/strubloid/resume",
-        description: "A collection of explanations and documentation for co-workers",
-        items: [
-            { icon: "now-ui-icons design_app", label: "TSQL" },
-            { icon: "now-ui-icons shopping_credit-card", label: "Shell" },
-            { icon: "now-ui-icons ui-2_settings-90", label: "PHP" },
-            { icon: "now-ui-icons design-2_html5", label: "HTML" },
-            { icon: "now-ui-icons education_atom", label: "Javascript" },
-        ],
-    },
-    {
-        name: ".bash_aliases",
-        url: "https://github.com/strubloid/.bash_aliases",
-        description: "A structured way to create your ~/.bash_aliases using classes",
-        items: [
-            { icon: "now-ui-icons design_bullet-list-67", label: ".bash_aliases in classes" },
-            {
-                icon: "now-ui-icons arrows-1_refresh-69",
-                label: (
-                    <>
-                        Update environment with: <br />
-                        tu [terminal update]
-                    </>
-                ),
-            },
-            { icon: "now-ui-icons tech_laptop", label: "Linux & Mac" },
-            { icon: "now-ui-icons shopping_credit-card", label: "Shellscript" },
-        ],
-    },
-    {
-        name: "Cardgame",
-        url: "https://github.com/strubloid/cardgame",
-        description: "A card game built with Unity featuring fireball mechanics and card dealing systems",
-        items: [
-            { icon: "now-ui-icons education_atom", label: "C# 51.5%" },
-            { icon: "now-ui-icons design_palette", label: "ShaderLab 31.5%" },
-            { icon: "now-ui-icons media-1_button-play", label: "Unity Engine" },
-            { icon: "now-ui-icons design_app", label: "HLSL Shaders" },
-        ],
-    },
-    {
-        name: "Python Music",
-        url: "https://github.com/strubloid/py-music",
-        description: "Full-stack music theory app with interactive piano, guitar fretboard, and chord progressions",
-        items: [
-            { icon: "now-ui-icons education_atom", label: "Python Flask" },
-            { icon: "now-ui-icons design-2_html5", label: "React 18 + Vite" },
-            { icon: "now-ui-icons media-1_button-play", label: "Piano & Guitar Fretboard" },
-            { icon: "now-ui-icons ui-2_settings-90", label: "Music Theory Engine" },
-        ],
-    },
-    {
-        name: "Sperm Whale",
-        url: "https://github.com/strubloid/spermwhale",
-        description: "Real-time transcription and translation system using OpenAI Whisper with CUDA GPU support",
-        items: [
-            { icon: "now-ui-icons education_atom", label: "Python 97.6%" },
-            { icon: "now-ui-icons ui-2_chat-round", label: "OpenAI Whisper" },
-            { icon: "now-ui-icons arrows-1_refresh-69", label: "Multi-Engine Translation" },
-            { icon: "now-ui-icons tech_laptop", label: "CUDA GPU Support" },
-        ],
-    },
-    {
-        name: "React & Java",
-        url: "https://github.com/strubloid/ReactAndJava",
-        description: "Book Manager application with a React TypeScript frontend and Java Spring backend",
-        items: [
-            { icon: "now-ui-icons design-2_html5", label: "TypeScript 52.8%" },
-            { icon: "now-ui-icons ui-2_settings-90", label: "Java 33.3%" },
-            { icon: "now-ui-icons design_app", label: "React Frontend" },
-            { icon: "now-ui-icons shopping_credit-card", label: "Spring Backend" },
-        ],
-    },
-];
-
-const Github: React.FC = () => {
+const Github: React.FC<GithubProps> = ({ projects }) => {
     const revealRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+    const cardsRef = useCardReveal<HTMLDivElement>({ staggerDelay: 180 });
 
     return (
         <div className="section section-github" ref={revealRef}>
             <Container>
-                <Row>
+                {/* Section header */}
+                <Row className="mb-5">
                     <Col lg="7" md="12">
                         <div className="section-description">
                             <h6 className="category" data-reveal="fade-up">
@@ -113,27 +73,6 @@ const Github: React.FC = () => {
                             </div>
                             <div className="clearfix" />
                         </div>
-                        <Row>
-                            {PROJECTS.map((project, idx) => (
-                                <Col key={project.name} className="pt-5" md="6" sm="6">
-                                    <a href={project.url} target="_blank" rel="noopener noreferrer" data-reveal="fade-up" data-reveal-delay={String(480 + idx * 150)}>
-                                        <Card className="card-pricing card-background modern-card">
-                                            <CardBody>
-                                                <CardTitle tag="h3">{project.name}</CardTitle>
-                                                <ul>
-                                                    <li>{project.description}</li>
-                                                    {project.items.map((item, itemIdx) => (
-                                                        <li key={itemIdx}>
-                                                            <i className={item.icon} /> {item.label}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </CardBody>
-                                        </Card>
-                                    </a>
-                                </Col>
-                            ))}
-                        </Row>
                     </Col>
                     <Col lg="5" md="12" className="github-column">
                         <div className="github-background-container" data-reveal="fade-left" data-reveal-delay="300">
@@ -141,6 +80,58 @@ const Github: React.FC = () => {
                         </div>
                     </Col>
                 </Row>
+
+                {/* Project cards — full width, 3 columns */}
+                <div className="github-cards-grid" ref={cardsRef}>
+                    {projects.map((project) => (
+                        <a key={project.name} href={project.url} target="_blank" rel="noopener noreferrer" data-card-reveal>
+                            <Card className="github-project-card">
+                                {/* Boilerplate gradient image header */}
+                                <div className="card-image-header">
+                                    <i className="fab fa-github" />
+                                    {project.stars > 0 && (
+                                        <span className="star-badge">
+                                            <i className="fas fa-star" /> {project.stars}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <CardBody>
+                                    <CardTitle tag="h3">{project.name}</CardTitle>
+                                    <p className="card-description">{project.description}</p>
+
+                                    {/* Language bar visualization */}
+                                    {project.languages.length > 0 && (
+                                        <div className="language-section">
+                                            <div className="language-bar">
+                                                {project.languages.map((lang) => (
+                                                    <div
+                                                        key={lang.name}
+                                                        className="language-bar-segment"
+                                                        style={{
+                                                            width: `${lang.percentage}%`,
+                                                            backgroundColor: LANGUAGE_COLORS[lang.name] ?? "var(--color-clay)",
+                                                        }}
+                                                        title={`${lang.name} ${lang.percentage}%`}
+                                                    />
+                                                ))}
+                                            </div>
+                                            <ul className="language-list">
+                                                {project.languages.map((lang) => (
+                                                    <li key={lang.name}>
+                                                        <span className="lang-dot" style={{ backgroundColor: LANGUAGE_COLORS[lang.name] ?? "var(--color-clay)" }} />
+                                                        <i className={LANGUAGE_ICONS[lang.name] ?? "now-ui-icons design_app"} />
+                                                        {lang.name} <span className="lang-pct">{lang.percentage}%</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </CardBody>
+                            </Card>
+                        </a>
+                    ))}
+                </div>
             </Container>
         </div>
     );
