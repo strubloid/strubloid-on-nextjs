@@ -244,3 +244,22 @@
     transform: translateY(-1px);
   }
 }
+
+// ============================================================
+// Excluded Buttons & Social Links Hover Effect
+// ============================================================
+// Rounded border box hover effect matching LinkedIn button style
+.flickr-gallery__arrow--next,
+.flickr-gallery__arrow--prev,
+.flickr-gallery__thumb,
+.footer .social-links a,
+.footer a {
+  transition: all 0.3s ease;
+
+  &:hover {
+    border: 2px solid #E8B631;
+    border-radius: 12px;
+    padding: 8px 12px;
+    color: #E8B631;
+  }
+}

@@ -288,3 +288,20 @@ body {
     display: table;
     clear: both;
     content: " "; }
+
+// ============================================================
+// Footer Navigation - Display items on one line
+// ============================================================
+.footer-nav-section ul {
+    display: inline-flex;
+    gap: 0;
+    flex-wrap: wrap;
+}
+
+.footer-nav-section ul li {
+    display: inline-block;
+}
+
+.footer-nav-section ul li a {
+    padding: 0 0.5rem;
+}
