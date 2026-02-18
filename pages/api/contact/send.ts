@@ -9,6 +9,25 @@ interface ContactRequestBody {
     captcha: string | false;
 }
 
+interface RecaptchaResponse {
+    success: boolean;
+    'error-codes'?: string[];
+}
+
+async function verifyRecaptcha(token: string): Promise<boolean> {
+    const secret = process.env.SITE_RECAPTCHA_SECRET;
+    if (!secret) return false;
+
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `secret=${secret}&response=${token}`,
+    });
+
+    const data = (await response.json()) as RecaptchaResponse;
+    return data.success;
+}
+
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse,
@@ -24,6 +43,12 @@ export default async function handler(
 
     if (!captcha) {
         res.status(400).send('You must confirm the captcha!');
+        return;
+    }
+
+    const captchaValid = await verifyRecaptcha(captcha as string);
+    if (!captchaValid) {
+        res.status(400).send('Captcha verification failed. Please try again.');
         return;
     }
 

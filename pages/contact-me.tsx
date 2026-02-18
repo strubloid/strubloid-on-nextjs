@@ -4,7 +4,7 @@ import ContactMe from "../components/contact/ContactMe";
 import ContactMeHeader from "../components/contact/ContactMeHeader";
 
 const ContactMePage: NextPage = () => {
-    const googleKey = process.env.GOOGLE_KEY;
+    const googleKey = process.env.NEXT_PUBLIC_GOOGLE_KEY;
 
     return (
         <>

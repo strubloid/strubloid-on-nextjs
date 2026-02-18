@@ -62,6 +62,7 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
         if (!inputs.email) error.email = "Email is required";
         if (!inputs.subject) error.subject = "Subject is required";
         if (!inputs.message) error.message = "Message is required";
+        if (!inputs.captcha) error.captcha = "Please confirm you are not a robot";
         return error;
     };
 
@@ -243,6 +244,7 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
 
                                             <FormGroup>
                                                 <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_SITE_RECAPTCHA_KEY ?? ""} onChange={onChangeRecaptcha} />
+                                                {errors.captcha && <p style={{ color: "red", marginTop: "4px", fontSize: "0.85rem" }}>{errors.captcha}</p>}
                                             </FormGroup>
 
                                             <div className="submit text-center">
@@ -265,13 +267,13 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
                                             <i className="now-ui-icons location_pin" />
                                         </div>
                                         <div className="description">
-                                            <h4 className="info-title">Find me in Dublin</h4>
+                                            <h4 className="info-title">Find me in Cork</h4>
                                             <p>
-                                                Oak Apple green,
+                                                Camden Court,
                                                 <br />
-                                                Dublin 6,
+                                                Knaps Square
                                                 <br />
-                                                Dublin
+                                                Cork
                                             </p>
                                         </div>
                                     </div>
