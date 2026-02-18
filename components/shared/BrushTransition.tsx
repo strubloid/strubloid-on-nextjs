@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useCallback, useState, memo } from "react";
 /* ------------------------------------------------------------------ *
  *  BrushTransition                                                    *
  *                                                                     *
- *  A reusable component that transitions between two images using     *
- *  a canvas-drawn brushstroke reveal effect. The incoming image is    *
- *  progressively "painted" over the outgoing one with organic,        *
- *  randomised brush strokes that feel hand-done.                      *
+ *  Reveals the incoming image with a single Ensō-style ink circle    *
+ *  (Japanese Zen circle brushstroke). The brush sweeps ~335° around  *
+ *  a large circle, revealing the new image through the stroke path.  *
+ *  When complete the full image is shown.                             *
  *                                                                     *
  *  Usage:                                                             *
  *    <BrushTransition                                                 *
@@ -16,18 +16,18 @@ import React, { useEffect, useRef, useCallback, useState, memo } from "react";
  *      height={600}                                                   *
  *      duration={1400}                                                *
  *    />                                                               *
- *  Every time `src` changes the brush animation fires.                *
+ *  Every time `src` changes the Ensō animation fires.                *
  * ------------------------------------------------------------------ */
 
 interface BrushTransitionProps {
     /** URL of the image to display / transition to */
     src: string;
     alt?: string;
-    /** Canvas width in CSS pixels (will be scaled for retina) */
+    /** Canvas width in CSS pixels (used for aspect-ratio only) */
     width: number;
     /** Canvas height in CSS pixels */
     height: number;
-    /** Duration of the brush reveal in ms (default 1200) */
+    /** Duration of the brush reveal in ms (default 1400) */
     duration?: number;
     /** Class to add to the wrapper */
     className?: string;
@@ -35,9 +35,6 @@ interface BrushTransitionProps {
     onComplete?: () => void;
 }
 
-/**
- * Preload an image and return a promise that resolves with the HTMLImageElement.
- */
 function loadImage(url: string): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -48,7 +45,7 @@ function loadImage(url: string): Promise<HTMLImageElement> {
     });
 }
 
-const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", width, height, duration = 1200, className = "", onComplete }) => {
+const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", width, height, duration = 1400, className = "", onComplete }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const bgCanvasRef = useRef<HTMLCanvasElement>(null);
     const animRef = useRef<number>(0);
@@ -63,11 +60,9 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
             if (!canvas || !bgCanvas) return;
 
             const dpr = window.devicePixelRatio || 1;
-            // Use the actual rendered size so the canvas fills its container
             const w = canvas.offsetWidth || width;
             const h = canvas.offsetHeight || height;
 
-            // Size both canvases to match their rendered dimensions
             [canvas, bgCanvas].forEach((c) => {
                 c.width = w * dpr;
                 c.height = h * dpr;
@@ -75,11 +70,10 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
 
             const ctx = canvas.getContext("2d")!;
             const bgCtx = bgCanvas.getContext("2d")!;
-
             ctx.scale(dpr, dpr);
             bgCtx.scale(dpr, dpr);
 
-            // Draw old image (or dark bg) on the background canvas
+            // Background canvas: old image or dark fill
             if (oldImg) {
                 bgCtx.drawImage(oldImg, 0, 0, w, h);
             } else {
@@ -87,7 +81,7 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
                 bgCtx.fillRect(0, 0, w, h);
             }
 
-            // Create an off-screen canvas with the new image
+            // Off-screen canvas: new image ready to be revealed
             const offscreen = document.createElement("canvas");
             offscreen.width = w * dpr;
             offscreen.height = h * dpr;
@@ -95,115 +89,150 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
             offCtx.scale(dpr, dpr);
             offCtx.drawImage(newImg, 0, 0, w, h);
 
-            // ── 4 Japanese calligraphy ink brushstrokes ─────────────
-            // Each stroke: thick body with fast-press start, ink-tip taper
-            // at the end, heavy bristle jitter on both edges, and small
-            // ink-drop splats that burst out near the edges.
-            const STROKE_COUNT = 5;
-            const STEPS = 10; // spine resolution
+            // ── Ensō geometry ────────────────────────────────────────
+            // Single large circle stroke (like a Zen ink circle).
+            // Starts at ~7-8 o'clock (traditional Ensō position) and
+            // sweeps ~335° clockwise, leaving a natural gap at the start.
 
-            interface InkStroke {
-                topEdge: { x: number; y: number }[];
-                bottomEdge: { x: number; y: number }[];
-                splats: { t: number; x: number; y: number; rx: number; ry: number; rot: number }[];
-                startT: number;
-                endT: number;
+            const STEPS = 500; // high resolution → smooth organic arc
+
+            const cx = w / 2;
+            const cy = h / 2;
+            // Radius: large enough to fill most of the frame
+            const radius = Math.min(w, h) * 0.7;
+            // Stroke half-width — very bold, like a real Ensō (~20% of shorter dim total)
+            const maxHalfW = Math.min(w, h) * 0.2;
+
+            // 210° in canvas coords = 7-8 o'clock (y-axis points down)
+            const startAngle = (320 * Math.PI) / 180;
+            const sweepAngle = (1800 * Math.PI) / 180;
+
+            // Width profile: sin(π·t)^0.25
+            //   → rises very rapidly to near-full width (first ~5% of arc)
+            //   → stays thick for almost the entire circle
+            //   → drops rapidly to a pointed tip at the very end
+            // This matches the classic Ensō shape exactly.
+            const halfWidth = (t: number): number => maxHalfW * Math.pow(Math.sin(Math.PI * t), 0.45);
+
+            interface Edge {
+                x: number;
+                y: number;
             }
 
-            // Width profile: rapid press at left, wide body, ink-tip taper at right
-            const strokeWidth = (t: number, maxW: number) => {
-                const rise = Math.min(1, t / 0.08); // very fast press
-                const fall = Math.max(0, 1 - Math.pow(Math.max(0, t - 0.82) / 0.18, 0.45)); // organic ink-tip taper
-                return maxW * rise * fall;
-            };
+            const outerEdge: Edge[] = [];
+            const innerEdge: Edge[] = [];
 
-            const strokes: InkStroke[] = Array.from({ length: STROKE_COUNT }, (_, i) => {
-                const bandH = h / STROKE_COUNT;
-                const cy = bandH * i + bandH * 0.5;
-                const maxW = bandH * 1.45; // bold — overlaps neighbours
-                // Slight diagonal so each stroke feels hand-done
-                const tilt = (Math.random() - 0.5) * bandH * 0.35;
-                const y1 = cy + tilt;
-                const y2 = cy - tilt;
+            // Independent wave parameters per edge → organic, non-mirrored undulation
+            const outerWaveFreq = 2.0 + Math.random() * 2.5;
+            const innerWaveFreq = 2.0 + Math.random() * 2.5;
+            const outerWavePhase = Math.random() * Math.PI * 2;
+            const innerWavePhase = Math.random() * Math.PI * 2;
 
-                const topEdge: InkStroke["topEdge"] = [];
-                const bottomEdge: InkStroke["bottomEdge"] = [];
+            for (let j = 0; j <= STEPS; j++) {
+                const t = j / STEPS;
+                const angle = startAngle + t * sweepAngle;
 
-                for (let j = 0; j <= STEPS; j++) {
-                    const t = j / STEPS;
-                    const x = t * w;
-                    const sy = y1 + (y2 - y1) * t;
-                    const hw = strokeWidth(t, maxW) / 2;
+                // Point on the centre-line circle
+                const px = cx + Math.cos(angle) * radius;
+                const py = cy + Math.sin(angle) * radius;
 
-                    // Three layers of jitter: large bristle clumps, medium splay, fine grain
-                    const topJ = (Math.random() - 0.5) * hw * 0.55 + (Math.random() - 0.5) * hw * 0.2 + (Math.random() - 0.5) * hw * 0.06;
-                    const botJ = (Math.random() - 0.5) * hw * 0.55 + (Math.random() - 0.5) * hw * 0.2 + (Math.random() - 0.5) * hw * 0.06;
+                // Radial outward normal
+                const nx = Math.cos(angle);
+                const ny = Math.sin(angle);
 
-                    topEdge.push({ x, y: sy - hw + topJ });
-                    bottomEdge.push({ x, y: sy + hw + botJ });
+                const hw = halfWidth(t);
+
+                // At tapered tips the two edges meet
+                if (hw < 1.2) {
+                    outerEdge.push({ x: px, y: py });
+                    innerEdge.push({ x: px, y: py });
+                    continue;
                 }
 
-                // Ink-drop splats: small elongated blobs that burst off the stroke edges
-                const splats: InkStroke["splats"] = Array.from({ length: 22 }, () => {
-                    const t = 0.04 + Math.random() * 0.92;
-                    const j = Math.floor(t * STEPS);
-                    const hw = strokeWidth(t, maxW) / 2;
-                    const sy = y1 + (y2 - y1) * t;
-                    const sign = Math.random() > 0.5 ? -1 : 1;
-                    return {
-                        t,
-                        x: topEdge[j].x + (Math.random() - 0.5) * 18,
-                        y: sy + sign * hw + sign * Math.random() * hw * 0.45,
-                        rx: 4 + Math.random() * 11,
-                        ry: 2 + Math.random() * 5,
-                        rot: Math.random() * Math.PI,
-                    };
+                // Gentle sine undulation on each edge
+                const outerWave = hw * 1.2 * Math.sin(t * outerWaveFreq * Math.PI + outerWavePhase);
+                const innerWave = hw * 1.2 * Math.sin(t * innerWaveFreq * Math.PI + innerWavePhase);
+
+                // Bristle spikes: 30% chance of a hair jutting outward,
+                // otherwise very fine grain noise.
+                const outerSpike = Math.random() < 0.4 ? Math.random() * hw * 0.65 : (Math.random() - 0.5) * hw * 0.09;
+                const innerSpike = Math.random() < 0.4 ? Math.random() * hw * 0.65 : (Math.random() - 0.5) * hw * 0.09;
+
+                outerEdge.push({
+                    x: px + nx * (hw + outerWave + outerSpike),
+                    y: py + ny * (hw + outerWave + outerSpike),
                 });
+                innerEdge.push({
+                    x: px - nx * (hw + innerWave + innerSpike),
+                    y: py - ny * (hw + innerWave + innerSpike),
+                });
+            }
 
-                // Sequential timing: fast sweeps with visible gaps between strokes
-                const startT = i * 0.22;
-                const endT = startT + 0.32; // each stroke is quick & decisive
+            // Ink splats — concentrated near the stroke start and end,
+            // where the brush presses down and lifts off (the Ensō gap area).
+            interface Splat {
+                x: number;
+                y: number;
+                rx: number;
+                ry: number;
+                rot: number;
+                t: number;
+            }
+            const splats: Splat[] = Array.from({ length: 40 }, () => {
+                // 60% near end, 40% near start (brush lifts with more splatter)
+                const atEnd = Math.random() < 0.6;
+                const t = atEnd ? 2.8 + Math.random() * 0.2 : Math.random() * 0.2;
 
-                return { topEdge, bottomEdge, splats, startT, endT };
+                const angle = startAngle + t * sweepAngle;
+                const hw = halfWidth(t);
+                const px = cx + Math.cos(angle) * radius;
+                const py = cy + Math.sin(angle) * radius;
+                const nx = Math.cos(angle);
+                const ny = Math.sin(angle);
+                const sign = Math.random() > 0.5 ? 1 : -1;
+
+                return {
+                    t,
+                    x: px + nx * sign * (hw * 0.7 + Math.random() * hw * 1.3) + (Math.random() - 0.5) * 28,
+                    y: py + ny * sign * (hw * 0.7 + Math.random() * hw * 1.3) + (Math.random() - 0.5) * 28,
+                    rx: 3 + Math.random() * 15,
+                    ry: 1.5 + Math.random() * 6,
+                    rot: Math.random() * Math.PI,
+                };
             });
 
-            const start = performance.now();
+            const startTime = performance.now();
 
             const animate = (now: number) => {
-                const progress = Math.min((now - start) / duration, 1);
+                const progress = Math.min((now - startTime) / duration, 1);
+                const stepsDone = Math.min(Math.ceil(progress * STEPS), STEPS);
 
-                // Every frame: reset to old image, then paint completed stroke regions
                 ctx.clearRect(0, 0, w, h);
                 ctx.drawImage(bgCanvas, 0, 0, w, h);
 
-                for (const stroke of strokes) {
-                    if (progress <= stroke.startT) continue;
-
-                    const strokeP = Math.min((progress - stroke.startT) / (stroke.endT - stroke.startT), 1);
-                    const stepsDone = Math.ceil(strokeP * STEPS);
-                    if (stepsDone < 1) continue;
-
-                    const revealX = stroke.topEdge[Math.min(stepsDone, STEPS)].x;
-
-                    // ── Draw main stroke body ─────────────────────────────
+                if (stepsDone >= 1) {
+                    // ── Draw the Ensō arc body ─────────────────────────
+                    // Clip to the ring polygon traced so far, then paint
+                    // the new image through that clip region.
                     ctx.save();
                     ctx.beginPath();
-                    ctx.moveTo(stroke.topEdge[0].x, stroke.topEdge[0].y);
+                    ctx.moveTo(outerEdge[0].x, outerEdge[0].y);
                     for (let i = 1; i <= stepsDone; i++) {
-                        ctx.lineTo(stroke.topEdge[i].x, stroke.topEdge[i].y);
+                        ctx.lineTo(outerEdge[i].x, outerEdge[i].y);
                     }
-                    ctx.lineTo(stroke.bottomEdge[stepsDone].x, stroke.bottomEdge[stepsDone].y);
+                    ctx.lineTo(innerEdge[stepsDone].x, innerEdge[stepsDone].y);
                     for (let i = stepsDone - 1; i >= 0; i--) {
-                        ctx.lineTo(stroke.bottomEdge[i].x, stroke.bottomEdge[i].y);
+                        ctx.lineTo(innerEdge[i].x, innerEdge[i].y);
+                        ctx.lineTo(innerEdge[i].x, innerEdge[i].y);
                     }
                     ctx.closePath();
                     ctx.clip();
                     ctx.drawImage(offscreen, 0, 0, w, h);
                     ctx.restore();
 
-                    // ── Draw ink-drop splats within the revealed region ───
-                    for (const splat of stroke.splats) {
-                        if (splat.x > revealX) continue;
+                    // ── Ink splats within the revealed region ──────────
+                    for (const splat of splats) {
+                        if (splat.t > progress) continue;
                         ctx.save();
                         ctx.beginPath();
                         ctx.ellipse(splat.x, splat.y, splat.rx, splat.ry, splat.rot, 0, Math.PI * 2);
@@ -214,6 +243,7 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
                 }
 
                 if (progress >= 1) {
+                    // Stroke complete — show the full new image
                     ctx.globalCompositeOperation = "source-over";
                     ctx.drawImage(newImg, 0, 0, w, h);
                     onComplete?.();
@@ -250,7 +280,7 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
                 if (cancelled) return;
 
                 if (isFirstRef.current) {
-                    // First image: just draw directly (no brush)
+                    // First image: draw directly, no animation
                     const canvas = canvasRef.current;
                     if (canvas) {
                         const dpr = window.devicePixelRatio || 1;
@@ -285,33 +315,10 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
 
     return (
         <div className={`brush-transition ${className}`.trim()} style={{ position: "relative", width: "100%", aspectRatio: `${width} / ${height}`, overflow: "hidden" }}>
-            {/* Background canvas (old image) */}
-            <canvas
-                ref={bgCanvasRef}
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "inherit",
-                }}
-                aria-hidden
-            />
-            {/* Main canvas (brush strokes reveal new image) */}
-            <canvas
-                ref={canvasRef}
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "inherit",
-                }}
-                role="img"
-                aria-label={alt}
-            />
+            {/* Background canvas (outgoing image) */}
+            <canvas ref={bgCanvasRef} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", borderRadius: "inherit" }} aria-hidden />
+            {/* Main canvas — Ensō arc reveals incoming image */}
+            <canvas ref={canvasRef} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", borderRadius: "inherit" }} role="img" aria-label={alt} />
         </div>
     );
 });
