@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback, useState, memo } from "react";
+import React, { useEffect, useRef, useCallback, useState, memo, use } from "react";
 
 /* ------------------------------------------------------------------ *
  *  BrushTransition                                                    *
@@ -87,7 +87,25 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
             offscreen.height = h * dpr;
             const offCtx = offscreen.getContext("2d")!;
             offCtx.scale(dpr, dpr);
-            offCtx.drawImage(newImg, 0, 0, w, h);
+            // Aspect-ratio aware draw for offscreen
+            const imgW = newImg.naturalWidth;
+            const imgH = newImg.naturalHeight;
+            let drawW, drawH, offsetX, offsetY;
+            if (imgW > imgH) {
+                // Landscape: fit width, center vertically
+                drawW = w;
+                drawH = (imgH / imgW) * w;
+                offsetX = 0;
+                offsetY = (h - drawH) / 2;
+            } else {
+                // Portrait: fit height, center horizontally
+                drawH = h;
+                drawW = (imgW / imgH) * h;
+                offsetX = (w - drawW) / 2;
+                offsetY = 0;
+            }
+            offCtx.clearRect(0, 0, w, h);
+            offCtx.drawImage(newImg, offsetX, offsetY, drawW, drawH);
 
             // ── Ensō geometry ────────────────────────────────────────
             // Single large circle stroke (like a Zen ink circle).
@@ -245,7 +263,22 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
                 if (progress >= 1) {
                     // Stroke complete — show the full new image
                     ctx.globalCompositeOperation = "source-over";
-                    ctx.drawImage(newImg, 0, 0, w, h);
+                    // Draw new image with aspect-ratio aware logic
+                    if (imgW > imgH) {
+                        // Landscape: fit width, center vertically
+                        drawW = w;
+                        drawH = (imgH / imgW) * w;
+                        offsetX = 0;
+                        offsetY = (h - drawH) / 2;
+                    } else {
+                        // Portrait: fit height, center horizontally
+                        drawH = h;
+                        drawW = (imgW / imgH) * h;
+                        offsetX = (w - drawW) / 2;
+                        offsetY = 0;
+                    }
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.drawImage(newImg, offsetX, offsetY, drawW, drawH);
                     onComplete?.();
                 } else {
                     animRef.current = requestAnimationFrame(animate);
@@ -290,15 +323,42 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
                         canvas.height = h * dpr;
                         const ctx = canvas.getContext("2d")!;
                         ctx.scale(dpr, dpr);
-                        ctx.drawImage(newImg, 0, 0, w, h);
+                        // --- Fix: draw image with aspect ratio preserved ---
+                        const imgW = newImg.naturalWidth;
+                        const imgH = newImg.naturalHeight;
+                        let drawW, drawH, offsetX, offsetY;
+                        if (imgW > imgH) {
+                            // Landscape: fit width, center vertically
+                            drawW = w;
+                            drawH = (imgH / imgW) * w;
+                            offsetX = 0;
+                            offsetY = (h - drawH) / 2;
+                        } else {
+                            // Portrait: fit height, center horizontally
+                            drawH = h;
+                            drawW = (imgW / imgH) * h;
+                            offsetX = (w - drawW) / 2;
+                            offsetY = 0;
+                        }
+                        ctx.clearRect(0, 0, w, h);
+                        ctx.drawImage(newImg, offsetX, offsetY, drawW, drawH);
+                        // Set style based on image aspect
+                        const aspect = imgW / imgH;
+                        configureVerticalImage(canvas, aspect);
                     }
                     isFirstRef.current = false;
                 } else {
                     runBrushReveal(newImg, oldImg);
+                    // Optionally, configure both canvases after animation
+                    const mainCanvas = canvasRef.current;
+                    const bgCanvas = bgCanvasRef.current;
+                    if (mainCanvas) configureVerticalImage(mainCanvas, newImg.naturalWidth / newImg.naturalHeight);
+                    if (bgCanvas && oldImg) configureVerticalImage(bgCanvas, oldImg.naturalWidth / oldImg.naturalHeight);
                 }
 
                 prevSrcRef.current = src;
                 setCurrentSrc(src);
+                console.log("Configured vertical image fit");
             } catch {
                 /* image failed to load */
             }
@@ -308,6 +368,27 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
             cancelled = true;
         };
     }, [src, width, height, runBrushReveal, currentSrc]);
+
+    // Accept canvas and aspect as arguments
+    const configureVerticalImage = useCallback((canvas: HTMLCanvasElement | null, aspect: number) => {
+        if (!canvas) return;
+        if (aspect < 0.75) {
+            canvas.style.objectFit = "contain";
+            canvas.style.background = "#222"; // Example: dark bg for portrait
+        } else {
+            canvas.style.objectFit = "cover";
+            canvas.style.background = "#111"; // Example: different bg for landscape
+        }
+    }, []);
+
+    useEffect(() => {
+        // Keep the old effect for initial mount/resize
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const aspect = width / height;
+        configureVerticalImage(canvas, aspect);
+        console.log("Configured vertical image fit (effect)");
+    }, [width, height, configureVerticalImage]);
 
     useEffect(() => {
         return () => cancelAnimationFrame(animRef.current);
