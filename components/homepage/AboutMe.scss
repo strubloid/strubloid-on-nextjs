@@ -9,7 +9,7 @@ body {
       background-size: cover;
       background-position: center;
       position: relative;
-      padding: 100px 0;
+      padding: 80px 0;
 
       // Dark overlay for readability
       &::before {
@@ -30,52 +30,92 @@ body {
       .container-fluid {
         position: relative;
         z-index: 1;
+        max-width: 1400px;
       }
 
-      // Section header
+      // ── Modern centered header ──────────────────────────────
       .about-me-header {
-        margin-bottom: 40px;
-        padding-left: 15px;
+        text-align: center;
+        margin-bottom: 48px;
+        padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
 
-        .category {
+        &__accent {
+          display: block;
+          width: 48px;
+          height: 3px;
+          border-radius: 2px;
+          background: linear-gradient(
+            90deg,
+            var(--color-brazil-green),
+            var(--color-accent-light)
+          );
+          opacity: 0.8;
+        }
+
+        &__category {
           color: var(--color-accent-light);
           font-weight: 600;
-          letter-spacing: 0.1em;
+          letter-spacing: 0.15em;
           text-transform: uppercase;
-          font-size: 0.85em;
-          margin-bottom: 8px;
+          font-size: 0.8em;
+          margin: 8px 0 0;
         }
 
-        .title {
+        &__title {
           color: var(--color-cream);
           font-family: var(--font-heading);
-          font-size: 2.5em;
+          font-size: 2.8em;
           font-weight: 700;
-          padding-top: 0;
+          margin: 0;
+          padding: 0;
+          background: linear-gradient(
+            135deg,
+            var(--color-cream) 0%,
+            var(--color-accent-light) 50%,
+            var(--color-brazil-gold) 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
       }
 
-      // Two-column skills grid
+      // ── Two-column skills grid ──────────────────────────────
       .skills-grid {
         display: flex;
-        gap: 0;
+        gap: 20px;
       }
 
       .skills-column {
         display: flex;
         flex-direction: column;
+        flex: 1;
+        gap: 12px;
       }
 
-      // Glassmorphism skill cards
+      // ── Glassmorphism skill cards ───────────────────────────
       .skill-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
         background: rgba(255, 255, 255, 0.06);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: var(--radius-lg);
-        padding: 24px;
-        margin-bottom: 16px;
+        padding: 20px 24px;
+        flex: 1;
         transition: all 0.4s var(--ease-spring);
+
+        // Linked cards are fully clickable
+        &--linked {
+          cursor: pointer;
+          user-select: none;
+        }
 
         &:hover {
           background: rgba(255, 255, 255, 0.1);
@@ -83,31 +123,54 @@ body {
           border-color: rgba(224, 123, 76, 0.3);
         }
 
-        .icon i {
-          color: var(--color-accent-light) !important;
-          font-size: 24px;
+        &--linked:hover {
+          border-color: rgba(224, 123, 76, 0.5);
+          box-shadow: 0 4px 20px rgba(224, 123, 76, 0.12);
         }
 
-        .info-title {
+        &__icon {
+          flex-shrink: 0;
+          padding-top: 2px;
+
+          i {
+            font-size: 22px;
+          }
+        }
+
+        &__body {
+          flex: 1;
+          min-width: 0;
+        }
+
+        &__title {
           color: var(--color-cream) !important;
           font-weight: 700;
-          font-size: 1.2em;
+          font-size: 1.15em;
+          margin: 0 0 6px;
         }
 
-        .description {
+        &__desc {
           color: rgba(255, 248, 240, 0.75) !important;
           font-weight: 300;
-          line-height: 1.7;
+          line-height: 1.65;
+          font-size: 0.95em;
+          margin: 0;
+        }
 
-          a {
-            color: var(--color-accent-light) !important;
-            text-decoration: underline;
-            text-underline-offset: 3px;
+        &__link-label {
+          color: var(--color-accent-light);
+          font-weight: 500;
+          white-space: nowrap;
 
-            &:hover {
-              color: var(--color-brazil-gold) !important;
-            }
+          i {
+            font-size: 0.8em;
+            margin-left: 2px;
+            transition: transform 0.3s var(--ease-spring);
           }
+        }
+
+        &--linked:hover &__link-label i {
+          transform: translateX(4px);
         }
       }
     }
@@ -121,16 +184,14 @@ body {
   body {
     .wrapper {
       .homepage-about-me {
-        padding: 70px 0;
+        padding: 60px 0;
 
-        .about-me-header {
-          .title {
-            font-size: 2em;
-          }
+        .about-me-header__title {
+          font-size: 2.2em;
         }
 
         .skill-card {
-          padding: 20px;
+          padding: 18px 20px;
         }
       }
     }
@@ -144,10 +205,8 @@ body {
   body {
     .wrapper {
       .homepage-about-me {
-        .about-me-header {
-          .title {
-            font-size: 2.2em;
-          }
+        .about-me-header__title {
+          font-size: 2.4em;
         }
       }
     }
@@ -165,19 +224,15 @@ body {
 
         .skills-grid {
           flex-direction: column;
+          gap: 12px;
         }
 
-        .about-me-header {
-          text-align: center;
-          padding-left: 0;
-
-          .title {
-            font-size: 1.8em;
-          }
+        .about-me-header__title {
+          font-size: 1.8em;
         }
 
         .skill-card {
-          padding: 18px;
+          padding: 16px 18px;
 
           &:hover {
             transform: translateY(-4px);
@@ -199,27 +254,25 @@ body {
 
         .skills-grid {
           flex-direction: column;
+          gap: 8px;
         }
 
         .about-me-header {
-          text-align: center;
-          padding-left: 0;
-          margin-bottom: 24px;
+          margin-bottom: 28px;
+        }
 
-          .title {
-            font-size: 1.6em;
-          }
+        .about-me-header__title {
+          font-size: 1.6em;
+        }
 
-          .category {
-            font-size: 0.75em;
-          }
+        .about-me-header__category {
+          font-size: 0.72em;
         }
 
         .skill-card {
-          padding: 16px;
-          margin-bottom: 12px;
+          padding: 14px 16px;
 
-          .info-title {
+          &__title {
             font-size: 1.05em !important;
           }
 
