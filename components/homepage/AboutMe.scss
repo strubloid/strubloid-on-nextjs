@@ -1,12 +1,17 @@
+// ============================================================
+// Homepage — About Me Section (Glassmorphism Cards)
+// ============================================================
+
 body {
   .wrapper {
-    .homepage-about-me{
+    .homepage-about-me {
       background-image: url("/img/rafael-mendes.jpg");
       background-size: cover;
       background-position: center;
       position: relative;
       padding: 100px 0;
 
+      // Dark overlay for readability
       &::before {
         content: '';
         position: absolute;
@@ -14,9 +19,11 @@ body {
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg,
+        background: linear-gradient(
+          135deg,
           rgba(61, 46, 34, 0.92) 0%,
-          rgba(26, 20, 18, 0.88) 100%);
+          rgba(26, 20, 18, 0.88) 100%
+        );
         z-index: 0;
       }
 
@@ -25,6 +32,7 @@ body {
         z-index: 1;
       }
 
+      // Section header
       .about-me-header {
         margin-bottom: 40px;
         padding-left: 15px;
@@ -47,6 +55,7 @@ body {
         }
       }
 
+      // Glassmorphism skill cards
       .skill-card {
         background: rgba(255, 255, 255, 0.06);
         backdrop-filter: blur(10px);
@@ -94,15 +103,19 @@ body {
   }
 }
 
-// Tablet  (portrait)
+// ------------------------------------------------------------
+// Responsive: Tablet (portrait)
+// ------------------------------------------------------------
 @media (min-width: 768px) and (max-width: 1024px) {
   body {
     .wrapper {
       .homepage-about-me {
         padding: 70px 0;
 
-        .about-me-header .title {
-          font-size: 2em;
+        .about-me-header {
+          .title {
+            font-size: 2em;
+          }
         }
 
         .skill-card {
@@ -113,20 +126,26 @@ body {
   }
 }
 
-// Tablet  (landscape)
+// ------------------------------------------------------------
+// Responsive: Tablet (landscape)
+// ------------------------------------------------------------
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
   body {
     .wrapper {
       .homepage-about-me {
-        .about-me-header .title {
-          font-size: 2.2em;
+        .about-me-header {
+          .title {
+            font-size: 2.2em;
+          }
         }
       }
     }
   }
 }
 
-// Mobile Landscaoe
+// ------------------------------------------------------------
+// Responsive: Mobile (landscape)
+// ------------------------------------------------------------
 @media (min-width: 481px) and (max-width: 767px) {
   body {
     .wrapper {
@@ -146,7 +165,7 @@ body {
           padding: 18px;
 
           &:hover {
-            transform: translateX(0) translateY(-4px);
+            transform: translateY(-4px);
           }
         }
       }
@@ -154,7 +173,9 @@ body {
   }
 }
 
-// Mobile Portrait
+// ------------------------------------------------------------
+// Responsive: Mobile (portrait)
+// ------------------------------------------------------------
 @media (min-width: 320px) and (max-width: 480px) {
   body {
     .wrapper {
@@ -184,7 +205,7 @@ body {
           }
 
           &:hover {
-            transform: translateX(0) translateY(-4px);
+            transform: translateY(-4px);
           }
         }
       }

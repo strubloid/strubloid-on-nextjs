@@ -1,111 +1,161 @@
+// ============================================================
+// Contact Me — Hero Header
+// ============================================================
+
 body {
   .wrapper {
-    .contact-me-header{
+    .contact-me-header {
       background-image: url("/img/dublin-contact.jpg");
     }
-  }
-}
 
-/* ──────────────────────────────────────────────
-   SECTION: Modern Contact Hero (2025 Organic)
-   ────────────────────────────────────────────── */
+    // Modern hero overlay
+    .contact-hero {
+      position: relative;
+      overflow: hidden;
 
-.contact-hero {
-  position: relative;
-  overflow: hidden;
+      .contact-hero-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          135deg,
+          rgba(43, 88, 118, 0.7) 0%,
+          rgba(78, 67, 118, 0.6) 50%,
+          rgba(107, 91, 78, 0.7) 100%
+        );
+        z-index: 2;
+      }
 
-  .contact-hero-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(
-      135deg,
-      rgba(43, 88, 118, 0.7) 0%,
-      rgba(78, 67, 118, 0.6) 50%,
-      rgba(107, 91, 78, 0.7) 100%
-    );
-    z-index: 2;
-  }
+      .contact-hero-title {
+        font-family: var(--font-display);
+        font-size: 3.5rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--color-cream);
+        margin-bottom: 0.75rem;
+        text-align: center;
+      }
 
-  .contact-hero-title {
-    font-family: var(--font-display, 'Montserrat', sans-serif);
-    font-size: 3.5rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--color-cream, #FFF8F0);
-    margin-bottom: 0.75rem;
-    text-align: center;
+      .contact-hero-subtitle {
+        font-size: 1.15rem;
+        color: rgba(255, 248, 240, 0.7);
+        letter-spacing: 0.02em;
+        text-align: center;
+      }
 
-    @media (max-width: 768px) {
-      font-size: 2.2rem;
+      // Decorative blobs
+      .contact-hero-blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.25;
+        animation: blobMorph 12s ease-in-out infinite alternate;
+        pointer-events: none;
+      }
+
+      .contact-blob-1 {
+        width: 350px;
+        height: 350px;
+        background: var(--color-brazil-gold);
+        top: -10%;
+        right: -5%;
+      }
+
+      .contact-blob-2 {
+        width: 280px;
+        height: 280px;
+        background: var(--color-brazil-green);
+        bottom: -10%;
+        left: -5%;
+        animation-delay: -6s;
+      }
     }
   }
-
-  .contact-hero-subtitle {
-    font-size: 1.15rem;
-    color: rgba(255, 248, 240, 0.7);
-    letter-spacing: 0.02em;
-    text-align: center;
-  }
-
-  .contact-hero-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.25;
-    animation: blobMorph 12s ease-in-out infinite alternate;
-    pointer-events: none;
-  }
-
-  .contact-blob-1 {
-    width: 350px;
-    height: 350px;
-    background: var(--color-brazil-gold, #E8B631);
-    top: -10%;
-    right: -5%;
-  }
-
-  .contact-blob-2 {
-    width: 280px;
-    height: 280px;
-    background: var(--color-brazil-green, #2D9B55);
-    bottom: -10%;
-    left: -5%;
-    animation-delay: -6s;
-  }
 }
 
-// Tablet  (portrait)
+// ------------------------------------------------------------
+// Responsive: Tablet (portrait)
+// ------------------------------------------------------------
 @media (min-width: 768px) and (max-width: 1024px) {
   body {
     .wrapper {
+      .contact-hero {
+        .contact-hero-title {
+          font-size: 2.8rem;
+        }
+      }
     }
   }
 }
 
-// Tablet  (landscape)
+// ------------------------------------------------------------
+// Responsive: Tablet (landscape)
+// ------------------------------------------------------------
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
   body {
     .wrapper {
+      .contact-hero {
+        .contact-hero-title {
+          font-size: 3rem;
+        }
+      }
     }
   }
 }
 
-// Mobile Landscaoe
+// ------------------------------------------------------------
+// Responsive: Mobile (landscape)
+// ------------------------------------------------------------
 @media (min-width: 481px) and (max-width: 767px) {
   body {
     .wrapper {
+      .contact-hero {
+        .contact-hero-title {
+          font-size: 2.4rem;
+        }
+
+        .contact-hero-subtitle {
+          font-size: 1rem;
+        }
+
+        .contact-blob-1 {
+          width: 250px;
+          height: 250px;
+        }
+
+        .contact-blob-2 {
+          width: 200px;
+          height: 200px;
+        }
+      }
     }
   }
 }
 
-// Mobile Portrait
+// ------------------------------------------------------------
+// Responsive: Mobile (portrait)
+// ------------------------------------------------------------
 @media (min-width: 320px) and (max-width: 480px) {
   body {
     .wrapper {
+      .contact-hero {
+        .contact-hero-title {
+          font-size: 2.2rem;
+        }
+
+        .contact-hero-subtitle {
+          font-size: 0.95rem;
+          padding: 0 1rem;
+        }
+
+        .contact-blob-1,
+        .contact-blob-2 {
+          display: none;
+        }
+      }
     }
   }
 }

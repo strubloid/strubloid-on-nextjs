@@ -1,43 +1,12 @@
-@-webkit-keyframes fontgradient {
-  0% {
-    background-position: 0% 0%
-    //background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 100%
-  }
-  750% {
-    background-position: 50% 50%
-    //background-position: 0% 100%
-  }
-  100% {
-    background-position: 100% 100%
-    //background-position: 0% 0%
-  }
-}
+// ============================================================
+// Homepage — GitHub Section
+// ============================================================
 
-@-moz-keyframes fontgradient {
-  0% {
-    background-position: 0% 92%
-  }
-  50% {
-    background-position: 100% 9%
-  }
-  100% {
-    background-position: 0% 92%
-  }
-}
-
+// Keyframes: GitHub icon gradient animation
 @keyframes fontgradient {
-  0% {
-    background-position: 0% 92%
-  }
-  50% {
-    background-position: 100% 9%
-  }
-  100% {
-    background-position: 0% 92%
-  }
+  0%   { background-position: 0% 92%; }
+  50%  { background-position: 100% 9%; }
+  100% { background-position: 0% 92%; }
 }
 
 body {
@@ -61,23 +30,32 @@ body {
         z-index: 1;
       }
 
+      // Section heading area
       .section-description {
         .title {
           color: var(--color-espresso);
           font-family: var(--font-heading);
           font-size: 2.8em;
-          font-weight: 700; }
+          font-weight: 700;
+        }
+
         .title + .category {
-          margin-top: 0; }
+          margin-top: 0;
+        }
+
         .category {
           color: var(--color-accent);
           font-weight: 600;
-          letter-spacing: 0.1em; }
+          letter-spacing: 0.1em;
+        }
+
         .description {
           color: var(--text-secondary);
-          line-height: 1.8; }
+          line-height: 1.8;
+        }
       }
 
+      // CTA button
       .github-buttons {
         a {
           background: linear-gradient(135deg, var(--color-brazil-green), var(--color-brazil-gold));
@@ -97,6 +75,7 @@ body {
         }
       }
 
+      // Repository cards
       .card-background {
         background: var(--surface-elevated);
         max-height: 380px;
@@ -108,7 +87,7 @@ body {
         overflow: hidden;
         transition: all 0.4s var(--ease-spring);
 
-        // Brazilian accent gradient strip at top
+        // Brazilian accent gradient strip
         &::before {
           content: '';
           position: absolute;
@@ -120,16 +99,17 @@ body {
           border-radius: var(--radius-lg) var(--radius-lg) 0 0;
         }
 
-        &:after{
+        &::after {
           background: none;
         }
+
         &:hover {
           transform: translateY(-6px);
           box-shadow: var(--shadow-card-hover);
         }
 
         ul {
-          margin: 10px auto 0px auto;
+          margin: 10px auto 0;
 
           li {
             padding: 8px 0;
@@ -140,10 +120,10 @@ body {
               color: var(--color-accent);
               margin-right: 4px;
             }
-          }
 
-          li:hover {
-            transform: translateX(4px);
+            &:hover {
+              transform: translateX(4px);
+            }
           }
         }
 
@@ -154,6 +134,7 @@ body {
         }
       }
 
+      // GitHub icon column
       .github-column {
         .github-background-container {
           display: flex;
@@ -162,7 +143,7 @@ body {
 
           .fa-github {
             font-size: 18rem;
-            padding: 0px 0px 0px 20px;
+            padding: 0 0 0 20px;
             float: left;
             background: linear-gradient(135deg, var(--color-brazil-green), var(--color-brazil-gold));
             -webkit-background-clip: text;
@@ -180,59 +161,40 @@ body {
           }
         }
       }
-
     }
   }
 }
 
-// Tablet  (portrait)
+// ------------------------------------------------------------
+// Responsive: Tablet (portrait)
+// ------------------------------------------------------------
 @media (min-width: 768px) and (max-width: 1024px) {
   body {
     .wrapper {
       .section-github {
-        .github-buttons {
-          a {
-            &:hover {
-
-            }
-          }
-        }
-
-        .card-background {
-          &:hover {
-
-          }
-        }
+        padding: 80px 0;
 
         .github-column {
           display: none;
+        }
+
+        .section-description .title {
+          font-size: 2.4em;
         }
       }
     }
   }
 }
 
-// Tablet  (landscape)
+// ------------------------------------------------------------
+// Responsive: Tablet (landscape)
+// ------------------------------------------------------------
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
   body {
     .wrapper {
       .section-github {
-        .github-buttons {
-          a {
-            &:hover {
-
-            }
-          }
-        }
-
-        .card-background {
-          &:hover {
-
-          }
-
-          .card-body {
-            max-height: 435px;
-          }
+        .card-background .card-body {
+          max-height: 435px;
         }
 
         .github-column {
@@ -251,21 +213,21 @@ body {
   }
 }
 
-// Mobile Landscaoe
+// ------------------------------------------------------------
+// Responsive: Mobile (landscape)
+// ------------------------------------------------------------
 @media (min-width: 481px) and (max-width: 767px) {
   body {
     .wrapper {
       .section-github {
-        .github-buttons {
-          a {
-            &:hover {
+        padding: 60px 0;
 
-            }
-          }
+        .section-description .title {
+          font-size: 2em;
         }
 
         .card-background {
-          margin: 0px auto;
+          margin: 0 auto;
           max-width: 21em;
           max-height: 400px;
         }
@@ -278,23 +240,29 @@ body {
   }
 }
 
-// Mobile Portrait
+// ------------------------------------------------------------
+// Responsive: Mobile (portrait)
+// ------------------------------------------------------------
 @media (min-width: 320px) and (max-width: 480px) {
   body {
     .wrapper {
       .section-github {
-        .github-buttons {
-          a {
-            display: flex;
-            justify-content: center;
-            margin: 30px auto -10px auto;
-            max-width: 180px;
-            background: linear-gradient(166deg, #009C3B, green, #ffdf00) 525px 0/25em 10%;
-          }
+        padding: 50px 0;
+
+        .section-description .title {
+          font-size: 1.8em;
+        }
+
+        .github-buttons a {
+          display: flex;
+          justify-content: center;
+          margin: 30px auto -10px auto;
+          max-width: 180px;
+          background: linear-gradient(166deg, #009C3B, green, #ffdf00);
         }
 
         .card-background {
-          margin: 0px auto;
+          margin: 0 auto;
           max-width: 21em;
           display: flex;
           justify-content: center;

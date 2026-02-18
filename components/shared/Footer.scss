@@ -1,6 +1,16 @@
+// ==========================================================================
+// Footer
+// Base footer styles, legacy data-background-color theme overrides, and
+// modern Organic & Warm footer (2025 redesign).
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Section: Base Footer Styles
+// --------------------------------------------------------------------------
 .footer {
   padding: 1.125rem 0;
   text-align: center;
+
   nav {
     display: inline-block;
     float: left;
@@ -71,25 +81,35 @@
     clear: both;
     content: " ";
   }
-}
-.footer.footer-default {
-  background-color: #f2f2f2;
-}
-.footer.footer-white {
-  background-color: #FFFFFF;
-}
-.footer.footer-big {
-  padding: 30px 0;
-  .social-feed {
-    i {
+
+  // --------------------------------------------------------------------------
+  // Variant: Default (gray background)
+  // --------------------------------------------------------------------------
+  &.footer-default {
+    background-color: #f2f2f2;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variant: White
+  // --------------------------------------------------------------------------
+  &.footer-white {
+    background-color: #FFFFFF;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variant: Big (social feed + gallery)
+  // --------------------------------------------------------------------------
+  &.footer-big {
+    padding: 30px 0;
+
+    .social-feed i {
       font-size: 20px;
       float: left;
       padding-right: 10px;
       padding-bottom: 30px;
     }
-  }
-  .gallery-feed {
-    img {
+
+    .gallery-feed img {
       width: 20%;
       margin-right: 5%;
       margin-bottom: 5%;
@@ -97,12 +117,19 @@
     }
   }
 }
+// --------------------------------------------------------------------------
+// Section: Legacy — Data Background Color Theme Overrides
+// These utility classes override text/element colors on dark backgrounds.
+// Inherited from Now UI Kit — kept as-is for framework compatibility.
+// --------------------------------------------------------------------------
 [data-background-color="orange"] {
   background-color: #e95e38;
 }
+
 [data-background-color="black"] {
   background-color: #2c2c2c;
 }
+
 [data-background-color] {
   &:not([data-background-color="gray"]) {
     color: #FFFFFF;
@@ -647,18 +674,17 @@
   }
 }
 
-/* ──────────────────────────────────────────────
-   SECTION: Modern Organic & Warm Footer (2025)
-   ────────────────────────────────────────────── */
-
+// --------------------------------------------------------------------------
+// Section: Modern Organic & Warm Footer (2025 Redesign)
+// --------------------------------------------------------------------------
 .footer.footer-modern {
-  background: var(--color-charcoal, #1A1412);
+  background: var(--color-charcoal);
   padding: 4rem 0 0;
   text-align: left;
   position: relative;
   overflow: hidden;
 
-  // subtle organic texture
+  // Top gradient accent line
   &::before {
     content: '';
     position: absolute;
@@ -668,32 +694,28 @@
     height: 4px;
     background: linear-gradient(
       90deg,
-      var(--color-brazil-green, #2D9B55) 0%,
-      var(--color-brazil-gold, #E8B631) 50%,
-      var(--color-accent, #E07B4C) 100%
+      var(--color-brazil-green) 0%,
+      var(--color-brazil-gold) 50%,
+      var(--color-accent) 100%
     );
   }
 
+  // Grid layout for footer columns
   .footer-content {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     gap: 3rem;
     padding-bottom: 3rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      text-align: center;
-    }
   }
 
+  // Brand section — name + tagline
   .footer-brand-section {
     .footer-brand-name {
-      font-family: var(--font-display, 'Montserrat', sans-serif);
+      font-family: var(--font-display);
       font-size: 1.5rem;
       font-weight: 700;
-      color: var(--color-cream, #FFF8F0);
+      color: var(--color-cream);
       margin-bottom: 0.75rem;
       letter-spacing: -0.02em;
     }
@@ -703,21 +725,18 @@
       font-size: 0.95rem;
       line-height: 1.6;
       max-width: 320px;
-
-      @media (max-width: 768px) {
-        max-width: none;
-      }
     }
   }
 
+  // Navigation links column
   .footer-nav-section {
     .footer-nav-title {
-      font-family: var(--font-display, 'Montserrat', sans-serif);
+      font-family: var(--font-display);
       font-size: 0.8rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--color-brazil-gold, #E8B631);
+      color: var(--color-brazil-gold);
       margin-bottom: 1.25rem;
     }
 
@@ -733,12 +752,12 @@
           color: rgba(255, 248, 240, 0.6);
           text-decoration: none;
           font-size: 0.95rem;
-          transition: color 0.3s var(--ease-out-expo, ease),
-                      transform 0.3s var(--ease-out-expo, ease);
+          transition: color 0.3s var(--ease-out-expo),
+                      transform 0.3s var(--ease-out-expo);
           display: inline-block;
 
           &:hover {
-            color: var(--color-cream, #FFF8F0);
+            color: var(--color-cream);
             transform: translateX(4px);
           }
         }
@@ -746,14 +765,15 @@
     }
   }
 
+  // Social links column
   .footer-social-section {
     .footer-nav-title {
-      font-family: var(--font-display, 'Montserrat', sans-serif);
+      font-family: var(--font-display);
       font-size: 0.8rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--color-brazil-gold, #E8B631);
+      color: var(--color-brazil-gold);
       margin-bottom: 1.25rem;
     }
 
@@ -761,28 +781,24 @@
       display: flex;
       gap: 1rem;
 
-      @media (max-width: 768px) {
-        justify-content: center;
-      }
-
       a {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 44px;
         height: 44px;
-        border-radius: var(--radius-md, 12px);
+        border-radius: var(--radius-md);
         background: rgba(255, 255, 255, 0.06);
         border: 1px solid rgba(255, 255, 255, 0.08);
         color: rgba(255, 248, 240, 0.6);
         font-size: 1.2rem;
-        transition: all 0.4s var(--ease-out-expo, ease);
+        transition: all 0.4s var(--ease-out-expo);
         text-decoration: none;
 
         &:hover {
           background: rgba(255, 255, 255, 0.12);
-          border-color: var(--color-brazil-gold, #E8B631);
-          color: var(--color-brazil-gold, #E8B631);
+          border-color: var(--color-brazil-gold);
+          color: var(--color-brazil-gold);
           transform: translateY(-3px);
           box-shadow: 0 8px 24px rgba(232, 182, 49, 0.15);
         }
@@ -790,6 +806,7 @@
     }
   }
 
+  // Bottom bar — copyright + accent line
   .footer-bottom {
     display: flex;
     align-items: center;
@@ -806,14 +823,90 @@
     .footer-accent-line {
       width: 60px;
       height: 3px;
-      border-radius: var(--radius-full, 9999px);
+      border-radius: var(--radius-full);
       background: linear-gradient(
         90deg,
-        var(--color-brazil-green, #2D9B55),
-        var(--color-brazil-gold, #E8B631)
+        var(--color-brazil-green),
+        var(--color-brazil-gold)
       );
       margin-top: 1rem;
       opacity: 0.6;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Responsive — Tablet Portrait (768px – 1024px)
+  // --------------------------------------------------------------------------
+  @media (min-width: 768px) and (max-width: 1024px) {
+    padding: 3rem 0 0;
+
+    .footer-content {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .footer-brand-section {
+      grid-column: 1 / -1;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Responsive — Tablet Landscape (768px – 1024px, landscape)
+  // --------------------------------------------------------------------------
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .footer-content {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+
+    .footer-brand-section {
+      grid-column: auto;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Responsive — Mobile Landscape (481px – 767px)
+  // --------------------------------------------------------------------------
+  @media (min-width: 481px) and (max-width: 767px) {
+    padding: 2.5rem 0 0;
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .footer-brand-section .footer-tagline {
+      max-width: none;
+    }
+
+    .footer-social-section .social-links {
+      justify-content: center;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Responsive — Mobile Portrait (320px – 480px)
+  // --------------------------------------------------------------------------
+  @media (min-width: 320px) and (max-width: 480px) {
+    padding: 2rem 0 0;
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .footer-brand-section .footer-tagline {
+      max-width: none;
+      font-size: 0.9rem;
+    }
+
+    .footer-social-section .social-links {
+      justify-content: center;
+    }
+
+    .footer-bottom .copyright {
+      font-size: 0.8rem;
     }
   }
 }

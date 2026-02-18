@@ -442,21 +442,12 @@ body {
 // --------------------------------------------------
 .section-spacer {
     padding: var(--space-3xl) 0;
-
-    @media (max-width: 768px) {
-        padding: var(--space-2xl) 0;
-    }
 }
 
 // --------------------------------------------------
 // Responsive container padding
+// Handled in consolidated responsive section below.
 // --------------------------------------------------
-@media (max-width: 576px) {
-    .container {
-        padding-left: var(--space-lg);
-        padding-right: var(--space-lg);
-    }
-}
 
 // --------------------------------------------------
 // Smooth image loading
@@ -492,5 +483,42 @@ img {
 
     &:hover {
         background: var(--color-clay);
+    }
+}
+
+// --------------------------------------------------
+// Responsive — Tablet Portrait (768px – 1024px)
+// --------------------------------------------------
+@media (min-width: 768px) and (max-width: 1024px) {
+    .section-spacer {
+        padding: var(--space-2xl) 0;
+    }
+}
+
+// --------------------------------------------------
+// Responsive — Tablet Landscape (768px – 1024px, landscape)
+// --------------------------------------------------
+// No overrides needed at this breakpoint.
+
+// --------------------------------------------------
+// Responsive — Mobile Landscape (481px – 767px)
+// --------------------------------------------------
+@media (min-width: 481px) and (max-width: 767px) {
+    .section-spacer {
+        padding: var(--space-2xl) 0;
+    }
+}
+
+// --------------------------------------------------
+// Responsive — Mobile Portrait (320px – 480px)
+// --------------------------------------------------
+@media (min-width: 320px) and (max-width: 480px) {
+    .section-spacer {
+        padding: var(--space-xl) 0;
+    }
+
+    .container {
+        padding-left: var(--space-lg);
+        padding-right: var(--space-lg);
     }
 }

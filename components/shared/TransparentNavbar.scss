@@ -8,11 +8,8 @@
 .nav-item .nav-link,
 .navbar,
 .nav-tabs .nav-link {
-    -webkit-transition: all 300ms ease 0s;
-    -moz-transition: all 300ms ease 0s;
-    -o-transition: all 300ms ease 0s;
-    -ms-transition: all 300ms ease 0s;
-    transition: all 300ms ease 0s; }
+    transition: all 300ms ease 0s;
+}
 
 // ============================================================
 // Section 2: Base .btn styles that reference .navbar .navbar-nav > a.btn
@@ -986,10 +983,35 @@ fieldset[disabled]
 
 // ============================================================
 // Section 7: Modern Organic & Warm Overrides (2025)
+// Proper SCSS nesting for the redesigned navbar.
 // ============================================================
 
-// --- Glassmorphism navbar (scrolled state) ---
-.navbar.bg-white:not(.navbar-transparent) {
+.navbar {
+
+  // Brand styling (shared base)
+  .navbar-brand {
+    font-family: var(--font-display);
+    font-size: 1.1em;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  // Nav link pill shape on hover (shared base)
+  .navbar-nav .nav-item .nav-link {
+    border-radius: var(--radius-full);
+    transition: all 0.3s var(--ease-spring);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  // btn-default pill override
+  .navbar-nav .nav-link.btn-default {
+    border-radius: var(--radius-full);
+  }
+
+  // --- Glassmorphism state (scrolled / white bg) ---
+  &.bg-white:not(.navbar-transparent) {
     background: var(--glass-bg) !important;
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -997,87 +1019,117 @@ fieldset[disabled]
     box-shadow: var(--shadow-md);
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    transition: all 0.5s var(--ease-out-expo); }
+    transition: all 0.5s var(--ease-out-expo);
 
-// --- Transparent navbar (over hero) ---
-.navbar.navbar-transparent {
-    transition: all 0.5s var(--ease-out-expo); }
+    .navbar-brand {
+      color: var(--color-espresso) !important;
+    }
 
-// --- Brand styling ---
-.navbar .navbar-brand {
-    font-family: var(--font-display);
-    font-size: 1.1em;
-    letter-spacing: 0.05em;
-    font-weight: 600;
-    transition: color 0.3s ease; }
+    .navbar-nav .nav-item .nav-link:hover,
+    .navbar-nav .nav-item .nav-link:focus {
+      background-color: var(--color-sand);
+      border-radius: var(--radius-full);
+      color: var(--color-accent-dark);
 
-.navbar.navbar-transparent .navbar-brand {
-    color: #FFFFFF !important; }
+      p { color: var(--color-accent-dark); }
+    }
 
-.navbar.bg-white:not(.navbar-transparent) .navbar-brand {
-    color: var(--color-espresso) !important; }
+    .navbar-nav .nav-link.btn-default:hover,
+    .navbar-nav .nav-link.btn-default:focus {
+      background-color: var(--color-sand);
+      color: var(--color-accent-dark);
+    }
 
-// --- Nav link pill shape on hover ---
-.navbar .navbar-nav .nav-item .nav-link {
-    border-radius: var(--radius-full);
-    transition: all 0.3s var(--ease-spring);
-    font-weight: 500;
-    letter-spacing: 0.03em; }
+    .navbar-toggler-bar {
+      background: var(--color-espresso);
+    }
+  }
 
-// Transparent state hovers
-.navbar.navbar-transparent .navbar-nav .nav-item .nav-link:hover,
-.navbar.navbar-transparent .navbar-nav .nav-item .nav-link:focus {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: var(--radius-full);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px); }
+  // --- Transparent state (over hero) ---
+  &.navbar-transparent {
+    transition: all 0.5s var(--ease-out-expo);
 
-// White state hovers
-.navbar.bg-white:not(.navbar-transparent) .navbar-nav .nav-item .nav-link:hover,
-.navbar.bg-white:not(.navbar-transparent) .navbar-nav .nav-item .nav-link:focus {
-    background-color: var(--color-sand);
-    border-radius: var(--radius-full);
-    color: var(--color-accent-dark); }
+    .navbar-brand {
+      color: #FFFFFF !important;
+    }
 
-.navbar.bg-white:not(.navbar-transparent) .navbar-nav .nav-item .nav-link:hover p,
-.navbar.bg-white:not(.navbar-transparent) .navbar-nav .nav-item .nav-link:focus p {
-    color: var(--color-accent-dark); }
-
-// --- btn-default pill override ---
-.navbar .navbar-nav .nav-link.btn-default {
-    border-radius: var(--radius-full); }
-
-.navbar.bg-white:not(.navbar-transparent) .navbar-nav .nav-link.btn-default:hover,
-.navbar.bg-white:not(.navbar-transparent) .navbar-nav .nav-link.btn-default:focus {
-    background-color: var(--color-sand);
-    color: var(--color-accent-dark); }
+    .navbar-nav .nav-item .nav-link:hover,
+    .navbar-nav .nav-item .nav-link:focus {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+  }
+}
 
 // --- Dropdown modern style ---
 .dropdown-menu {
-    border-radius: var(--radius-lg) !important;
-    box-shadow: var(--shadow-lg) !important;
-    border: 1px solid var(--glass-border) !important;
-    padding: var(--space-sm) !important;
-    background: var(--surface-elevated) !important;
-    overflow: hidden; }
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid var(--glass-border) !important;
+  padding: var(--space-sm) !important;
+  background: var(--surface-elevated) !important;
+  overflow: hidden;
 
-.dropdown-menu .dropdown-item {
+  .dropdown-item {
     border-radius: var(--radius-md);
     padding: 10px 16px;
     font-weight: 500;
-    transition: all 0.2s var(--ease-spring); }
+    transition: all 0.2s var(--ease-spring);
 
-.dropdown-menu .dropdown-item:hover,
-.dropdown-menu .dropdown-item:focus {
-    background-color: var(--color-sand) !important;
-    color: var(--color-accent-dark) !important;
-    transform: translateX(4px); }
+    &:hover,
+    &:focus {
+      background-color: var(--color-sand) !important;
+      color: var(--color-accent-dark) !important;
+      transform: translateX(4px);
+    }
 
-.dropdown-menu .dropdown-item i {
-    margin-right: 8px;
-    color: var(--color-accent); }
+    i {
+      margin-right: 8px;
+      color: var(--color-accent);
+    }
+  }
+}
 
-// --- Hamburger bars warm color ---
-.navbar.bg-white:not(.navbar-transparent) .navbar-toggler-bar {
-    background: var(--color-espresso); }
+// --------------------------------------------------------------------------
+// Responsive — Tablet Portrait (768px – 1024px)
+// --------------------------------------------------------------------------
+@media (min-width: 768px) and (max-width: 1024px) {
+  .navbar .navbar-brand {
+    font-size: 1em;
+  }
+
+  .navbar .navbar-nav .nav-link:not(.btn) {
+    font-size: 0.65em;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Responsive — Tablet Landscape (768px – 1024px, landscape)
+// --------------------------------------------------------------------------
+// No additional overrides — tablet landscape inherits desktop styles.
+
+// --------------------------------------------------------------------------
+// Responsive — Mobile Landscape (481px – 767px)
+// --------------------------------------------------------------------------
+@media (min-width: 481px) and (max-width: 767px) {
+  .navbar .navbar-brand {
+    font-size: 0.95em;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Responsive — Mobile Portrait (320px – 480px)
+// --------------------------------------------------------------------------
+@media (min-width: 320px) and (max-width: 480px) {
+  .navbar .navbar-brand {
+    font-size: 0.9em;
+  }
+
+  .navbar.navbar-transparent {
+    padding-top: 12px !important;
+  }
+}
 
