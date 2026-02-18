@@ -18,15 +18,15 @@ interface FlickrGalleryProps {
  */
 const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [isPlaying, setIsPlaying]     = useState(true);
-    const intervalRef        = useRef<ReturnType<typeof setInterval> | null>(null);
-    const thumbStripRef      = useRef<HTMLDivElement>(null);
-    const galleryRef         = useRef<HTMLDivElement>(null);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const thumbStripRef = useRef<HTMLDivElement>(null);
+    const galleryRef = useRef<HTMLDivElement>(null);
     // True only when the user explicitly clicked the pause button.
     // Hover and scroll-back will NOT resume if this is true.
-    const manuallyPausedRef  = useRef(false);
+    const manuallyPausedRef = useRef(false);
 
-    const total   = photos.length;
+    const total = photos.length;
     const current = photos[activeIndex] ?? null;
 
     // ── Auto-play interval ───────────────────────────────────
@@ -100,12 +100,12 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
     );
 
     const prev = useCallback(() => goTo((activeIndex - 1 + total) % total), [activeIndex, total, goTo]);
-    const next = useCallback(() => goTo((activeIndex + 1) % total),         [activeIndex, total, goTo]);
+    const next = useCallback(() => goTo((activeIndex + 1) % total), [activeIndex, total, goTo]);
 
     // ── Keyboard ─────────────────────────────────────────────
     useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
-            if (e.key === "ArrowLeft")       prev();
+            if (e.key === "ArrowLeft") prev();
             else if (e.key === "ArrowRight") next();
             else if (e.key === " ") {
                 e.preventDefault();
@@ -140,14 +140,7 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
         <div className="flickr-gallery" ref={galleryRef} onMouseEnter={handleMouseEnter}>
             {/* ── Main viewer ──────────────────────────────── */}
             <div className="flickr-gallery__viewer">
-                <BrushTransition
-                    src={current!.url_l || current!.url_c}
-                    alt={current!.title}
-                    width={900}
-                    height={600}
-                    duration={1300}
-                    className="flickr-gallery__canvas-wrap"
-                />
+                <BrushTransition src={current!.url_l || current!.url_c} alt={current!.title} width={900} height={600} duration={1300} className="flickr-gallery__canvas-wrap" />
 
                 {/* Navigation arrows */}
                 <button className="flickr-gallery__arrow flickr-gallery__arrow--prev" onClick={prev} aria-label="Previous photo">
@@ -158,11 +151,7 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
                 </button>
 
                 {/* Play / Pause */}
-                <button
-                    className="flickr-gallery__play-btn"
-                    onClick={handleTogglePlay}
-                    aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-                >
+                <button className="flickr-gallery__play-btn" onClick={handleTogglePlay} aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}>
                     <i className={`now-ui-icons media-1_button-${isPlaying ? "pause" : "play"}`} />
                 </button>
 
@@ -185,7 +174,7 @@ const FlickrGallery: React.FC<FlickrGalleryProps> = ({ photos }) => {
                         onClick={() => goTo(idx)}
                         aria-label={`View ${photo.title}`}
                     >
-                        <img src={photo.url_z} alt={photo.title} loading="lazy" draggable={false} />
+                        <img src={photo.url_z} alt={photo.title} draggable={false} />
                     </button>
                 ))}
             </div>
