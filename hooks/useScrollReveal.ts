@@ -4,6 +4,8 @@ interface ScrollRevealOptions {
     threshold?: number;
     rootMargin?: string;
     staggerDelay?: number;
+    /** When true, elements re-hide when scrolled out of view */
+    reversible?: boolean;
 }
 
 /**
@@ -22,7 +24,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
     options: ScrollRevealOptions = {}
 ) {
     const ref = useRef<T>(null);
-    const { threshold = 0.15, rootMargin = "0px 0px -60px 0px", staggerDelay = 120 } = options;
+    const { threshold = 0.15, rootMargin = "0px 0px -60px 0px", staggerDelay = 120, reversible = false } = options;
 
     const setupObserver = useCallback(() => {
         if (!ref.current) return;
@@ -30,20 +32,37 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
         const elements = ref.current.querySelectorAll("[data-reveal]");
         if (elements.length === 0) return;
 
+        // Track pending reveal timeouts so we can cancel on un-intersect
+        const pendingTimeouts = new Map<Element, ReturnType<typeof setTimeout>>();
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
+                    const el = entry.target as HTMLElement;
+
                     if (entry.isIntersecting) {
-                        const el = entry.target as HTMLElement;
                         const delay = el.dataset.revealDelay
                             ? parseInt(el.dataset.revealDelay, 10)
                             : 0;
 
-                        setTimeout(() => {
+                        const timeoutId = setTimeout(() => {
                             el.classList.add("revealed");
+                            pendingTimeouts.delete(el);
                         }, delay);
 
-                        observer.unobserve(el);
+                        pendingTimeouts.set(el, timeoutId);
+
+                        if (!reversible) {
+                            observer.unobserve(el);
+                        }
+                    } else if (reversible) {
+                        // Cancel pending reveal if element left viewport before timeout fired
+                        const pending = pendingTimeouts.get(el);
+                        if (pending) {
+                            clearTimeout(pending);
+                            pendingTimeouts.delete(el);
+                        }
+                        el.classList.remove("revealed");
                     }
                 });
             },

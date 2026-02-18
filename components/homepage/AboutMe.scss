@@ -55,6 +55,17 @@ body {
         }
       }
 
+      // Two-column skills grid
+      .skills-grid {
+        display: flex;
+        gap: 0;
+      }
+
+      .skills-column {
+        display: flex;
+        flex-direction: column;
+      }
+
       // Glassmorphism skill cards
       .skill-card {
         background: rgba(255, 255, 255, 0.06);
@@ -152,6 +163,10 @@ body {
       .homepage-about-me {
         padding: 50px 0;
 
+        .skills-grid {
+          flex-direction: column;
+        }
+
         .about-me-header {
           text-align: center;
           padding-left: 0;
@@ -181,6 +196,10 @@ body {
     .wrapper {
       .homepage-about-me {
         padding: 40px 0;
+
+        .skills-grid {
+          flex-direction: column;
+        }
 
         .about-me-header {
           text-align: center;

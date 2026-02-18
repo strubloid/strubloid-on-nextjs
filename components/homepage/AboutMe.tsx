@@ -16,40 +16,51 @@ interface AboutMeProps {
 }
 
 const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
-    const revealRef = useScrollReveal<HTMLDivElement>({ threshold: 0.08, staggerDelay: 150 });
+    const revealRef = useScrollReveal<HTMLDivElement>({ threshold: 0.08, staggerDelay: 150, reversible: true });
+
+    // Split skills into two columns
+    const leftSkills = skills.filter((_, i) => i % 2 === 0);
+    const rightSkills = skills.filter((_, i) => i % 2 === 1);
+
+    const renderCard = (skill: Skill, colIndex: number, direction: "fade-right" | "fade-left") => (
+        <div key={skill.id} className="info info-horizontal skill-card" data-reveal={direction} data-reveal-delay={String(200 + colIndex * 180)}>
+            <div className="icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
+                <i className={skill.icon} />
+            </div>
+            <div className="description">
+                <h5 className="info-title">{skill.title}</h5>
+                <p className="description">
+                    {skill.description}
+                    {skill.link && (
+                        <>
+                            {" "}
+                            <a href={skill.link.url} target="_blank" rel="noopener noreferrer">
+                                {skill.link.text}
+                            </a>
+                        </>
+                    )}
+                </p>
+            </div>
+        </div>
+    );
 
     return (
         <div className="section features-7 section-image homepage-about-me" ref={revealRef}>
             <Container fluid>
                 <Row>
-                    <Col className="px-0" md="6">
+                    <Col md="12">
                         <div className="about-me-header" data-reveal="fade-right">
                             <h6 className="category">Skills & Experience</h6>
                             <h2 className="title">Who Am I</h2>
                         </div>
-                        <Col sm="12">
-                            {skills.map((skill, idx) => (
-                                <div key={skill.id} className="info info-horizontal skill-card" data-reveal="fade-up" data-reveal-delay={String(200 + idx * 150)}>
-                                    <div className="icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
-                                        <i className={skill.icon} />
-                                    </div>
-                                    <div className="description">
-                                        <h5 className="info-title">{skill.title}</h5>
-                                        <p className="description">
-                                            {skill.description}
-                                            {skill.link && (
-                                                <>
-                                                    {" "}
-                                                    <a href={skill.link.url} target="_blank" rel="noopener noreferrer">
-                                                        {skill.link.text}
-                                                    </a>
-                                                </>
-                                            )}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </Col>
+                    </Col>
+                </Row>
+                <Row className="skills-grid">
+                    <Col md="6" className="skills-column skills-column-left">
+                        {leftSkills.map((skill, idx) => renderCard(skill, idx, "fade-right"))}
+                    </Col>
+                    <Col md="6" className="skills-column skills-column-right">
+                        {rightSkills.map((skill, idx) => renderCard(skill, idx, "fade-left"))}
                     </Col>
                 </Row>
             </Container>
