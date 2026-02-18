@@ -110,14 +110,6 @@ body {
           .flickr-gallery__canvas-wrap {
             display: block;
             width: 100%;
-            height: auto;
-            line-height: 0;
-
-            canvas {
-              width: 100% !important;
-              height: auto !important;
-              display: block;
-            }
           }
         }
 

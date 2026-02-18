@@ -88,15 +88,14 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
             if (!canvas || !bgCanvas) return;
 
             const dpr = window.devicePixelRatio || 1;
-            const w = width;
-            const h = height;
+            // Use the actual rendered size so the canvas fills its container
+            const w = canvas.offsetWidth || width;
+            const h = canvas.offsetHeight || height;
 
-            // Size both canvases
+            // Size both canvases to match their rendered dimensions
             [canvas, bgCanvas].forEach((c) => {
                 c.width = w * dpr;
                 c.height = h * dpr;
-                c.style.width = `${w}px`;
-                c.style.height = `${h}px`;
             });
 
             const ctx = canvas.getContext("2d")!;
@@ -226,13 +225,13 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
                     const canvas = canvasRef.current;
                     if (canvas) {
                         const dpr = window.devicePixelRatio || 1;
-                        canvas.width = width * dpr;
-                        canvas.height = height * dpr;
-                        canvas.style.width = `${width}px`;
-                        canvas.style.height = `${height}px`;
+                        const w = canvas.offsetWidth || width;
+                        const h = canvas.offsetHeight || height;
+                        canvas.width = w * dpr;
+                        canvas.height = h * dpr;
                         const ctx = canvas.getContext("2d")!;
                         ctx.scale(dpr, dpr);
-                        ctx.drawImage(newImg, 0, 0, width, height);
+                        ctx.drawImage(newImg, 0, 0, w, h);
                     }
                     isFirstRef.current = false;
                 } else {
@@ -256,7 +255,10 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
     }, []);
 
     return (
-        <div className={`brush-transition ${className}`.trim()} style={{ position: "relative", width, height, overflow: "hidden" }}>
+        <div
+            className={`brush-transition ${className}`.trim()}
+            style={{ position: "relative", width: "100%", aspectRatio: `${width} / ${height}`, overflow: "hidden" }}
+        >
             {/* Background canvas (old image) */}
             <canvas
                 ref={bgCanvasRef}
@@ -264,6 +266,8 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
                     position: "absolute",
                     top: 0,
                     left: 0,
+                    width: "100%",
+                    height: "100%",
                     borderRadius: "inherit",
                 }}
                 aria-hidden
@@ -275,6 +279,8 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
                     position: "absolute",
                     top: 0,
                     left: 0,
+                    width: "100%",
+                    height: "100%",
                     borderRadius: "inherit",
                 }}
                 role="img"
