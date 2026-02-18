@@ -6,6 +6,7 @@ import ExternalImports from "./shared/ExternalImports";
 import Footer from "./shared/Footer";
 import { useCustomCursor } from "../hooks/useCustomCursor";
 import { useScrollProgress } from "../hooks/useScrollProgress";
+import { useMatrixFallChars } from "../hooks/useMatrixFallChars";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
     const [mounted, setMounted] = useState(false);
@@ -29,6 +30,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 
     useCustomCursor();
     useScrollProgress();
+    useMatrixFallChars();
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });

@@ -568,29 +568,13 @@ img {
     }
 }
 
-@keyframes elementGlow {
-    0%, 100% {
-        box-shadow: 0 0 20px rgba(232, 182, 49, 0.4),
-                    0 0 40px rgba(224, 123, 76, 0.2),
-                    inset 0 0 0 rgba(232, 182, 49, 0);
-    }
-    50% {
-        box-shadow: 0 0 30px rgba(232, 182, 49, 0.6),
-                    0 0 60px rgba(224, 123, 76, 0.3),
-                    inset 0 0 0 rgba(232, 182, 49, 0);
-    }
-}
-
 // --------------------------------------------------
-// Interactive Element Glow Effects
+// Interactive Element Hover Effects
 // --------------------------------------------------
+// Matrix falling characters handled by useMatrixFallChars hook
 a, button, .btn, .nav-link, .dropdown-toggle, .card, input[type="button"], input[type="submit"] {
     position: relative;
     transition: all 0.3s var(--ease-out-expo);
-
-    &:hover {
-        animation: elementGlow 1.5s ease-in-out infinite;
-    }
 
     &:active {
         transform: scale(0.98);
