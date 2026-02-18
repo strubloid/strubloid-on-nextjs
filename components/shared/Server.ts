@@ -1,2 +1,2 @@
 export const server: string =
-    process.env.SERVER_URL ?? 'https://strubloid.com';
+    process.env.NEXT_PUBLIC_SERVER_URL ?? 'https://strubloid.com';
