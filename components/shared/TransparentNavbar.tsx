@@ -72,6 +72,12 @@ const ScrollTransparentNavbar: React.FC = () => {
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         <NavItem>
+                            <Button className="nav-link btn-default" color="neutral" href="/artistic">
+                                <i aria-hidden={true} className="now-ui-icons design_palette" />
+                                <p>Artistic Of Me</p>
+                            </Button>
+                        </NavItem>
+                        <NavItem>
                             <Button className="nav-link btn-default" color="neutral" href="https://www.linkedin.com/in/strubloid/" target="_blank">
                                 <p>Linkedin</p>
                             </Button>

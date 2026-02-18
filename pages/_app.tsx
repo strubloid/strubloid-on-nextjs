@@ -39,6 +39,8 @@ import "../components/homepage/Art.scss";
 import "../components/homepage/Github.scss";
 import "../components/homepage/Header.scss";
 
+import "../public/scss/pages/artistic.scss";
+
 import "../public/scss/global/_fonts.scss";
 import "../public/scss/global/_cool_effects.scss";
 import "../public/scss/global/_quote.scss";

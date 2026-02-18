@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Link from "next/link";
 import Rellax from "rellax";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 
@@ -76,6 +77,16 @@ const Header: React.FC = () => {
                 <p className="hero-tagline" data-reveal="fade-up" data-reveal-delay="400">
                     Software Engineer &middot; Linux Enthusiast &middot; Photographer &middot; Painter
                 </p>
+
+                {/* Navigation buttons */}
+                <div className="header-nav-buttons" data-reveal="fade-up" data-reveal-delay="600">
+                    <Link href="/" className="nav-button">
+                        IT PART OF ME
+                    </Link>
+                    <Link href="/artistic" className="nav-button">
+                        ARTISTIC OF ME
+                    </Link>
+                </div>
             </div>
             <div id="fly-container">
                 {[
