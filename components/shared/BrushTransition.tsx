@@ -77,8 +77,37 @@ const BrushTransition: React.FC<BrushTransitionProps> = memo(({ src, alt = "", w
             if (oldImg) {
                 bgCtx.drawImage(oldImg, 0, 0, w, h);
             } else {
+                // --- New: blurred side extensions for portrait images ---
+                // Fill with black first
                 bgCtx.fillStyle = "#1A1412";
                 bgCtx.fillRect(0, 0, w, h);
+                // Only apply if portrait (or nearly square)
+                const imgW = newImg.naturalWidth;
+                const imgH = newImg.naturalHeight;
+                if (imgW < imgH * 0.95) {
+                    // Calculate blurred side width (e.g. 30% of canvas width each)
+                    const sideW = Math.max((w - (imgW / imgH) * h) / 2, w * 0.15);
+                    // Draw left blurred extension
+                    bgCtx.save();
+                    bgCtx.filter = "blur(32px) brightness(0.7)";
+                    bgCtx.globalAlpha = 0.85;
+                    bgCtx.drawImage(
+                        newImg,
+                        0, 0, imgW, imgH,
+                        0, 0, sideW, h
+                    );
+                    bgCtx.restore();
+                    // Draw right blurred extension
+                    bgCtx.save();
+                    bgCtx.filter = "blur(32px) brightness(0.7)";
+                    bgCtx.globalAlpha = 0.85;
+                    bgCtx.drawImage(
+                        newImg,
+                        0, 0, imgW, imgH,
+                        w - sideW, 0, sideW, h
+                    );
+                    bgCtx.restore();
+                }
             }
 
             // Off-screen canvas: new image ready to be revealed
