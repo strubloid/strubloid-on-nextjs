@@ -36,7 +36,7 @@ const Art: React.FC<ArtProps> = ({ photos, albums }) => {
                             {albums.map((album) => (
                                 <a key={album.id} className="art-album-card" href={album.flickrUrl} target="_blank" rel="noopener noreferrer">
                                     <div className="art-album-card__cover">
-                                        <img src={album.coverUrl} alt={album.title} loading="lazy" />
+                                        <img src={album.coverUrl} alt={album.title} />
                                         <span className="art-album-card__count">
                                             {album.photoCount} photo{album.photoCount !== 1 ? "s" : ""}
                                         </span>
