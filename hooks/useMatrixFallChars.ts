@@ -9,10 +9,7 @@ export function useMatrixFallChars() {
         const chars = ["0", "1"];
         const interactiveSelectors = "a, button, .btn, .nav-link, .dropdown-toggle, .card, input[type='button'], input[type='submit']";
 
-        const onMouseEnter = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-            if (!target) return;
-
+        const createCharacterWave = (target: HTMLElement) => {
             const rect = target.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
@@ -20,7 +17,6 @@ export function useMatrixFallChars() {
             const height = rect.height;
 
             // Create characters distributed around the element's perimeter
-            // Create enough to outline the element shape (roughly width in pixels)
             const count = Math.max(16, Math.round(width / 8));
 
             for (let i = 0; i < count; i++) {
@@ -33,7 +29,7 @@ export function useMatrixFallChars() {
 
                 // Distribute characters evenly around the perimeter
                 const angle = (i / count) * Math.PI * 2;
-                const radiusX = width / 2 + 8; // Slightly outside the element
+                const radiusX = width / 2 + 8;
                 const radiusY = height / 2 + 8;
 
                 const offsetX = Math.cos(angle) * radiusX;
@@ -54,29 +50,62 @@ export function useMatrixFallChars() {
 
                 document.body.appendChild(charEl);
 
-                // Animate falling 10px down
-                const startTime = performance.now();
-                const duration = 500; // milliseconds
-                const fallDistance = 25;
+                // Random delay before animation starts (0-200ms)
+                const randomDelay = Math.random() * 200;
 
-                const animate = (currentTime: number) => {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
+                const startAnimationTimer = setTimeout(() => {
+                    const startTime = performance.now();
+                    const duration = 2000;
+                    const fallDistance = 40;
 
-                    // Easing function (ease-in)
-                    const easeProgress = progress * progress;
+                    const animate = (currentTime: number) => {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const easeProgress = progress * progress;
 
-                    charEl.style.transform = `translateY(${easeProgress * fallDistance}px)`;
-                    charEl.style.opacity = String(Math.max(0, 0.8 - progress * 0.8));
+                        charEl.style.transform = `translateY(${easeProgress * fallDistance}px)`;
+                        charEl.style.opacity = String(Math.max(0, 0.8 - progress * 0.8));
 
-                    if (progress < 1) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        charEl.remove();
-                    }
-                };
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            charEl.remove();
+                        }
+                    };
 
-                requestAnimationFrame(animate);
+                    requestAnimationFrame(animate);
+                }, randomDelay);
+
+                // Store timeout ID for cleanup
+                (charEl as any).__timeoutId = startAnimationTimer;
+            }
+        };
+
+        const onMouseEnter = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target) return;
+
+            // Create first wave immediately
+            createCharacterWave(target);
+
+            // Create continuous waves while hovering (every 300ms)
+            const waveInterval = setInterval(() => {
+                createCharacterWave(target);
+            }, 300);
+
+            // Store interval ID on the target for cleanup
+            (target as any).__waveIntervalId = waveInterval;
+        };
+
+        const onMouseLeave = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target) return;
+
+            // Stop creating new waves
+            const intervalId = (target as any).__waveIntervalId;
+            if (intervalId) {
+                clearInterval(intervalId);
+                delete (target as any).__waveIntervalId;
             }
         };
 
@@ -85,6 +114,7 @@ export function useMatrixFallChars() {
             const elements = document.querySelectorAll(interactiveSelectors);
             elements.forEach((el) => {
                 el.addEventListener("mouseenter", onMouseEnter as EventListener);
+                el.addEventListener("mouseleave", onMouseLeave as EventListener);
             });
         };
 
@@ -98,6 +128,7 @@ export function useMatrixFallChars() {
             mutObserver.disconnect();
             document.querySelectorAll(interactiveSelectors).forEach((el) => {
                 el.removeEventListener("mouseenter", onMouseEnter as EventListener);
+                el.removeEventListener("mouseleave", onMouseLeave as EventListener);
             });
         };
     }, []);
