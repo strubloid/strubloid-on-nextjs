@@ -43,6 +43,24 @@ const LANGUAGE_COLORS: Record<string, string> = {
     PHP: "#4F5D95",
 };
 
+/**
+ * Map project URLs → screenshot filenames in public/img/projects/.
+ * Projects with a matching file get the screenshot as the card header.
+ * Projects without one keep the default gradient + GitHub icon.
+ */
+const PROJECT_IMAGES: Record<string, string> = {
+    "https://github.com/strubloid/.bash_aliases": "bash-aliases.png",
+    "https://github.com/strubloid/cardgame": "cardgame.png",
+    "https://github.com/strubloid/py-music": "py-music.png",
+    "https://github.com/strubloid/spermwhale": "spermwhale.png",
+    "https://github.com/strubloid/ReactAndJava": "reactandjava.png",
+};
+
+function getProjectImage(url: string): string | null {
+    const file = PROJECT_IMAGES[url];
+    return file ? `/img/projects/${file}` : null;
+}
+
 interface GithubProps {
     projects: CachedProject[];
 }
@@ -88,8 +106,11 @@ const Github: React.FC<GithubProps> = ({ projects }) => {
                     {projects.map((project) => (
                         <a key={project.name} href={project.url} target="_blank" rel="noopener noreferrer" data-card-reveal>
                             <Card className="github-project-card">
-                                {/* Boilerplate gradient image header */}
-                                <div className="card-image-header">
+                                {/* Project screenshot header — falls back to gradient when no image */}
+                                <div
+                                    className={`card-image-header${getProjectImage(project.url) ? " has-image" : ""}`}
+                                    style={getProjectImage(project.url) ? { backgroundImage: `url(${getProjectImage(project.url)})` } : undefined}
+                                >
                                     <i className="fab fa-github" />
                                     {project.stars > 0 && (
                                         <span className="star-badge">

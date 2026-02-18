@@ -153,6 +153,11 @@ body {
               transform: scale(1.15) rotate(5deg);
               opacity: 0.5;
             }
+
+            // Keep github icon hidden on screenshot cards during hover
+            &.has-image .fa-github {
+              opacity: 0;
+            }
           }
         }
 
@@ -183,6 +188,26 @@ body {
             animation: shimmer 6s ease-in-out infinite;
             opacity: 0.3;
             transition: opacity 0.5s ease;
+          }
+
+          // When a project screenshot is available
+          &.has-image {
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+
+            .fa-github {
+              opacity: 0;
+            }
+
+            // Subtle overlay so star badge stays readable
+            &::before {
+              content: '';
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.25) 100%);
+              z-index: 0;
+            }
           }
 
           .fa-github {
