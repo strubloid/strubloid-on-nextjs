@@ -1707,7 +1707,7 @@
       "id": "72177720327975996",
       "title": "Red",
       "description": "",
-      "photoCount": 1,
+      "photoCount": 2,
       "coverUrl": "https://live.staticflickr.com/65535/54688539196_a5b367f741_z.jpg",
       "flickrUrl": "https://www.flickr.com/photos/josephbr/albums/72177720327975996"
     },
@@ -1716,7 +1716,7 @@
       "title": "Dublin",
       "description": "",
       "photoCount": 3,
-      "coverUrl": "https://live.staticflickr.com/65535/54688539196_a5b367f741_z.jpg",
+      "coverUrl": "https://live.staticflickr.com/65535/54728505526_eddce10724_z.jpg",
       "flickrUrl": "https://www.flickr.com/photos/josephbr/albums/72177720327975991"
     },
     {
@@ -1724,7 +1724,7 @@
       "title": "Black & White",
       "description": "",
       "photoCount": 7,
-      "coverUrl": "https://live.staticflickr.com/65535/54689050224_a81dc266ca_z.jpg",
+      "coverUrl": "https://live.staticflickr.com/65535/54697913170_1dc9eab405_z.jpg",
       "flickrUrl": "https://www.flickr.com/photos/josephbr/albums/72177720327874126"
     },
     {
@@ -1764,7 +1764,7 @@
       "title": "casamentos",
       "description": "Alguns exemplos de fotografias de casamentos que mais gostei de fazer, estar junto, experienciar e fotografar seus melhores momentos.",
       "photoCount": 13,
-      "coverUrl": "https://live.staticflickr.com/5575/14961097575_6c56a1cb38_z.jpg",
+      "coverUrl": "https://live.staticflickr.com/5561/14774367467_32e44ecc2b_z.jpg",
       "flickrUrl": "https://www.flickr.com/photos/josephbr/albums/72157646187290329"
     },
     {
@@ -1775,5 +1775,6 @@
       "coverUrl": "https://live.staticflickr.com/3838/14859435853_bec1547ae9_z.jpg",
       "flickrUrl": "https://www.flickr.com/photos/josephbr/albums/72157646254794723"
     }
-  ]
+  ],
+  "photoCount": 135
 }
