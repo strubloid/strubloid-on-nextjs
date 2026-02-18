@@ -97,6 +97,7 @@ async function refreshCache(): Promise<GithubCache> {
     const existing = readCache();
     const existingMap = new Map(existing.projects.map((p) => [p.url, p]));
     const projects: CachedProject[] = [];
+    let successCount = 0;
 
     await Promise.allSettled(
         REPOS.map(async (repo) => {
@@ -104,6 +105,8 @@ async function refreshCache(): Promise<GithubCache> {
             if (!slug) return;
             const data = await fetchRepoData(slug);
             const prev = existingMap.get(repo.url);
+
+            if (data) successCount++;
 
             // If API returned data with languages, use it; otherwise preserve cached data
             const newLangs = data ? toLangList(data.langs) : [];
@@ -119,8 +122,16 @@ async function refreshCache(): Promise<GithubCache> {
         }),
     );
 
+    // If EVERY API call failed (e.g. rate-limited), don't overwrite the cache at all
+    if (successCount === 0 && existing.projects.length > 0) {
+        return existing;
+    }
+
     const ordered = REPOS.map((r) => projects.find((p) => p.url === r.url)).filter(Boolean) as CachedProject[];
-    const cache: GithubCache = { timestamp: Date.now(), projects: ordered };
+
+    // Only bump the timestamp if we got at least some fresh data
+    const newTimestamp = successCount > 0 ? Date.now() : existing.timestamp;
+    const cache: GithubCache = { timestamp: newTimestamp, projects: ordered };
     writeCache(cache);
     return cache;
 }
