@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import sgMail from '@sendgrid/mail';
+import { Resend } from 'resend';
 
 interface ContactRequestBody {
     name: string;
@@ -15,7 +15,7 @@ interface RecaptchaResponse {
 }
 
 async function verifyRecaptcha(token: string): Promise<boolean> {
-    const secret = process.env.SITE_RECAPTCHA_SECRET;
+    const secret = process.env.NEXT_PUBLIC_SITE_RECAPTCHA_SECRET;
     if (!secret) return false;
 
     const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
@@ -52,13 +52,13 @@ export default async function handler(
         return;
     }
 
-    const sendgridApiKey = process.env.SENDGRID_API_KEY;
-    if (!sendgridApiKey) {
+    const resendApiKey = process.env.NEXT_PUBLIC_RESEND_API_KEY;
+    if (!resendApiKey) {
         res.status(500).send('Mail service is not configured.');
         return;
     }
 
-    sgMail.setApiKey(sendgridApiKey);
+    const resend = new Resend(resendApiKey);
 
     const html = `
     <h2>The craic mate: ${subject}</h2>
@@ -69,15 +69,24 @@ export default async function handler(
   `;
 
     try {
-        await sgMail.send({
-            to: process.env.MAIL,
-            from: process.env.GMAIL ?? '',
+        const { error } = await resend.emails.send({
+            from: `${name} <noreply@strubloid.com>`,
+            to: process.env.MAIL ?? 'mail@strubloid.com',
+            replyTo: email,
             subject,
-            text: message,
             html,
         });
+
+        if (error) {
+            console.error('Resend error:', error);
+            res.status(400).send(`Message not sent: ${error.message}`);
+            return;
+        }
+
         res.status(200).send('Message sent successfully.');
-    } catch {
-        res.status(400).send('Message not sent.');
+    } catch (err: unknown) {
+        const e = err as { message?: string };
+        console.error('Resend exception:', e?.message);
+        res.status(400).send(`Message not sent: ${e?.message ?? 'Unknown error'}`);
     }
 }

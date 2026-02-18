@@ -2,14 +2,14 @@ const fs = require('fs')
 
 // Keys array to populate on live
 const keys = [
-    `GOOGLE_KEY=${process.env.GOOGLE_KEY}\n`,
-    `MONGO_URI=${process.env.MONGO_URI}\n`,
-    `SERVER_URL=${process.env.SERVER_URL}\n`,
-    `SITE_RECAPTCHA_KEY=${process.env.SITE_RECAPTCHA_KEY}\n`,
-    `SITE_RECAPTCHA_SECRET=${process.env.SITE_RECAPTCHA_SECRET}\n`,
-    `SENDGRID_API_KEY=${process.env.SENDGRID_API_KEY}\n`,
-    `GMAIL=${process.env.GMAIL}\n`,
-    `MAIL=${process.env.MAIL}\n`,
+    `NEXT_PUBLIC_GOOGLE_KEY=${process.env.NEXT_PUBLIC_GOOGLE_KEY}\n`,
+    `NEXT_PUBLIC_MONGO_URI=${process.env.NEXT_PUBLIC_MONGO_URI}\n`,
+    `NEXT_PUBLIC_SERVER_URL=${process.env.NEXT_PUBLIC_SERVER_URL}\n`,
+    `NEXT_PUBLIC_SITE_RECAPTCHA_KEY=${process.env.NEXT_PUBLIC_SITE_RECAPTCHA_KEY}\n`,
+    `NEXT_PUBLIC_SITE_RECAPTCHA_SECRET=${process.env.NEXT_PUBLIC_SITE_RECAPTCHA_SECRET}\n`,
+    `NEXT_PUBLIC_RESEND_API_KEY=${process.env.NEXT_PUBLIC_RESEND_API_KEY}\n`,
+    `NEXT_PUBLIC_GMAIL=${process.env.NEXT_PUBLIC_GMAIL}\n`,
+    `NEXT_PUBLIC_MAIL=${process.env.NEXT_PUBLIC_MAIL}\n`,
 ]
 
 // Tranforming into a string
