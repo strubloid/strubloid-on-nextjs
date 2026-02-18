@@ -30,6 +30,10 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
     useCustomCursor();
     useScrollProgress();
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     return (
         <>
             <Head>
@@ -40,6 +44,15 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
             <ExternalImports />
             {showNavbar && <TransparentNavbar />}
             <div className={`wrapper${mounted ? " page-mounted" : ""}`}>{children}</div>
+            {scrollY > 300 && (
+                <button
+                    className="scroll-to-top"
+                    onClick={scrollToTop}
+                    aria-label="Scroll to top"
+                >
+                    ↑
+                </button>
+            )}
             <Footer />
         </>
     );
