@@ -86,12 +86,12 @@ export function useMatrixFallChars() {
 
                 const startAnimationTimer = setTimeout(() => {
                     const startTime = performance.now();
-                    const duration = 1100; // Slightly longer for visible trail
-                    const fallDistance = 30; // Longer fall for impressive effect
+                    const duration = 500; // Slightly longer for visible trail
+                    const fallDistance = 8; // Longer fall for impressive effect
 
                     // Random horizontal drift amplitude (characters wave as they fall)
                     const driftAmplitude = (Math.random() - 0.5) * 40;
-                    const driftFrequency = Math.random() * 0.005 + 0.002;
+                    const driftFrequency = Math.random() * 0.002 + 0.002;
 
                     const animate = (currentTime: number) => {
                         const elapsed = currentTime - startTime;
@@ -107,7 +107,7 @@ export function useMatrixFallChars() {
                         const driftOffset = Math.sin(elapsed * driftFrequency) * driftAmplitude;
 
                         // Pulsing opacity - glow gets brighter/dimmer
-                        const pulseOpacity = 0.9 - progress * 0.9 + Math.sin(elapsed * 0.003) * 0.1;
+                        const pulseOpacity = 0.5 - progress * 0.9 + Math.sin(elapsed * 0.003) * 0.1;
 
                         charEl.style.transform = `translate(${driftOffset}px, ${verticalPos}px)`;
                         charEl.style.opacity = String(Math.max(0, pulseOpacity));
