@@ -1,10 +1,10 @@
 {
-  "timestamp": 1771414860418,
+  "timestamp": 1771422160234,
   "projects": [
     {
       "name": ".bash_aliases",
       "url": "https://github.com/strubloid/.bash_aliases",
-      "description": "My idea of a good bash aliases",
+      "description": "A curated, modular Bash alias library designed to supercharge terminal productivity and standardize command-line workflows across environments. This project organizes reusable aliases by purpose and operating system, includes installation and upgrade scripts for easy setup, and evolves as a living toolkit to optimize daily development tasks. Built ",
       "stars": 1,
       "languages": [
         {

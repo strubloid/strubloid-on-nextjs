@@ -35,6 +35,7 @@ import "../components/shared/BasicHeader.scss";
 import "../components/shared/TransparentNavbar.scss";
 import "../components/shared/Footer.scss";
 import "../components/homepage/AboutMe.scss";
+import "../components/homepage/Art.scss";
 import "../components/homepage/Github.scss";
 import "../components/homepage/Header.scss";
 
