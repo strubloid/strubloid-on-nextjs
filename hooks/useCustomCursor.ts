@@ -12,11 +12,13 @@ export function useCustomCursor() {
         // Create cursor elements
         const dot = document.createElement("div");
         dot.className = "custom-cursor-dot";
+        dot.style.display = "none";
         document.body.appendChild(dot);
         dotRef.current = dot;
 
         const circle = document.createElement("div");
         circle.className = "custom-cursor-circle";
+        circle.style.display = "none";
         document.body.appendChild(circle);
         circleRef.current = circle;
 
@@ -43,12 +45,16 @@ export function useCustomCursor() {
 
         const onMouseEnterLink = () => {
             dot.classList.add("cursor-hover");
+            dot.style.display = "block";
             circle.classList.add("cursor-hover");
+            circle.style.display = "block";
         };
 
         const onMouseLeaveLink = () => {
             dot.classList.remove("cursor-hover");
+            dot.style.display = "none";
             circle.classList.remove("cursor-hover");
+            circle.style.display = "none";
         };
 
         // Animate the trailing circle

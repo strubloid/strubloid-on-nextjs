@@ -9,10 +9,10 @@ const MIN_DESKTOP_WIDTH = 991;
 
 const MESSAGES = {
     siteName: "Strubloid.com",
-    first: "A mix between lines of code and light!",
-    second: 'Import { positivism } from "proton.lib"',
-    third: "$ Git push [your-code] me",
-    fourth: "while (live) alias everywhere!",
+    first: "const creativity = await inspire();",
+    second: "λ ∞ code.stream().map(light)",
+    third: "> git push origin/dreams",
+    fourth: "✦ recursion != boring ✦",
 } as const;
 
 const Header: React.FC = () => {
