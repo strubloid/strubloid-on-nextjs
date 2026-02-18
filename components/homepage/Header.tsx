@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Rellax from "rellax";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 
@@ -15,8 +16,16 @@ const MESSAGES = {
 } as const;
 
 const Header: React.FC = () => {
+    const router = useRouter();
     const revealRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
     const scrollIndicatorRef = React.useRef<HTMLDivElement>(null);
+
+    const handleScrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    };
 
     useEffect(() => {
         document.body.classList.add("presentation-page", "sidebar-collapse");
@@ -50,7 +59,7 @@ const Header: React.FC = () => {
                     indicator.style.pointerEvents = "none";
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.1 },
         );
 
         observer.observe(revealRef.current!);
@@ -80,12 +89,12 @@ const Header: React.FC = () => {
 
                 {/* Navigation buttons */}
                 <div className="header-nav-buttons" data-reveal="fade-up" data-reveal-delay="600">
-                    <Link href="/" className="nav-button">
+                    <button className="nav-button" onClick={() => handleScrollToSection("github-section")}>
                         IT PART OF ME
-                    </Link>
-                    <Link href="/artistic" className="nav-button">
+                    </button>
+                    <button className="nav-button" onClick={() => handleScrollToSection("art-section")}>
                         ARTISTIC OF ME
-                    </Link>
+                    </button>
                 </div>
             </div>
             <div id="fly-container">

@@ -21,9 +21,15 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = ({ githubProjects, skills, flickrPhotos, flickrAlbums }) => (
     <>
         <Header />
-        <Art photos={flickrPhotos} albums={flickrAlbums} />
-        <Github projects={githubProjects} />
-        <AboutMe skills={skills} />
+        <div id="art-section">
+            <Art photos={flickrPhotos} albums={flickrAlbums} />
+        </div>
+        <div id="github-section">
+            <Github projects={githubProjects} />
+        </div>
+        <div id="aboutme-section">
+            <AboutMe skills={skills} />
+        </div>
     </>
 );
 

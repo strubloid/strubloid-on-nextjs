@@ -542,6 +542,8 @@
     position: relative;
     top: 2%;
     padding: 0 200px;
+    z-index: 10;
+    pointer-events: auto;
 
     .hero-greeting {
       font-family: var(--font-body);
@@ -589,6 +591,8 @@
     justify-content: center;
     margin-top: 40px;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
 
     .nav-button {
       padding: 12px 28px;
@@ -602,6 +606,10 @@
       text-transform: uppercase;
       transition: all 0.3s ease;
       cursor: pointer;
+      background: transparent;
+      font-family: inherit;
+      display: inline-block;
+      pointer-events: auto;
 
       &:hover {
         background: rgba(255, 255, 255, 0.1);
