@@ -94,6 +94,8 @@ function toLangList(langs: Record<string, number>): CachedLanguage[] {
 /* ------------------------------------------------------------------ */
 
 async function refreshCache(): Promise<GithubCache> {
+    const existing = readCache();
+    const existingMap = new Map(existing.projects.map((p) => [p.url, p]));
     const projects: CachedProject[] = [];
 
     await Promise.allSettled(
@@ -101,12 +103,18 @@ async function refreshCache(): Promise<GithubCache> {
             const slug = repoSlug(repo.url);
             if (!slug) return;
             const data = await fetchRepoData(slug);
+            const prev = existingMap.get(repo.url);
+
+            // If API returned data with languages, use it; otherwise preserve cached data
+            const newLangs = data ? toLangList(data.langs) : [];
+            const languages = newLangs.length > 0 ? newLangs : (prev?.languages ?? []);
+
             projects.push({
                 name: repo.name,
                 url: repo.url,
-                description: data?.description || repo.fallbackDescription,
-                stars: data?.stars ?? 0,
-                languages: data ? toLangList(data.langs) : [],
+                description: data?.description || prev?.description || repo.fallbackDescription,
+                stars: data?.stars ?? prev?.stars ?? 0,
+                languages,
             });
         }),
     );
@@ -124,7 +132,11 @@ async function refreshCache(): Promise<GithubCache> {
 export async function getGithubProjects(): Promise<CachedProject[]> {
     const cache = readCache();
 
-    if (cache.projects.length > 0 && Date.now() - cache.timestamp < ONE_HOUR_MS) {
+    // Treat cache as stale if it has no language data (sign of a rate-limited fetch)
+    const hasLanguages = cache.projects.some((p) => p.languages.length > 0);
+    const isFresh = Date.now() - cache.timestamp < ONE_HOUR_MS;
+
+    if (cache.projects.length > 0 && isFresh && hasLanguages) {
         return cache.projects;
     }
 

@@ -22,6 +22,7 @@ const LANGUAGE_ICONS: Record<string, string> = {
     Dockerfile: "now-ui-icons tech_laptop",
     PowerShell: "now-ui-icons shopping_credit-card",
     "Wolfram Language": "now-ui-icons education_atom",
+    PHP: "now-ui-icons education_atom",
 };
 
 /** Map language names to warm accent hues for the language bar */
@@ -39,6 +40,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
     Dockerfile: "#384d54",
     PowerShell: "#012456",
     "Wolfram Language": "#dd1100",
+    PHP: "#4F5D95",
 };
 
 interface GithubProps {
