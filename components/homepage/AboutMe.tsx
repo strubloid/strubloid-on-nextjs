@@ -216,6 +216,17 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                                     className="skill-item"
                                     style={{ "--skill-delay": `${idx * 50}ms` } as React.CSSProperties}
                                 >
+                                    {/* Hidden Detail Panel (Glass) */}
+                                    <div className="skill-item__detail">
+                                        <div className="skill-item__detail-inner">
+                                            <h4 className="skill-item__detail-title">More About</h4>
+                                            <p className="skill-item__detail-text">{skill.description}</p>
+                                            <div className="skill-item__detail-tag" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
+                                                {skill.title}
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div className="skill-item__icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
                                         <i className={skill.icon} />
                                     </div>

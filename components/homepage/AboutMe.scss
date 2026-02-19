@@ -158,6 +158,82 @@ body {
           z-index: 1;
         }
 
+        // ── Hidden Detail Panel (Glassmorphism) ──────────────────
+        &__detail {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 0;
+          height: 100%;
+          opacity: 0;
+          overflow: hidden;
+          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        &__detail-inner {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 16px;
+          padding: 32px;
+          height: 100%;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.05) 100%
+          );
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-right: 2px solid rgba(255, 255, 255, 0.2);
+          box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+          border-radius: 16px 0 0 16px;
+        }
+
+        &__detail-title {
+          color: #ffffff;
+          font-weight: 700;
+          font-size: 1.2em;
+          margin: 0;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+          opacity: 0.9;
+        }
+
+        &__detail-text {
+          color: #e8e8e8;
+          font-weight: 400;
+          line-height: 1.6;
+          font-size: 0.95em;
+          margin: 0;
+          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+          opacity: 0.85;
+        }
+
+        &__detail-tag {
+          display: inline-block;
+          padding: 8px 16px;
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 2px solid currentColor;
+          font-weight: 600;
+          font-size: 0.9em;
+          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+          width: fit-content;
+          margin-top: 8px;
+        }
+
+        &:hover &__detail {
+          width: 280px;
+          opacity: 1;
+          pointer-events: auto;
+        }
+
         &__icon {
           flex-shrink: 0;
           width: 130px;
@@ -177,6 +253,8 @@ body {
           box-shadow:
             0 8px 32px rgba(0, 0, 0, 0.3),
             inset 0 1px 0 rgba(255, 255, 255, 0.08);
+          position: relative;
+          z-index: 2;
 
           i {
             font-size: 72px;
@@ -209,6 +287,8 @@ body {
           display: flex;
           flex-direction: column;
           gap: 12px;
+          position: relative;
+          z-index: 2;
         }
 
         &__title {
