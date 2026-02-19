@@ -83,8 +83,8 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
     // Matrix reveal for skill cards (handles intersection + canvas)
     const matrixRef = useMatrixReveal<HTMLDivElement>({
         threshold: 0.12,
-        staggerDelay: 200,
-        matrixDuration: 1100,
+        staggerDelay: 100,
+        matrixDuration: 800,
     });
 
     // Separate scroll reveal just for the header
