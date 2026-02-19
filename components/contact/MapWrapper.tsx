@@ -15,8 +15,8 @@ const MapComponent: React.FC = () => {
     useEffect(() => {
         if (!mapRef.current || !window.google) return;
 
-        // Cork, Ireland - Camden Court, Knaps Square coordinates
-        const location = { lat: 51.8985, lng: -8.4756 };
+        // Cork, Ireland - 10 Camden Court, Knaps Square coordinates
+        const location = { lat: 51.9010, lng: -8.4705 };
 
         // Initialize map
         map.current = new window.google.maps.Map(mapRef.current, {
