@@ -97,10 +97,25 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         if (hoveredElement) {
             const rect = hoveredElement.getBoundingClientRect();
             const panelHeight = detailPanelRef.current.offsetHeight || 490;
-            const yPosition = window.scrollY + rect.top + rect.height / 2;
+            const yPosition = window.scrollY + rect.top + rect.height / 2 - 100; // Offset upward by 100px
 
-            // Clamp the position to keep panel within viewport
-            const minTop = window.scrollY + panelHeight / 2;
+            // Dynamically detect the fixed navbar's actual bottom position
+            // Look for the fixed-top navbar (not the section header)
+            const navbar = document.querySelector(".navbar") || document.querySelector("nav[class*='fixed']");
+            let headerBuffer = window.scrollY + 80 + 2; // Fallback if navbar not found
+
+            if (navbar) {
+                const navbarRect = navbar.getBoundingClientRect();
+                // navbarRect.height is the navbar's height, it stays constant
+                headerBuffer = window.scrollY + navbarRect.height + 2; // Dynamic navbar height + 2px gap
+                console.log("📍 Navbar detected - height:", navbarRect.height, "buffer:", headerBuffer);
+            } else {
+                console.log("⚠️ Navbar NOT found - using fallback:", headerBuffer);
+            }
+
+            // Clamp the position to keep panel within viewport and below header
+            // Header buffer takes absolute priority
+            const minTop = headerBuffer;
             const maxTop = window.scrollY + window.innerHeight - panelHeight / 2;
             const clampedY = Math.max(minTop, Math.min(yPosition, maxTop));
 
