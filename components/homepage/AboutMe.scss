@@ -215,7 +215,6 @@ body {
         transform-style: preserve-3d;
         transform: perspective(800px) rotateX(0deg) rotateY(0deg);
         will-change: transform, opacity;
-        height: 100%;
         display: flex;
         flex-direction: column;
 
@@ -232,6 +231,7 @@ body {
 
         // ── Carousel variant ──
         &--carousel {
+          height: 100%;
           opacity: 0;
           border: 3px solid rgba(200, 160, 80, 0.6);
         }
