@@ -225,11 +225,11 @@ body {
           &:hover {
             background: rgba(255, 255, 255, 0.25);
             border-color: rgba(255, 255, 255, 0.5);
-            transform: scale(1.15) rotate(90deg);
+            transform: scale(1.15);
           }
 
           &:active {
-            transform: scale(0.9) rotate(90deg);
+            transform: scale(0.9);
           }
         }
 
@@ -468,39 +468,40 @@ body {
           border-radius: 14px;
           background: linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.12) 0%,
-            rgba(255, 255, 255, 0.05) 100%
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.08) 100%
           );
-          border: 2px solid rgba(255, 255, 255, 0.15);
+          border: 2px solid rgba(255, 255, 255, 0.2);
           transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
           box-shadow:
-            0 6px 24px rgba(0, 0, 0, 0.25),
-            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 20px rgba(255, 255, 255, 0.05);
           position: relative;
           z-index: 2;
 
           i {
             font-size: 56px;
-            filter: drop-shadow(0 0 12px currentColor);
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
           }
         }
 
         &:hover &__icon {
           background: linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.2) 0%,
-            rgba(255, 255, 255, 0.1) 100%
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.12) 100%
           );
-          border-color: rgba(255, 255, 255, 0.4);
+          border-color: rgba(255, 255, 255, 0.5);
           box-shadow:
             0 12px 48px rgba(0, 0, 0, 0.4),
-            0 0 32px rgba(255, 255, 255, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            0 0 40px rgba(255, 255, 255, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
 
           i {
-            transform: scale(1.25) rotate(15deg);
-            filter: drop-shadow(0 0 24px currentColor);
+            transform: scale(1.15);
+            filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.5));
           }
         }
 
