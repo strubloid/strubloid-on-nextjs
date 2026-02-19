@@ -5,7 +5,7 @@ interface StrubloidTooltipProps {
     target: string;
 }
 
-const DISPLAY_DURATION_MS = 1000;
+const DISPLAY_DURATION_MS = 4500;
 
 const StrubloidTooltip: React.FC<PropsWithChildren<StrubloidTooltipProps>> = ({ target, children }) => {
     const [isOpen, setIsOpen] = useState(false);
