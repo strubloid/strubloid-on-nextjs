@@ -98,6 +98,15 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         const skillElement = document.querySelector(`.skill-item[data-skill-id="${skillId}"]`);
         if (!skillElement) return;
 
+        // Find the skill data to get accent color
+        const skillData = skills.find((s) => s.id === skillId);
+        const accentColor = skillData ? ACCENT_MAP[skillData.accent] ?? "var(--color-accent)" : "var(--color-accent)";
+
+        // Convert CSS variable to actual RGB values for animation
+        const colorValue = getComputedStyle(document.documentElement).getPropertyValue(accentColor).trim() || "45, 155, 85";
+        const colorFrom = `rgba(${colorValue}, 0.3)`;
+        const colorTo = `rgba(${colorValue}, 0.15)`;
+
         const rect = skillElement.getBoundingClientRect();
         const panelHeight = detailPanelRef.current.offsetHeight || 490;
         const yPosition = window.scrollY + rect.top + rect.height / 2 - 100;
@@ -115,12 +124,21 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         const maxTop = window.scrollY + window.innerHeight - panelHeight / 2;
         const clampedY = Math.max(minTop, Math.min(yPosition, maxTop));
 
+        // Animate both position and colors
         gsap.to(detailPanelRef.current, {
             top: clampedY,
-            duration: 0.6,
+            duration: 0.7,
             ease: "power2.out",
         });
-    }, []);
+
+        // Animate colors separately
+        gsap.to(detailPanelRef.current.style, {
+            "--panel-color-from": colorFrom,
+            "--panel-color-to": colorTo,
+            duration: 0.6,
+            ease: "power2.inOut",
+        } as any);
+    }, [skills]);
 
     // Handle skill click - pin for 10 seconds
     const handleSkillClick = useCallback((skillId: string) => {
