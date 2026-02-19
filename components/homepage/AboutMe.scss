@@ -165,6 +165,27 @@ body {
           pointer-events: none;
         }
 
+        &__background {
+          position: absolute;
+          top: 0;
+          right: -40px;
+          width: 280px;
+          height: 280px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.08;
+          pointer-events: none;
+          z-index: 0;
+          animation: backgroundFade 0.8s ease-out forwards;
+
+          i {
+            font-size: 280px;
+            color: #ffffff;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+          }
+        }
+
         &__content {
           display: flex;
           flex-direction: column;
@@ -378,9 +399,9 @@ body {
 
       .skill-item {
         display: flex;
-        gap: 28px;
-        align-items: center;
-        padding: 32px 40px;
+        gap: 20px;
+        align-items: flex-start;
+        padding: 10px 15px;
         border-radius: 16px;
         background: linear-gradient(
           135deg,
@@ -438,9 +459,9 @@ body {
 
         &__icon {
           flex-shrink: 0;
-          width: 100px;
-          height: 100px;
-          min-width: 100px;
+          width: 60px;
+          height: 60px;
+          min-width: 60px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1257,6 +1278,40 @@ body {
         }
         100% {
           width: 100%;
+        }
+      }
+
+      // ── Panel Slide In Animation ───────────────────────────
+      @keyframes panelSlideIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      // ── Icon Pulse Animation ───────────────────────────
+      @keyframes iconPulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      // ── Background Fade Animation ───────────────────────────
+      @keyframes backgroundFade {
+        0% {
+          opacity: 0;
+          transform: scale(0.8) rotate(-10deg);
+        }
+        100% {
+          opacity: 0.08;
+          transform: scale(1) rotate(0deg);
         }
       }
 

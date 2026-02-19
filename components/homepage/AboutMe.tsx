@@ -92,69 +92,75 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
     const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
     // Helper function to show skill details (used by both hover and click)
-    const showSkillDetails = useCallback((skillId: string | null) => {
-        if (!skillId || !detailPanelRef.current) return;
+    const showSkillDetails = useCallback(
+        (skillId: string | null) => {
+            if (!skillId || !detailPanelRef.current) return;
 
-        const skillElement = document.querySelector(`.skill-item[data-skill-id="${skillId}"]`);
-        if (!skillElement) return;
+            const skillElement = document.querySelector(`.skill-item[data-skill-id="${skillId}"]`);
+            if (!skillElement) return;
 
-        // Find the skill data to get accent color
-        const skillData = skills.find((s) => s.id === skillId);
-        const accentColor = skillData ? ACCENT_MAP[skillData.accent] ?? "var(--color-accent)" : "var(--color-accent)";
+            // Find the skill data to get accent color
+            const skillData = skills.find((s) => s.id === skillId);
+            const accentColor = skillData ? (ACCENT_MAP[skillData.accent] ?? "var(--color-accent)") : "var(--color-accent)";
 
-        // Convert CSS variable to actual RGB values for animation
-        const colorValue = getComputedStyle(document.documentElement).getPropertyValue(accentColor).trim() || "45, 155, 85";
-        const colorFrom = `rgba(${colorValue}, 0.3)`;
-        const colorTo = `rgba(${colorValue}, 0.15)`;
+            // Convert CSS variable to actual RGB values for animation
+            const colorValue = getComputedStyle(document.documentElement).getPropertyValue(accentColor).trim() || "45, 155, 85";
+            const colorFrom = `rgba(${colorValue}, 0.3)`;
+            const colorTo = `rgba(${colorValue}, 0.15)`;
 
-        const rect = skillElement.getBoundingClientRect();
-        const panelHeight = detailPanelRef.current.offsetHeight || 490;
-        const yPosition = window.scrollY + rect.top + rect.height / 2 - 100;
+            const rect = skillElement.getBoundingClientRect();
+            const panelHeight = detailPanelRef.current.offsetHeight || 490;
+            const yPosition = window.scrollY + rect.top + rect.height / 2 - 100;
 
-        // Dynamically detect navbar position
-        const navbar = document.querySelector(".navbar") || document.querySelector("nav[class*='fixed']");
-        let headerBuffer = window.scrollY + 80 + 2;
+            // Dynamically detect navbar position
+            const navbar = document.querySelector(".navbar") || document.querySelector("nav[class*='fixed']");
+            let headerBuffer = window.scrollY + 80 + 2;
 
-        if (navbar) {
-            const navbarRect = navbar.getBoundingClientRect();
-            headerBuffer = window.scrollY + navbarRect.height + 2;
-        }
+            if (navbar) {
+                const navbarRect = navbar.getBoundingClientRect();
+                headerBuffer = window.scrollY + navbarRect.height + 2;
+            }
 
-        const minTop = headerBuffer;
-        const maxTop = window.scrollY + window.innerHeight - panelHeight / 2;
-        const clampedY = Math.max(minTop, Math.min(yPosition, maxTop));
+            const minTop = headerBuffer;
+            const maxTop = window.scrollY + window.innerHeight - panelHeight / 2;
+            const clampedY = Math.max(minTop, Math.min(yPosition, maxTop));
 
-        // Animate both position and colors
-        gsap.to(detailPanelRef.current, {
-            top: clampedY,
-            duration: 0.7,
-            ease: "power2.out",
-        });
+            // Animate both position and colors
+            gsap.to(detailPanelRef.current, {
+                top: clampedY,
+                duration: 0.7,
+                ease: "power2.out",
+            });
 
-        // Animate colors separately
-        gsap.to(detailPanelRef.current.style, {
-            "--panel-color-from": colorFrom,
-            "--panel-color-to": colorTo,
-            duration: 0.6,
-            ease: "power2.inOut",
-        } as any);
-    }, [skills]);
+            // Animate colors separately
+            gsap.to(detailPanelRef.current.style, {
+                "--panel-color-from": colorFrom,
+                "--panel-color-to": colorTo,
+                duration: 0.6,
+                ease: "power2.inOut",
+            } as any);
+        },
+        [skills],
+    );
 
     // Handle skill click - pin for 10 seconds
-    const handleSkillClick = useCallback((skillId: string) => {
-        setPinnedSkill(skillId);
-        showSkillDetails(skillId);
+    const handleSkillClick = useCallback(
+        (skillId: string) => {
+            setPinnedSkill(skillId);
+            showSkillDetails(skillId);
 
-        // Clear existing timer
-        if (closeTimerRef.current) {
-            clearTimeout(closeTimerRef.current);
-        }
+            // Clear existing timer
+            if (closeTimerRef.current) {
+                clearTimeout(closeTimerRef.current);
+            }
 
-        // Auto-close after 10 seconds
-        closeTimerRef.current = setTimeout(() => {
-            setPinnedSkill(null);
-        }, 10000);
-    }, [showSkillDetails]);
+            // Auto-close after 10 seconds
+            closeTimerRef.current = setTimeout(() => {
+                setPinnedSkill(null);
+            }, 10000);
+        },
+        [showSkillDetails],
+    );
 
     // Handle hover (only if nothing is pinned)
     const handleSkillHover = useCallback(
@@ -326,66 +332,69 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                     <Col md="7" className="skills-layout__left">
                         <div className={`detail-panel ${isClosing ? "detail-panel--closing" : ""}`} ref={detailPanelRef}>
                             {(pinnedSkill || hoveredSkill) && skills.find((s) => s.id === (pinnedSkill || hoveredSkill)) && (
-                                <div className="detail-panel__content">
-                                    {pinnedSkill && (
-                                        <button
-                                            className="detail-panel__close"
-                                            onClick={closePinnedSkill}
-                                            aria-label="Close detail panel"
-                                        >
-                                            ✕
-                                        </button>
-                                    )}
+                                <>
                                     {(() => {
                                         const skill = skills.find((s) => s.id === (pinnedSkill || hoveredSkill));
-                                        return (
-                                            <>
-                                                <div className="detail-panel__icon" style={{ color: ACCENT_MAP[skill!.accent] ?? "var(--color-accent)" }}>
-                                                    <i className={skill!.icon} />
-                                                </div>
-                                                <div className="detail-panel__body">
-                                                    <h3 className="detail-panel__title">{skill!.title}</h3>
-                                                    <p className="detail-panel__description">{skill!.description}</p>
+                                        return skill ? (
+                                            <div className="detail-panel__background">
+                                                <i className={skill.icon} />
+                                            </div>
+                                        ) : null;
+                                    })()}
+                                    <div className="detail-panel__content">
+                                        {pinnedSkill && (
+                                            <button className="detail-panel__close" onClick={closePinnedSkill} aria-label="Close detail panel">
+                                                ✕
+                                            </button>
+                                        )}
+                                        {(() => {
+                                            const skill = skills.find((s) => s.id === (pinnedSkill || hoveredSkill));
+                                            return (
+                                                <>
+                                                    <div className="detail-panel__body">
+                                                        <h3 className="detail-panel__title">{skill!.title}</h3>
+                                                        <p className="detail-panel__description">{skill!.description}</p>
 
-                                                    {/* Usage Timeline */}
-                                                    {skill!.usages && skill!.usages.length > 0 && (
-                                                        <div className="detail-panel__usages">
-                                                            {skill!.usages.map((usage, idx) => (
-                                                                <div key={idx} className="detail-panel__usage-item">
-                                                                    <div className="detail-panel__usage-header">
-                                                                        <h4 className="detail-panel__usage-title">
-                                                                            {usage.company || usage.project}
-                                                                        </h4>
-                                                                        <span className="detail-panel__usage-period">{usage.period}</span>
+                                                        {/* Usage Timeline */}
+                                                        {skill!.usages && skill!.usages.length > 0 && (
+                                                            <div className="detail-panel__usages">
+                                                                {skill!.usages.map((usage, idx) => (
+                                                                    <div key={idx} className="detail-panel__usage-item">
+                                                                        <div className="detail-panel__usage-header">
+                                                                            <h4 className="detail-panel__usage-title">{usage.company || usage.project}</h4>
+                                                                            <span className="detail-panel__usage-period">{usage.period}</span>
+                                                                        </div>
+                                                                        <p className="detail-panel__usage-detail">{usage.detail}</p>
                                                                     </div>
-                                                                    <p className="detail-panel__usage-detail">{usage.detail}</p>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    )}
-
-                                                    {/* Related Skills */}
-                                                    {skill!.relatedSkills && skill!.relatedSkills.length > 0 && (
-                                                        <div className="detail-panel__related">
-                                                            <h4 className="detail-panel__related-title">Combined with:</h4>
-                                                            <div className="detail-panel__related-tags">
-                                                                {skill!.relatedSkills.map((relatedSkill, idx) => (
-                                                                    <span key={idx} className="detail-panel__tag">{relatedSkill}</span>
                                                                 ))}
                                                             </div>
-                                                        </div>
-                                                    )}
+                                                        )}
 
-                                                    {skill!.link && (
-                                                        <a href={skill!.link.url} target="_blank" rel="noopener noreferrer" className="detail-panel__link">
-                                                            {skill!.link.text} <i className="now-ui-icons ui-1_send" />
-                                                        </a>
-                                                    )}
-                                                </div>
-                                            </>
-                                        );
-                                    })()}
-                                </div>
+                                                        {/* Related Skills */}
+                                                        {skill!.relatedSkills && skill!.relatedSkills.length > 0 && (
+                                                            <div className="detail-panel__related">
+                                                                <h4 className="detail-panel__related-title">Combined with:</h4>
+                                                                <div className="detail-panel__related-tags">
+                                                                    {skill!.relatedSkills.map((relatedSkill, idx) => (
+                                                                        <span key={idx} className="detail-panel__tag">
+                                                                            {relatedSkill}
+                                                                        </span>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {skill!.link && (
+                                                            <a href={skill!.link.url} target="_blank" rel="noopener noreferrer" className="detail-panel__link">
+                                                                {skill!.link.text} <i className="now-ui-icons ui-1_send" />
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                </>
+                                            );
+                                        })()}
+                                    </div>
+                                </>
                             )}
                         </div>
                     </Col>
