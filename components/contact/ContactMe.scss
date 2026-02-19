@@ -492,9 +492,11 @@ body {
 
     // Map container
     .big-map {
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      height: 38vh;
+      border-radius: 0;
       overflow: hidden;
-      margin: 0 2rem;
+      margin: 0;
+      width: 100%;
     }
   }
 }
