@@ -125,7 +125,7 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
                 <div className="contact-content">
                     <Container>
                         <Row>
-                            <Col className="ml-auto mr-auto" md="5">
+                            <Col className="ml-auto mr-auto" md="8">
                                 <div className="contact-form-card" data-reveal="fade-right">
                                     <span className="contact-category">Say Hello</span>
                                     <h2 className="title">Let&apos;s have a chat!</h2>
@@ -177,6 +177,7 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
                                                     <Form.Field
                                                         id="email"
                                                         control={Input}
+                                                        style={{ border: "none" }}
                                                         className="form-control"
                                                         aria-label="Email Here..."
                                                         autoComplete="email"
@@ -200,6 +201,7 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
                                                         id="subject"
                                                         control={Input}
                                                         className="form-control"
+                                                        style={{ border: "none" }}
                                                         aria-label="Subject Here..."
                                                         autoComplete="subject"
                                                         placeholder="What's the craic mate?"
@@ -264,7 +266,7 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
                                 </div>
                             </Col>
 
-                            <Col className="ml-auto mr-auto" md="5">
+                            <Col className="ml-auto mr-auto" md="3">
                                 <div className="contact-info-cards" data-reveal="fade-left">
                                     <div className="contact-info-card">
                                         <div className="contact-info-icon">
