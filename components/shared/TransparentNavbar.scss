@@ -1036,12 +1036,20 @@ fieldset[disabled]
       color: var(--color-accent-dark);
 
       p { color: var(--color-accent-dark); }
+
+      i { color: #FFFFFF !important; }
     }
 
     .navbar-nav .nav-link.btn-default:hover,
     .navbar-nav .nav-link.btn-default:focus {
       background-color: var(--color-sand);
-      color: var(--color-accent-dark);
+      color: #FFFFFF;
+
+      i { color: #FFFFFF !important; }
+    }
+
+    .navbar-nav .nav-link.btn-default {
+      color: #FFFFFF !important;
     }
 
     .navbar-toggler-bar {

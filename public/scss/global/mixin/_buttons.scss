@@ -91,16 +91,6 @@
             }
         }
 
-        &.btn-default{
-            color: $default-color;
-
-            &:hover,
-            &:focus,
-            &:active{
-                color: $default-states-color !important;
-            }
-        }
-
         &:hover,
         &:focus,
         &:not(:disabled):not(.disabled):active,
@@ -119,7 +109,7 @@
 
         &:hover,
         &:focus{
-            color: $primary-states-color !important;
+            color: $white-color !important;
 
             &:not(.nav-link){
                 box-shadow: none;
