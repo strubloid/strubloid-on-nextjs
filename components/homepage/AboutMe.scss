@@ -83,18 +83,111 @@ body {
         }
       }
 
-      // ── Two-column skills grid ──────────────────────────────
-      .skills-grid {
+      // ── Carousel Container ──────────────────────────────────
+      .carousel-container {
         display: flex;
-        gap: 32px;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        margin-bottom: 40px;
         perspective: 1200px;
       }
 
-      .skills-column {
-        display: flex;
-        flex-direction: column;
+      // ── Carousel Viewport ────────────────────────────────────
+      .carousel-viewport {
         flex: 1;
-        gap: 24px;
+        max-width: 600px;
+        height: 500px;
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+      }
+
+      .carousel-track {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      // ── Carousel Slides ─────────────────────────────────────
+      .carousel-slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        pointer-events: none;
+
+        &--active {
+          opacity: 1;
+          transform: translateX(0);
+          pointer-events: auto;
+          animation: cardEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+      }
+
+      // ── Carousel Navigation Buttons ──────────────────────────
+      .carousel-btn {
+        flex-shrink: 0;
+        width: 50px;
+        height: 50px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        background: rgba(26, 20, 18, 0.6);
+        backdrop-filter: blur(6px);
+        color: var(--color-cream);
+        font-size: 1.3em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+
+        &:hover {
+          background: rgba(224, 123, 76, 0.5);
+          border-color: rgba(224, 123, 76, 0.6);
+          transform: scale(1.1);
+          box-shadow: 0 0 20px rgba(224, 123, 76, 0.3);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+
+      // ── Paginator ───────────────────────────────────────────
+      .carousel-paginator {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .paginator-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+
+        &:hover {
+          background: rgba(224, 123, 76, 0.4);
+          border-color: rgba(224, 123, 76, 0.6);
+          transform: scale(1.15);
+        }
+
+        &--active {
+          background: var(--color-accent);
+          border-color: var(--color-accent);
+          box-shadow: 0 0 15px rgba(224, 123, 76, 0.5);
+          transform: scale(1.25);
+        }
       }
 
       // ── Matrix canvas overlay ───────────────────────────────
@@ -122,10 +215,13 @@ body {
         transform-style: preserve-3d;
         transform: perspective(800px) rotateX(0deg) rotateY(0deg);
         will-change: transform, opacity;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
 
         // ── Initial hidden state (pre-reveal) ──
         opacity: 0;
-        border: 2px solid transparent;
+        border: 3px solid rgba(200, 160, 80, 0.4);
         background: transparent;
 
         transition:
@@ -133,6 +229,12 @@ body {
           box-shadow 0.5s var(--ease-spring),
           border-color 0.4s ease,
           background 0.4s ease;
+
+        // ── Carousel variant ──
+        &--carousel {
+          opacity: 0;
+          border: 3px solid rgba(200, 160, 80, 0.6);
+        }
 
         // Add accent color border
         &[style*="--rotateX"] {
@@ -167,18 +269,19 @@ body {
         // ── Fully revealed state ──
         &.revealed {
           opacity: 1;
-          border-color: rgba(255, 255, 255, 0.2);
+          border-color: rgba(200, 160, 80, 0.8);
           background: linear-gradient(
             135deg,
-            rgba(65, 72, 68, 0.85) 0%,
-            rgba(52, 60, 56, 0.85) 100%
+            rgba(45, 40, 35, 0.95) 0%,
+            rgba(35, 30, 25, 0.95) 100%
           );
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           box-shadow:
-            0 12px 40px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.15),
-            0 0 20px rgba(45, 155, 85, 0.05);
+            0 12px 40px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 20px rgba(200, 160, 80, 0.2),
+            inset 0 0 30px rgba(200, 160, 80, 0.05);
           position: relative;
           animation: postRevealBounce 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 
@@ -208,6 +311,16 @@ body {
           .skill-card__edge-glow {
             opacity: 1;
           }
+        }
+
+        // ── Carousel variant revealed ──
+        &--carousel.revealed {
+          border-color: rgba(200, 160, 80, 0.9);
+          box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 30px rgba(200, 160, 80, 0.25),
+            inset 0 0 40px rgba(200, 160, 80, 0.08);
         }
 
         // ── 3D tilt on hover ──
@@ -295,6 +408,54 @@ body {
           padding: 1px;
         }
 
+        // ── MTG Top Bar ─────────────────────────────────────────
+        &__top-bar {
+          flex-shrink: 0;
+          padding: 12px 16px;
+          background: linear-gradient(
+            90deg,
+            rgba(200, 160, 80, 0.3) 0%,
+            rgba(232, 182, 49, 0.15) 100%
+          );
+          border-bottom: 1px solid rgba(200, 160, 80, 0.4);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          z-index: 4;
+        }
+
+        &__category {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.75em;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        // ── MTG Bottom Bar ───────────────────────────────────────
+        &__bottom-bar {
+          flex-shrink: 0;
+          padding: 12px 16px;
+          background: linear-gradient(
+            90deg,
+            rgba(200, 160, 80, 0.2) 0%,
+            rgba(232, 182, 49, 0.1) 100%
+          );
+          border-top: 1px solid rgba(200, 160, 80, 0.4);
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          z-index: 4;
+          margin-top: auto;
+        }
+
+        &__power {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 0.8em;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+        }
+
         // ── Content layer ──
         &__content {
           position: relative;
@@ -302,15 +463,16 @@ body {
           display: flex;
           align-items: flex-start;
           gap: 24px;
-          padding: 36px 40px;
+          padding: 32px 28px;
           opacity: 0;
           transform: translateZ(20px) translateY(8px);
           transition:
             opacity 0.5s var(--ease-out-expo),
             transform 0.6s var(--ease-out-expo);
-          min-height: 150px;
+          flex: 1;
           display: flex;
           flex-direction: column;
+          justify-content: center;
         }
 
         &__icon {
@@ -466,6 +628,35 @@ body {
         }
 
         &.revealed::after {
+          opacity: 0;
+        }
+      }
+
+      // ── Carousel Card Enter Animation ──────────────────────
+      @keyframes cardEnter {
+        0% {
+          transform: translateX(100%) rotateY(20deg) scale(0.9);
+          opacity: 0;
+        }
+        50% {
+          transform: translateX(5%) rotateY(5deg) scale(1.02);
+        }
+        100% {
+          transform: translateX(0) rotateY(0deg) scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes cardExit {
+        0% {
+          transform: translateX(0) rotateY(0deg) scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: translateX(-5%) rotateY(-5deg) scale(1.02);
+        }
+        100% {
+          transform: translateX(-100%) rotateY(-20deg) scale(0.9);
           opacity: 0;
         }
       }
@@ -671,9 +862,11 @@ body {
   }
 }
 
-// ------------------------------------------------------------
-// Responsive: Tablet (portrait)
-// ------------------------------------------------------------
+// ============================================================
+// Responsive Design for Carousel
+// ============================================================
+
+// Tablet Portrait
 @media (min-width: 768px) and (max-width: 1024px) {
   body {
     .wrapper {
@@ -684,61 +877,19 @@ body {
           font-size: 2.2em;
         }
 
-        .skill-card__content {
-          padding: 28px 32px;
-          min-height: 140px;
+        .carousel-viewport {
+          max-width: 500px;
+          height: 450px;
         }
 
-        .skill-card__title {
-          font-size: 1.25em !important;
-        }
-
-        .skill-card__icon i {
-          font-size: 38px;
-        }
-      }
-    }
-  }
-}
-
-// ------------------------------------------------------------
-// Responsive: Tablet (landscape)
-// ------------------------------------------------------------
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  body {
-    .wrapper {
-      .homepage-about-me {
-        .about-me-header__title {
-          font-size: 2.4em;
-        }
-      }
-    }
-  }
-}
-
-// ------------------------------------------------------------
-// Responsive: Mobile (landscape)
-// ------------------------------------------------------------
-@media (min-width: 481px) and (max-width: 767px) {
-  body {
-    .wrapper {
-      .homepage-about-me {
-        padding: 50px 0;
-
-        .skills-grid {
-          flex-direction: column;
-          gap: 12px;
-          perspective: none;
-        }
-
-        .about-me-header__title {
-          font-size: 1.8em;
+        .carousel-btn {
+          width: 44px;
+          height: 44px;
+          font-size: 1.1em;
         }
 
         .skill-card__content {
-          padding: 24px 28px;
-          min-height: 120px;
-          gap: 16px;
+          padding: 24px 20px;
         }
 
         .skill-card__title {
@@ -750,27 +901,103 @@ body {
         }
 
         .skill-card__icon i {
-          font-size: 32px;
+          font-size: 36px;
         }
       }
     }
   }
 }
 
-// ------------------------------------------------------------
-// Responsive: Mobile (portrait)
-// ------------------------------------------------------------
+// Tablet Landscape
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  body {
+    .wrapper {
+      .homepage-about-me {
+        padding: 50px 0;
+
+        .about-me-header__title {
+          font-size: 2.4em;
+        }
+
+        .carousel-viewport {
+          max-width: 480px;
+          height: 400px;
+        }
+      }
+    }
+  }
+}
+
+// Mobile Landscape
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    .wrapper {
+      .homepage-about-me {
+        padding: 50px 0;
+
+        .about-me-header__title {
+          font-size: 1.8em;
+        }
+
+        .carousel-container {
+          gap: 16px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .carousel-btn {
+          width: 40px;
+          height: 40px;
+          font-size: 1em;
+        }
+
+        .carousel-viewport {
+          max-width: 100%;
+          width: 100%;
+          height: 380px;
+          order: 2;
+          flex-basis: 100%;
+        }
+
+        .carousel-btn--prev {
+          order: 1;
+        }
+
+        .carousel-btn--next {
+          order: 3;
+        }
+
+        .skill-card__content {
+          padding: 20px 16px;
+        }
+
+        .skill-card__title {
+          font-size: 1.1em !important;
+        }
+
+        .skill-card__desc {
+          font-size: 0.9em !important;
+        }
+
+        .skill-card__icon i {
+          font-size: 30px;
+        }
+
+        .skill-card__icon {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
+  }
+}
+
+// Mobile Portrait
 @media (min-width: 320px) and (max-width: 480px) {
   body {
     .wrapper {
       .homepage-about-me {
         padding: 40px 0;
-
-        .skills-grid {
-          flex-direction: column;
-          gap: 8px;
-          perspective: none;
-        }
 
         .about-me-header {
           margin-bottom: 28px;
@@ -784,24 +1011,62 @@ body {
           font-size: 0.72em;
         }
 
+        .carousel-container {
+          gap: 12px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .carousel-btn {
+          width: 36px;
+          height: 36px;
+          font-size: 0.9em;
+        }
+
+        .carousel-viewport {
+          max-width: 100%;
+          width: 100%;
+          height: 340px;
+          order: 2;
+          flex-basis: 100%;
+        }
+
+        .carousel-btn--prev {
+          order: 1;
+        }
+
+        .carousel-btn--next {
+          order: 3;
+        }
+
         .skill-card__content {
-          padding: 20px 24px;
-          min-height: 110px;
-          gap: 14px;
+          padding: 16px 14px;
+          gap: 16px;
         }
 
         .skill-card__title {
-          font-size: 1.15em !important;
-          margin: 0 0 8px;
+          font-size: 1em !important;
+          margin: 0 0 6px;
         }
 
         .skill-card__desc {
-          font-size: 0.93em !important;
-          line-height: 1.7;
+          font-size: 0.85em !important;
+          line-height: 1.6;
         }
 
         .skill-card__icon i {
-          font-size: 28px;
+          font-size: 24px;
+        }
+
+        .skill-card__icon {
+          width: 44px;
+          height: 44px;
+          min-width: 44px;
+        }
+
+        .paginator-dot {
+          width: 10px;
+          height: 10px;
         }
       }
     }
