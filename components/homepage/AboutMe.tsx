@@ -81,6 +81,14 @@ function use3DTilt() {
 }
 
 const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
+    // State to track which skill is being hovered
+    const [hoveredSkill, setHoveredSkill] = React.useState<string | null>(null);
+
+    // Debug: Log which layout is being rendered
+    React.useEffect(() => {
+        console.log("📋 AboutMe Component Rendered | carousel:", carousel, "| skills count:", skills.length);
+    }, [carousel, skills.length]);
+
     // Matrix reveal for skill cards (handles intersection + canvas)
     const matrixRef = useMatrixReveal<HTMLDivElement>({
         threshold: 0.12,
@@ -158,6 +166,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
 
     // Grid layout (for about-me page)
     if (!carousel) {
+        console.log("🎨 Rendering GRID layout (carousel=false)");
         const leftSkills = skills.filter((_, i) => i % 2 === 0);
         const rightSkills = skills.filter((_, i) => i % 2 === 1);
 
@@ -189,7 +198,8 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         );
     }
 
-    // Playful skills list layout (for homepage)
+    // Two-column layout: Left (detail panel) + Right (skills list)
+    console.log("✨ Rendering TWO-COLUMN layout (carousel=true) | hoveredSkill:", hoveredSkill);
     return (
         <div className="section section-image homepage-about-me" ref={matrixRef}>
             <Container fluid>
@@ -206,27 +216,53 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                     </Col>
                 </Row>
 
-                {/* Playful Skills List */}
-                <Row>
-                    <Col md="12">
+                <Row className="skills-layout">
+                    {/* Left Column: Detail Panel (appears on hover) */}
+                    <Col md="5" className="skills-layout__left">
+                        <div className="detail-panel">
+                            {hoveredSkill && skills.find((s) => s.id === hoveredSkill) && (
+                                <div className="detail-panel__content">
+                                    {(() => {
+                                        const skill = skills.find((s) => s.id === hoveredSkill);
+                                        return (
+                                            <>
+                                                <div className="detail-panel__icon" style={{ color: ACCENT_MAP[skill!.accent] ?? "var(--color-accent)" }}>
+                                                    <i className={skill!.icon} />
+                                                </div>
+                                                <div className="detail-panel__body">
+                                                    <h3 className="detail-panel__title">{skill!.title}</h3>
+                                                    <p className="detail-panel__description">{skill!.description}</p>
+                                                    {skill!.link && (
+                                                        <a href={skill!.link.url} target="_blank" rel="noopener noreferrer" className="detail-panel__link">
+                                                            {skill!.link.text} <i className="now-ui-icons ui-1_send" />
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            </>
+                                        );
+                                    })()}
+                                </div>
+                            )}
+                        </div>
+                    </Col>
+
+                    {/* Right Column: Skills List */}
+                    <Col md="7" className="skills-layout__right">
                         <div className="skills-list">
                             {skills.map((skill, idx) => (
                                 <div
                                     key={skill.id}
-                                    className="skill-item"
+                                    className={`skill-item ${hoveredSkill === skill.id ? "skill-item--hovered" : ""}`}
                                     style={{ "--skill-delay": `${idx * 50}ms` } as React.CSSProperties}
+                                    onMouseEnter={() => {
+                                        console.log("🎯 Hovering skill:", skill.id, skill.title);
+                                        setHoveredSkill(skill.id);
+                                    }}
+                                    onMouseLeave={() => {
+                                        console.log("👋 Left skill:", skill.id);
+                                        setHoveredSkill(null);
+                                    }}
                                 >
-                                    {/* Hidden Detail Panel (Glass) */}
-                                    <div className="skill-item__detail">
-                                        <div className="skill-item__detail-inner">
-                                            <h4 className="skill-item__detail-title">More About</h4>
-                                            <p className="skill-item__detail-text">{skill.description}</p>
-                                            <div className="skill-item__detail-tag" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
-                                                {skill.title}
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div className="skill-item__icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
                                         <i className={skill.icon} />
                                     </div>
