@@ -7,6 +7,7 @@ const PARALLAX_FACTOR = 3;
 const ContactMeHeader: React.FC = () => {
     const pageHeader = useRef<HTMLDivElement>(null);
     const sectionRef = useScrollReveal();
+    const scrollIndicatorRef = React.useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (window.innerWidth <= MIN_DESKTOP_WIDTH) return;
@@ -22,6 +23,28 @@ const ContactMeHeader: React.FC = () => {
         return () => window.removeEventListener("scroll", updateScroll);
     }, []);
 
+    // Show/hide scroll indicator based on header visibility
+    useEffect(() => {
+        const indicator = scrollIndicatorRef.current;
+        if (!indicator) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    indicator.style.opacity = "1";
+                    indicator.style.pointerEvents = "auto";
+                } else {
+                    indicator.style.opacity = "0";
+                    indicator.style.pointerEvents = "none";
+                }
+            },
+            { threshold: 0.1 },
+        );
+
+        observer.observe(sectionRef.current!);
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <div className="page-header page-header-small contact-hero" ref={sectionRef}>
             <div className="page-header-image contact-me-header" ref={pageHeader} />
@@ -34,6 +57,12 @@ const ContactMeHeader: React.FC = () => {
                 <p className="contact-hero-subtitle" data-reveal="fade-up" data-reveal-delay="1">
                     Let&apos;s build something amazing together
                 </p>
+            </div>
+
+            {/* Scroll indicator */}
+            <div className="scroll-indicator" ref={scrollIndicatorRef}>
+                <div className="scroll-indicator-dot" />
+                <span>Scroll to explore</span>
             </div>
         </div>
     );
