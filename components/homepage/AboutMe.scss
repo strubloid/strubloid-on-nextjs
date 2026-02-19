@@ -190,6 +190,20 @@ body {
         }
       }
 
+      // ── Grid layout (for about-me page) ────────────────────
+      .skills-grid {
+        display: flex;
+        gap: 32px;
+        perspective: 1200px;
+      }
+
+      .skills-column {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 20px;
+      }
+
       // ── Matrix canvas overlay ───────────────────────────────
       .matrix-canvas {
         position: absolute;
