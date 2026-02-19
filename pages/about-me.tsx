@@ -10,7 +10,7 @@ interface AboutMePageProps {
 
 const AboutMePage: NextPage<AboutMePageProps> = ({ skills }) => (
     <>
-        <AboutMe skills={skills} />
+        <AboutMe skills={skills} carousel={false} />
     </>
 );
 

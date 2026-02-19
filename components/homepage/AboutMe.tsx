@@ -14,6 +14,7 @@ const ACCENT_MAP: Record<string, string> = {
 
 interface AboutMeProps {
     skills: Skill[];
+    carousel?: boolean;
 }
 
 /**
@@ -79,7 +80,7 @@ function use3DTilt() {
     return registerCard;
 }
 
-const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
+const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
     // Carousel state
     const [currentIndex, setCurrentIndex] = React.useState(0);
 
@@ -95,23 +96,23 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
 
     const registerTilt = use3DTilt();
 
-    const handlePrev = () => {
+    const handlePrev = React.useCallback(() => {
         setCurrentIndex((prev) => (prev === 0 ? skills.length - 1 : prev - 1));
-    };
+    }, [skills.length]);
 
-    const handleNext = () => {
+    const handleNext = React.useCallback(() => {
         setCurrentIndex((prev) => (prev === skills.length - 1 ? 0 : prev + 1));
-    };
+    }, [skills.length]);
 
     const handleCardClick = (url: string) => {
         window.open(url, "_blank", "noopener,noreferrer");
     };
 
-    const renderCard = (skill: Skill) => (
+    const renderCard = (skill: Skill, isCarousel: boolean = true) => (
         <div
             key={skill.id}
             ref={registerTilt}
-            className={`skill-card skill-card--carousel${skill.link ? " skill-card--linked" : ""}`}
+            className={`skill-card${isCarousel ? " skill-card--carousel" : ""}${skill.link ? " skill-card--linked" : ""}`}
             onClick={skill.link ? () => handleCardClick(skill.link!.url) : undefined}
             role={skill.link ? "link" : undefined}
             tabIndex={skill.link ? 0 : undefined}
@@ -123,10 +124,14 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
                     : undefined
             }
         >
-            {/* MTG Card top bar */}
-            <div className="skill-card__top-bar">
-                <span className="skill-card__category">Expertise</span>
-            </div>
+            {isCarousel && (
+                <>
+                    {/* MTG Card top bar */}
+                    <div className="skill-card__top-bar">
+                        <span className="skill-card__category">Expertise</span>
+                    </div>
+                </>
+            )}
 
             {/* Holographic glare overlay */}
             <div className="skill-card__glare" />
@@ -151,13 +156,51 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
                 </div>
             </div>
 
-            {/* MTG Card bottom bar */}
-            <div className="skill-card__bottom-bar">
-                <span className="skill-card__power">+Skills</span>
-            </div>
+            {isCarousel && (
+                <>
+                    {/* MTG Card bottom bar */}
+                    <div className="skill-card__bottom-bar">
+                        <span className="skill-card__power">+Skills</span>
+                    </div>
+                </>
+            )}
         </div>
     );
 
+    // Grid layout (for about-me page)
+    if (!carousel) {
+        const leftSkills = skills.filter((_, i) => i % 2 === 0);
+        const rightSkills = skills.filter((_, i) => i % 2 === 1);
+
+        return (
+            <div className="section section-image homepage-about-me" ref={matrixRef}>
+                <Container fluid>
+                    <Row>
+                        <Col md="12">
+                            <div className="about-me-header" ref={headerRef}>
+                                <div className="about-me-header__inner" data-reveal="fade-up">
+                                    <span className="about-me-header__accent" />
+                                    <h6 className="about-me-header__category">Skills &amp; Experience</h6>
+                                    <h2 className="about-me-header__title">Who Am I</h2>
+                                    <span className="about-me-header__accent" />
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row className="skills-grid">
+                        <Col md="6" className="skills-column">
+                            {leftSkills.map((skill) => renderCard(skill, false))}
+                        </Col>
+                        <Col md="6" className="skills-column">
+                            {rightSkills.map((skill) => renderCard(skill, false))}
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        );
+    }
+
+    // Carousel layout (for homepage)
     return (
         <div className="section section-image homepage-about-me" ref={matrixRef}>
             <Container fluid>
@@ -177,6 +220,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
                 {/* Carousel Section */}
                 <div className="carousel-container">
                     <button
+                        type="button"
                         className="carousel-btn carousel-btn--prev"
                         onClick={handlePrev}
                         aria-label="Previous skill"
@@ -191,13 +235,14 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
                                     key={skill.id}
                                     className={`carousel-slide${idx === currentIndex ? " carousel-slide--active" : ""}`}
                                 >
-                                    {renderCard(skill)}
+                                    {renderCard(skill, true)}
                                 </div>
                             ))}
                         </div>
                     </div>
 
                     <button
+                        type="button"
                         className="carousel-btn carousel-btn--next"
                         onClick={handleNext}
                         aria-label="Next skill"
@@ -211,6 +256,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills }) => {
                     {skills.map((_, idx) => (
                         <button
                             key={idx}
+                            type="button"
                             className={`paginator-dot${idx === currentIndex ? " paginator-dot--active" : ""}`}
                             onClick={() => setCurrentIndex(idx)}
                             aria-label={`Go to skill ${idx + 1}`}
