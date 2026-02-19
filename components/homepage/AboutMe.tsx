@@ -81,9 +81,6 @@ function use3DTilt() {
 }
 
 const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
-    // Carousel state
-    const [currentIndex, setCurrentIndex] = React.useState(0);
-
     // Matrix reveal for skill cards (handles intersection + canvas)
     const matrixRef = useMatrixReveal<HTMLDivElement>({
         threshold: 0.12,
@@ -95,14 +92,6 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
     const headerRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2, reversible: true });
 
     const registerTilt = use3DTilt();
-
-    const handlePrev = React.useCallback(() => {
-        setCurrentIndex((prev) => (prev === 0 ? skills.length - 1 : prev - 1));
-    }, [skills.length]);
-
-    const handleNext = React.useCallback(() => {
-        setCurrentIndex((prev) => (prev === skills.length - 1 ? 0 : prev + 1));
-    }, [skills.length]);
 
     const handleCardClick = (url: string) => {
         window.open(url, "_blank", "noopener,noreferrer");
@@ -200,78 +189,56 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         );
     }
 
-    // Carousel layout (for homepage)
+    // Playful skills list layout (for homepage)
     return (
-        <div className="carousel-wrapper-full">
-            <div className="section section-image homepage-about-me">
-                <Container fluid>
-                    <Row>
-                        <Col md="12">
-                            <div className="about-me-header" ref={headerRef}>
-                                <div className="about-me-header__inner" data-reveal="fade-up">
-                                    <span className="about-me-header__accent" />
-                                    <h6 className="about-me-header__category">Skills &amp; Experience</h6>
-                                    <h2 className="about-me-header__title">Who Am I</h2>
-                                    <span className="about-me-header__accent" />
-                                </div>
+        <div className="section section-image homepage-about-me" ref={matrixRef}>
+            <Container fluid>
+                <Row>
+                    <Col md="12">
+                        <div className="about-me-header" ref={headerRef}>
+                            <div className="about-me-header__inner" data-reveal="fade-up">
+                                <span className="about-me-header__accent" />
+                                <h6 className="about-me-header__category">Skills &amp; Experience</h6>
+                                <h2 className="about-me-header__title">Who Am I</h2>
+                                <span className="about-me-header__accent" />
                             </div>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+                        </div>
+                    </Col>
+                </Row>
 
-            {/* Carousel Section — Buttons positioned absolutely ABOVE the viewport */}
-            <div className="carousel-section" ref={matrixRef}>
-                <Container fluid>
-                    {/* Buttons Container — Positioned absolutely */}
-                    <div className="carousel-controls">
-                        <button
-                            type="button"
-                            className="carousel-btn carousel-btn--prev"
-                            onClick={handlePrev}
-                            aria-label="Previous skill"
-                        >
-                            <i className="now-ui-icons arrows-1_minimal-left" />
-                        </button>
-
-                        <button
-                            type="button"
-                            className="carousel-btn carousel-btn--next"
-                            onClick={handleNext}
-                            aria-label="Next skill"
-                        >
-                            <i className="now-ui-icons arrows-1_minimal-right" />
-                        </button>
-                    </div>
-
-                    {/* Carousel Viewport */}
-                    <div className="carousel-viewport">
-                        <div className="carousel-track">
+                {/* Playful Skills List */}
+                <Row>
+                    <Col md="12">
+                        <div className="skills-list">
                             {skills.map((skill, idx) => (
                                 <div
                                     key={skill.id}
-                                    className={`carousel-slide${idx === currentIndex ? " carousel-slide--active" : ""}`}
+                                    className="skill-item"
+                                    style={{ "--skill-delay": `${idx * 50}ms` } as React.CSSProperties}
                                 >
-                                    {renderCard(skill, true)}
+                                    <div className="skill-item__icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
+                                        <i className={skill.icon} />
+                                    </div>
+                                    <div className="skill-item__content">
+                                        <h5 className="skill-item__title">{skill.title}</h5>
+                                        <p className="skill-item__desc">{skill.description}</p>
+                                        {skill.link && (
+                                            <a
+                                                href={skill.link.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="skill-item__link"
+                                            >
+                                                {skill.link.text} <i className="now-ui-icons ui-1_send" />
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
                             ))}
                         </div>
-                    </div>
-
-                    {/* Paginator */}
-                    <div className="carousel-paginator">
-                        {skills.map((_, idx) => (
-                            <button
-                                key={idx}
-                                type="button"
-                                className={`paginator-dot${idx === currentIndex ? " paginator-dot--active" : ""}`}
-                                onClick={() => setCurrentIndex(idx)}
-                                aria-label={`Go to skill ${idx + 1}`}
-                            />
-                        ))}
-                    </div>
-                </Container>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 };

@@ -83,155 +83,131 @@ body {
         }
       }
 
-      // ── Full Carousel Wrapper ────────────────────────────────
-      &-wrapper-full {
+      // ── Playful Skills List ─────────────────────────────────
+      .skills-list {
         display: flex;
         flex-direction: column;
+        gap: 16px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
       }
 
-      // ── Carousel Section (separate from main section) ────────
-      .carousel-section {
-        position: relative;
-        padding: 60px 0 40px 0;
-        z-index: 2;
-
-        .container-fluid {
-          position: relative;
-          max-width: 1400px;
-        }
-      }
-
-      // ── Carousel Controls (Buttons) ──────────────────────────
-      .carousel-controls {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        transform: translateY(-50%);
+      .skill-item {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 30px;
-        pointer-events: none;
-        z-index: 10;
-
-        .carousel-btn {
-          pointer-events: auto;
-        }
-      }
-
-      // ── Carousel Container (legacy - keeping for compatibility) ──
-      .carousel-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         gap: 24px;
-        margin-bottom: 40px;
-        perspective: 1200px;
-      }
-
-      // ── Carousel Viewport ────────────────────────────────────
-      .carousel-section .carousel-viewport {
-        margin: 0 auto 40px auto;
-        max-width: 600px;
-        height: 500px;
-        position: relative;
-        overflow: hidden;
-        border-radius: var(--radius-lg);
-      }
-
-      .carousel-viewport {
-        position: relative;
-        overflow: hidden;
-        border-radius: var(--radius-lg);
-      }
-
-      .carousel-track {
-        position: relative;
-        width: 100%;
-        height: 100%;
-      }
-
-      // ── Carousel Slides ─────────────────────────────────────
-      .carousel-slide {
-        position: absolute;
-        width: 100%;
-        height: 100%;
+        align-items: flex-start;
+        padding: 28px 32px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          rgba(65, 72, 68, 0.4) 0%,
+          rgba(52, 60, 56, 0.4) 100%
+        );
+        border: 2px solid rgba(200, 160, 80, 0.3);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         opacity: 0;
-        transform: translateX(100%);
-        transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
-                    transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        pointer-events: none;
-
-        &--active {
-          opacity: 1;
-          transform: translateX(0);
-          pointer-events: auto;
-          animation: cardEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-      }
-
-      // ── Carousel Navigation Buttons ──────────────────────────
-      .carousel-btn {
-        flex-shrink: 0;
-        width: 50px;
-        height: 50px;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        background: rgba(26, 20, 18, 0.6);
-        backdrop-filter: blur(6px);
-        color: var(--color-cream);
-        font-size: 1.3em;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 999;
-        position: relative;
-        pointer-events: auto !important;
+        transform: translateX(-30px);
+        animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        animation-delay: var(--skill-delay, 0ms);
 
         &:hover {
-          background: rgba(224, 123, 76, 0.5);
           border-color: rgba(224, 123, 76, 0.6);
-          transform: scale(1.1);
-          box-shadow: 0 0 20px rgba(224, 123, 76, 0.3);
+          background: linear-gradient(
+            135deg,
+            rgba(65, 72, 68, 0.7) 0%,
+            rgba(52, 60, 56, 0.7) 100%
+          );
+          box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.4),
+            0 0 30px rgba(224, 123, 76, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          transform: translateX(8px);
         }
 
-        &:active {
-          transform: scale(0.95);
-        }
-      }
+        &__icon {
+          flex-shrink: 0;
+          width: 70px;
+          height: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.08);
+          border: 2px solid rgba(255, 255, 255, 0.15);
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-      // ── Paginator ───────────────────────────────────────────
-      .carousel-paginator {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 24px;
-      }
-
-      .paginator-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        padding: 0;
-
-        &:hover {
-          background: rgba(224, 123, 76, 0.4);
-          border-color: rgba(224, 123, 76, 0.6);
-          transform: scale(1.15);
+          i {
+            font-size: 38px;
+            filter: drop-shadow(0 0 12px currentColor);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
         }
 
-        &--active {
-          background: var(--color-accent);
-          border-color: var(--color-accent);
-          box-shadow: 0 0 15px rgba(224, 123, 76, 0.5);
-          transform: scale(1.25);
+        &:hover &__icon {
+          background: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.3);
+          box-shadow:
+            0 0 25px rgba(255, 255, 255, 0.15),
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+
+          i {
+            transform: scale(1.15) rotate(10deg);
+          }
+        }
+
+        &__content {
+          flex: 1;
+          min-width: 0;
+        }
+
+        &__title {
+          color: #ffffff;
+          font-weight: 700;
+          font-size: 1.3em;
+          margin: 0 0 8px;
+          letter-spacing: 0.01em;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+          transition: all 0.3s ease;
+        }
+
+        &__desc {
+          color: #f5f5f5;
+          font-weight: 400;
+          line-height: 1.6;
+          font-size: 0.95em;
+          margin: 0 0 12px;
+          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        &__link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #ffdd99;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 0.9em;
+          transition: all 0.3s ease;
+
+          i {
+            font-size: 0.85em;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
+
+          &:hover {
+            color: #fff;
+            gap: 12px;
+
+            i {
+              transform: translateX(4px);
+            }
+          }
+        }
+
+        &:hover &__title {
+          color: #ffdd99;
         }
       }
 
@@ -688,6 +664,18 @@ body {
 
         &.revealed::after {
           opacity: 0;
+        }
+      }
+
+      // ── Slide In Up Animation (Skills List) ──────────────────
+      @keyframes slideInUp {
+        0% {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
         }
       }
 
