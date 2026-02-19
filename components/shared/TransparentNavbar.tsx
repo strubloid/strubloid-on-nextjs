@@ -54,15 +54,15 @@ const ScrollTransparentNavbar: React.FC = () => {
                             </Button>
                         </NavItem>
                         <NavItem>
-                            <Button className="nav-link btn-default" color="neutral" href="/contact-me">
-                                <i aria-hidden={true} className="now-ui-icons location_pin" />
-                                <p>Contact Me</p>
-                            </Button>
-                        </NavItem>
-                        <NavItem>
                             <Button className="nav-link btn-default" color="neutral" href="/artistic">
                                 <i aria-hidden={true} className="now-ui-icons design_palette" />
                                 <p>Artistic Of Me</p>
+                            </Button>
+                        </NavItem>
+                        <NavItem>
+                            <Button className="nav-link btn-default" color="neutral" href="/contact-me">
+                                <i aria-hidden={true} className="now-ui-icons location_pin" />
+                                <p>Contact Me</p>
                             </Button>
                         </NavItem>
                         <NavItem>
