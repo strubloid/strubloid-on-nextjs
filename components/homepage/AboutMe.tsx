@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
+import gsap from "gsap";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { useMatrixReveal } from "../../hooks/useMatrixReveal";
 import type { Skill } from "../../lib/strubloid";
@@ -83,6 +84,33 @@ function use3DTilt() {
 const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
     // State to track which skill is being hovered
     const [hoveredSkill, setHoveredSkill] = React.useState<string | null>(null);
+    const detailPanelRef = useRef<HTMLDivElement>(null);
+
+    // GSAP: Position detail panel based on hovered skill
+    useEffect(() => {
+        if (!hoveredSkill || !detailPanelRef.current) return;
+
+        const hoveredElement = document.querySelector(
+            `.skill-item[data-skill-id="${hoveredSkill}"]`
+        );
+
+        if (hoveredElement) {
+            const rect = hoveredElement.getBoundingClientRect();
+            const panelHeight = detailPanelRef.current.offsetHeight || 490;
+            const yPosition = window.scrollY + rect.top + rect.height / 2;
+
+            // Clamp the position to keep panel within viewport
+            const minTop = window.scrollY + panelHeight / 2;
+            const maxTop = window.scrollY + window.innerHeight - panelHeight / 2;
+            const clampedY = Math.max(minTop, Math.min(yPosition, maxTop));
+
+            gsap.to(detailPanelRef.current, {
+                top: clampedY,
+                duration: 0.6,
+                ease: "power2.out",
+            });
+        }
+    }, [hoveredSkill]);
 
     // Debug: Log which layout is being rendered
     React.useEffect(() => {
@@ -218,8 +246,8 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
 
                 <Row className="skills-layout">
                     {/* Left Column: Detail Panel (appears on hover) */}
-                    <Col md="5" className="skills-layout__left">
-                        <div className="detail-panel">
+                    <Col md="7" className="skills-layout__left">
+                        <div className="detail-panel" ref={detailPanelRef}>
                             {hoveredSkill && skills.find((s) => s.id === hoveredSkill) && (
                                 <div className="detail-panel__content">
                                     {(() => {
@@ -247,11 +275,12 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                     </Col>
 
                     {/* Right Column: Skills List */}
-                    <Col md="7" className="skills-layout__right">
+                    <Col md="5" className="skills-layout__right">
                         <div className="skills-list">
                             {skills.map((skill, idx) => (
                                 <div
                                     key={skill.id}
+                                    data-skill-id={skill.id}
                                     className={`skill-item ${hoveredSkill === skill.id ? "skill-item--hovered" : ""}`}
                                     style={{ "--skill-delay": `${idx * 50}ms` } as React.CSSProperties}
                                     onMouseEnter={() => {
@@ -270,12 +299,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                                         <h5 className="skill-item__title">{skill.title}</h5>
                                         <p className="skill-item__desc">{skill.description}</p>
                                         {skill.link && (
-                                            <a
-                                                href={skill.link.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="skill-item__link"
-                                            >
+                                            <a href={skill.link.url} target="_blank" rel="noopener noreferrer" className="skill-item__link">
                                                 {skill.link.text} <i className="now-ui-icons ui-1_send" />
                                             </a>
                                         )}
