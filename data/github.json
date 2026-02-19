@@ -1,5 +1,5 @@
 {
-  "timestamp": 1771530362573,
+  "timestamp": 1771533994773,
   "projects": [
     {
       "name": ".bash_aliases",
@@ -69,7 +69,7 @@
         },
         {
           "name": "Shell",
-          "percentage": "0.4"
+          "percentage": "0.3"
         }
       ]
     },

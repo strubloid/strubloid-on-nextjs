@@ -28,7 +28,7 @@ const ScrollTransparentNavbar: React.FC = () => {
     return (
         <>
             {collapseOpen && <div id="bodyClick" onClick={toggleNavOpen} />}
-            <Navbar className={`fixed-top${navbarColor}`} color="white" expand="lg" container>
+            <Navbar className={`fixed-top${navbarColor}`} color="white" expand="lg">
                 <div className="navbar-translate">
                     <NavbarBrand href="/" id="navbar-brand">
                         Rafael Mendes
@@ -47,30 +47,18 @@ const ScrollTransparentNavbar: React.FC = () => {
                 </div>
                 <Collapse isOpen={collapseOpen} navbar>
                     <Nav className="ml-auto" id="ceva" navbar>
-                        <UncontrolledDropdown nav>
-                            <DropdownToggle
-                                caret
-                                color="default"
-                                data-toggle="dropdown"
-                                href="#pablo"
-                                id="navbarDropdownMenuLink"
-                                nav
-                                onClick={(e: React.MouseEvent) => e.preventDefault()}
-                            >
+                        <NavItem>
+                            <Button className="nav-link btn-default" color="neutral" href="/about-me">
                                 <i aria-hidden={true} className="now-ui-icons design_image" />
                                 <p>IT Part of me</p>
-                            </DropdownToggle>
-                            <DropdownMenu aria-labelledby="navbarDropdownMenuLink" end>
-                                <DropdownItem href="/about-me">
-                                    <i className="now-ui-icons business_bulb-63" />
-                                    Who is IT Raf?
-                                </DropdownItem>
-                                <DropdownItem href="/contact-me">
-                                    <i className="now-ui-icons location_pin" />
-                                    Contact Me!
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
+                            </Button>
+                        </NavItem>
+                        <NavItem>
+                            <Button className="nav-link btn-default" color="neutral" href="/contact-me">
+                                <i aria-hidden={true} className="now-ui-icons location_pin" />
+                                <p>Contact Me</p>
+                            </Button>
+                        </NavItem>
                         <NavItem>
                             <Button className="nav-link btn-default" color="neutral" href="/artistic">
                                 <i aria-hidden={true} className="now-ui-icons design_palette" />
