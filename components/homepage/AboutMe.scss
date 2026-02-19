@@ -138,6 +138,14 @@ body {
         transform: translateY(-50%);
         will-change: top;
 
+        // Instant close without transition delay
+        &--closing {
+          transition: none;
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+        }
+
         &__content {
           display: flex;
           flex-direction: column;
@@ -153,6 +161,35 @@ body {
           opacity: 1;
           visibility: visible;
           pointer-events: auto;
+        }
+
+        &__close {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: #ffffff;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          font-size: 18px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          padding: 0;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+          }
+
+          &:active {
+            transform: scale(0.95);
+          }
         }
 
         &__icon {

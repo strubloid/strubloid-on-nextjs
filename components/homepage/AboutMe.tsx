@@ -82,50 +82,94 @@ function use3DTilt() {
 }
 
 const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
-    // State to track which skill is being hovered
+    // State to track which skill is being hovered (for preview)
     const [hoveredSkill, setHoveredSkill] = React.useState<string | null>(null);
+    // State to track which skill is pinned/clicked (stays visible for 10 seconds)
+    const [pinnedSkill, setPinnedSkill] = React.useState<string | null>(null);
+    // State to track if panel is closing (for immediate hide)
+    const [isClosing, setIsClosing] = React.useState(false);
     const detailPanelRef = useRef<HTMLDivElement>(null);
+    const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-    // GSAP: Position detail panel based on hovered skill
-    useEffect(() => {
-        if (!hoveredSkill || !detailPanelRef.current) return;
+    // Helper function to show skill details (used by both hover and click)
+    const showSkillDetails = useCallback((skillId: string | null) => {
+        if (!skillId || !detailPanelRef.current) return;
 
-        const hoveredElement = document.querySelector(
-            `.skill-item[data-skill-id="${hoveredSkill}"]`
-        );
+        const skillElement = document.querySelector(`.skill-item[data-skill-id="${skillId}"]`);
+        if (!skillElement) return;
 
-        if (hoveredElement) {
-            const rect = hoveredElement.getBoundingClientRect();
-            const panelHeight = detailPanelRef.current.offsetHeight || 490;
-            const yPosition = window.scrollY + rect.top + rect.height / 2 - 100; // Offset upward by 100px
+        const rect = skillElement.getBoundingClientRect();
+        const panelHeight = detailPanelRef.current.offsetHeight || 490;
+        const yPosition = window.scrollY + rect.top + rect.height / 2 - 100;
 
-            // Dynamically detect the fixed navbar's actual bottom position
-            // Look for the fixed-top navbar (not the section header)
-            const navbar = document.querySelector(".navbar") || document.querySelector("nav[class*='fixed']");
-            let headerBuffer = window.scrollY + 80 + 2; // Fallback if navbar not found
+        // Dynamically detect navbar position
+        const navbar = document.querySelector(".navbar") || document.querySelector("nav[class*='fixed']");
+        let headerBuffer = window.scrollY + 80 + 2;
 
-            if (navbar) {
-                const navbarRect = navbar.getBoundingClientRect();
-                // navbarRect.height is the navbar's height, it stays constant
-                headerBuffer = window.scrollY + navbarRect.height + 2; // Dynamic navbar height + 2px gap
-                console.log("📍 Navbar detected - height:", navbarRect.height, "buffer:", headerBuffer);
-            } else {
-                console.log("⚠️ Navbar NOT found - using fallback:", headerBuffer);
-            }
-
-            // Clamp the position to keep panel within viewport and below header
-            // Header buffer takes absolute priority
-            const minTop = headerBuffer;
-            const maxTop = window.scrollY + window.innerHeight - panelHeight / 2;
-            const clampedY = Math.max(minTop, Math.min(yPosition, maxTop));
-
-            gsap.to(detailPanelRef.current, {
-                top: clampedY,
-                duration: 0.6,
-                ease: "power2.out",
-            });
+        if (navbar) {
+            const navbarRect = navbar.getBoundingClientRect();
+            headerBuffer = window.scrollY + navbarRect.height + 2;
         }
-    }, [hoveredSkill]);
+
+        const minTop = headerBuffer;
+        const maxTop = window.scrollY + window.innerHeight - panelHeight / 2;
+        const clampedY = Math.max(minTop, Math.min(yPosition, maxTop));
+
+        gsap.to(detailPanelRef.current, {
+            top: clampedY,
+            duration: 0.6,
+            ease: "power2.out",
+        });
+    }, []);
+
+    // Handle skill click - pin for 10 seconds
+    const handleSkillClick = useCallback((skillId: string) => {
+        setPinnedSkill(skillId);
+        showSkillDetails(skillId);
+
+        // Clear existing timer
+        if (closeTimerRef.current) {
+            clearTimeout(closeTimerRef.current);
+        }
+
+        // Auto-close after 10 seconds
+        closeTimerRef.current = setTimeout(() => {
+            setPinnedSkill(null);
+        }, 10000);
+    }, [showSkillDetails]);
+
+    // Handle hover (only if nothing is pinned)
+    const handleSkillHover = useCallback(
+        (skillId: string | null) => {
+            if (!pinnedSkill) {
+                setHoveredSkill(skillId);
+                if (skillId) {
+                    showSkillDetails(skillId);
+                }
+            }
+        },
+        [pinnedSkill, showSkillDetails],
+    );
+
+    // Close pinned skill
+    const closePinnedSkill = useCallback(() => {
+        setIsClosing(true);
+        setPinnedSkill(null);
+        if (closeTimerRef.current) {
+            clearTimeout(closeTimerRef.current);
+        }
+        // Reset closing state after animation
+        setTimeout(() => setIsClosing(false), 100);
+    }, []);
+
+    // Cleanup timer on unmount
+    useEffect(() => {
+        return () => {
+            if (closeTimerRef.current) {
+                clearTimeout(closeTimerRef.current);
+            }
+        };
+    }, []);
 
     // Debug: Log which layout is being rendered
     React.useEffect(() => {
@@ -262,11 +306,20 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                 <Row className="skills-layout">
                     {/* Left Column: Detail Panel (appears on hover) */}
                     <Col md="7" className="skills-layout__left">
-                        <div className="detail-panel" ref={detailPanelRef}>
-                            {hoveredSkill && skills.find((s) => s.id === hoveredSkill) && (
+                        <div className={`detail-panel ${isClosing ? "detail-panel--closing" : ""}`} ref={detailPanelRef}>
+                            {(pinnedSkill || hoveredSkill) && skills.find((s) => s.id === (pinnedSkill || hoveredSkill)) && (
                                 <div className="detail-panel__content">
+                                    {pinnedSkill && (
+                                        <button
+                                            className="detail-panel__close"
+                                            onClick={closePinnedSkill}
+                                            aria-label="Close detail panel"
+                                        >
+                                            ✕
+                                        </button>
+                                    )}
                                     {(() => {
-                                        const skill = skills.find((s) => s.id === hoveredSkill);
+                                        const skill = skills.find((s) => s.id === (pinnedSkill || hoveredSkill));
                                         return (
                                             <>
                                                 <div className="detail-panel__icon" style={{ color: ACCENT_MAP[skill!.accent] ?? "var(--color-accent)" }}>
@@ -326,16 +379,26 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                                 <div
                                     key={skill.id}
                                     data-skill-id={skill.id}
-                                    className={`skill-item ${hoveredSkill === skill.id ? "skill-item--hovered" : ""}`}
-                                    style={{ "--skill-delay": `${idx * 50}ms` } as React.CSSProperties}
+                                    className={`skill-item ${pinnedSkill === skill.id || hoveredSkill === skill.id ? "skill-item--hovered" : ""}`}
+                                    style={{ "--skill-delay": `${idx * 50}ms`, cursor: "pointer" } as React.CSSProperties}
+                                    onClick={() => {
+                                        console.log("🔖 Pinned skill:", skill.id, skill.title);
+                                        handleSkillClick(skill.id);
+                                    }}
                                     onMouseEnter={() => {
-                                        console.log("🎯 Hovering skill:", skill.id, skill.title);
-                                        setHoveredSkill(skill.id);
+                                        if (!pinnedSkill) {
+                                            console.log("🎯 Hovering skill:", skill.id, skill.title);
+                                            handleSkillHover(skill.id);
+                                        }
                                     }}
                                     onMouseLeave={() => {
-                                        console.log("👋 Left skill:", skill.id);
-                                        setHoveredSkill(null);
+                                        if (!pinnedSkill) {
+                                            console.log("👋 Left skill:", skill.id);
+                                            handleSkillHover(null);
+                                        }
                                     }}
+                                    role="button"
+                                    tabIndex={0}
                                 >
                                     <div className="skill-item__icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
                                         <i className={skill.icon} />
