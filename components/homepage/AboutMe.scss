@@ -36,27 +36,30 @@ body {
       // ── Modern centered header ──────────────────────────────
       .about-me-header {
         text-align: center;
-        margin-bottom: 48px;
+        margin-bottom: 60px;
         padding: 0 15px;
 
         &__inner {
           display: inline-flex;
           flex-direction: column;
           align-items: center;
-          gap: 6px;
+          gap: 12px;
         }
 
         &__accent {
           display: block;
-          width: 48px;
-          height: 3px;
+          width: 60px;
+          height: 4px;
           border-radius: 2px;
           background: linear-gradient(
             90deg,
             var(--color-brazil-green),
+            var(--color-accent),
             var(--color-accent-light)
           );
-          opacity: 0.8;
+          opacity: 0.9;
+          box-shadow: 0 0 20px rgba(45, 155, 85, 0.4);
+          transition: all 0.3s ease;
         }
 
         &__category {
@@ -122,7 +125,7 @@ body {
 
         // ── Initial hidden state (pre-reveal) ──
         opacity: 0;
-        border: 1px solid transparent;
+        border: 2px solid transparent;
         background: transparent;
 
         transition:
@@ -130,6 +133,11 @@ body {
           box-shadow 0.5s var(--ease-spring),
           border-color 0.4s ease,
           background 0.4s ease;
+
+        // Add accent color border
+        &[style*="--rotateX"] {
+          border-left: 4px solid currentColor;
+        }
 
         // ── Card becomes visible shell when matrix starts ──
         &.matrix-active {
@@ -159,7 +167,7 @@ body {
         // ── Fully revealed state ──
         &.revealed {
           opacity: 1;
-          border-color: rgba(255, 255, 255, 0.18);
+          border-color: rgba(255, 255, 255, 0.2);
           background: linear-gradient(
             135deg,
             rgba(65, 72, 68, 0.85) 0%,
@@ -168,8 +176,28 @@ body {
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            0 12px 40px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 20px rgba(45, 155, 85, 0.05);
+          position: relative;
+
+          // Colored accent bar
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(
+              180deg,
+              currentColor,
+              rgba(255, 255, 255, 0.3)
+            );
+            z-index: 10;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, width 0.3s ease;
+          }
 
           .skill-card__content {
             opacity: 1;
@@ -204,12 +232,18 @@ body {
         }
 
         &--linked:hover {
-          border-color: rgba(224, 123, 76, 0.6);
+          border-color: rgba(224, 123, 76, 0.8);
           box-shadow:
-            0 24px 48px rgba(0, 0, 0, 0.35),
-            0 0 24px rgba(224, 123, 76, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.12);
-          transform: translateY(-6px);
+            0 24px 48px rgba(0, 0, 0, 0.4),
+            0 0 30px rgba(224, 123, 76, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 60px rgba(45, 155, 85, 0.08);
+          transform: translateY(-8px);
+
+          &::before {
+            width: 6px;
+            opacity: 1;
+          }
         }
 
         // ── Holographic glare ──
@@ -282,16 +316,32 @@ body {
           padding-top: 8px;
           transform: translateZ(30px);
           transition: transform 0.3s var(--ease-spring);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 60px;
+          height: 60px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.3s var(--ease-spring);
 
           i {
             font-size: 42px;
-            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
-            transition: transform 0.3s var(--ease-spring);
+            filter: drop-shadow(0 0 12px currentColor);
+            transition: transform 0.3s var(--ease-spring), filter 0.3s ease;
           }
         }
 
+        &--linked:hover &__icon {
+          background: rgba(255, 255, 255, 0.1);
+          border-color: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
         &--linked:hover &__icon i {
-          transform: scale(1.15) translateY(-6px);
+          transform: scale(1.2) translateY(-8px);
+          filter: drop-shadow(0 0 16px currentColor);
         }
 
         &__body {
@@ -306,8 +356,26 @@ body {
           font-size: 1.4em;
           margin: 0 0 14px;
           letter-spacing: 0.01em;
-          text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
           line-height: 1.3;
+          transition: all 0.3s ease;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: width 0.3s var(--ease-spring);
+          }
+        }
+
+        &--linked:hover &__title::after {
+          width: 100%;
+          opacity: 0.6;
         }
 
         &__desc {
@@ -317,6 +385,11 @@ body {
           font-size: 1.05em;
           margin: 0;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+          transition: color 0.3s ease;
+        }
+
+        &--linked:hover &__desc {
+          color: #ffffff !important;
         }
 
         &__link-label {
@@ -365,6 +438,56 @@ body {
         &.revealed::after {
           opacity: 0;
         }
+      }
+
+      // ── Reveal animations ──────────────────────────────────
+      @keyframes cardRevealFadeRight {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes cardRevealFadeLeft {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .skill-card[data-direction="fade-right"] {
+        animation: cardRevealFadeRight 0.8s var(--ease-out-expo) backwards;
+      }
+
+      .skill-card[data-direction="fade-left"] {
+        animation: cardRevealFadeLeft 0.8s var(--ease-out-expo) backwards;
+      }
+
+      .skill-card[data-reveal-delay="200"] {
+        animation-delay: 0.1s;
+      }
+      .skill-card[data-reveal-delay="400"] {
+        animation-delay: 0.2s;
+      }
+      .skill-card[data-reveal-delay="600"] {
+        animation-delay: 0.3s;
+      }
+      .skill-card[data-reveal-delay="800"] {
+        animation-delay: 0.4s;
+      }
+      .skill-card[data-reveal-delay="1000"] {
+        animation-delay: 0.5s;
+      }
+      .skill-card[data-reveal-delay="1200"] {
+        animation-delay: 0.6s;
       }
     }
   }
