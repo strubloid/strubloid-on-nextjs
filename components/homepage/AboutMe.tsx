@@ -433,7 +433,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                                     </div>
                                     <div className="skill-item__content">
                                         <h5 className="skill-item__title">{skill.title}</h5>
-                                        <p className="skill-item__desc">{skill.description}</p>
+                                        <p className="skill-item__desc">{skill.description_short || skill.description}</p>
                                         {skill.link && (
                                             <a href={skill.link.url} target="_blank" rel="noopener noreferrer" className="skill-item__link">
                                                 {skill.link.text} <i className="now-ui-icons ui-1_send" />

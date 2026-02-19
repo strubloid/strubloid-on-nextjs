@@ -40,6 +40,7 @@ export interface Skill {
     title: string;
     accent: string;
     description: string;
+    description_short?: string;
     usages?: SkillUsage[];
     relatedSkills?: string[];
     link?: SkillLink;

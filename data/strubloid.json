@@ -22,7 +22,8 @@
       "icon": "now-ui-icons users_single-02",
       "title": "A little bit about me",
       "accent": "accent",
-      "description": "Born into brush strokes and colour palettes, I danced between paint and canvas until binary whispers and the elegance of code seduced my soul. 🎨→💻 Now, as a Brazilian Software Engineer with 16+ years of crafting digital experiences, I blend artistic sensibility with technical precision—building clean architectures, pixel-perfect interfaces, and systems that feel alive.\n\nWhen I'm not architecting code, you'll find me chasing light through a camera lens 📸, strumming guitars into the night 🎸, or curating moments of beauty that have graced exibit into galleries from the Louvre to the streets of João Pessoa. I believe great software—like great art tells a story, stirs emotion, and leaves the world slightly more beautiful.\n\nDesign patterns are poetry. Linux is freedom. And every line of code is a brushstroke in something larger. Let's build something extraordinary together. 🚀"
+      "description": "Born into brush strokes and colour palettes, I danced between paint and canvas until binary whispers and the elegance of code seduced my soul. 🎨→💻 Now, as a Brazilian Software Engineer with 16+ years of crafting digital experiences, I blend artistic sensibility with technical precision—building clean architectures, pixel-perfect interfaces, and systems that feel alive.\n\nWhen I'm not architecting code, you'll find me chasing light through a camera lens 📸, strumming guitars into the night 🎸, or curating moments of beauty that have graced exibit into galleries from the Louvre to the streets of João Pessoa. I believe great software—like great art tells a story, stirs emotion, and leaves the world slightly more beautiful.\n\nDesign patterns are poetry. Linux is freedom. And every line of code is a brushstroke in something larger. Let's build something extraordinary together. 🚀",
+      "description_short": "Brazilian Software Engineer with 16+ years crafting digital experiences. Artist, guitarist, photographer. Blending clean code with creative passion. 🎨💻"
     },
     {
       "id": "react",
@@ -30,6 +31,7 @@
       "title": "React & Next.js",
       "accent": "info",
       "description": "React has been my frontend evolution, starting from Node.js and maturing through React 18, React Native 0.74, Next.js 13/14, and Expo. I follow SOLID principles, build reusable component architectures, and manage state with React Query, TanStack Table, React Hook Form, and Context API. I deliver pixel-perfect Figma-to-code implementations with consistent typography, spacing, and theming.",
+      "description_short": "Frontend expert with React 18, Next.js, React Native, and Expo. Building scalable, performant applications with clean component architectures.",
       "usages": [
         {
           "company": "Konvi",
@@ -60,6 +62,7 @@
       "title": "TypeScript",
       "accent": "info",
       "description": "TypeScript 5+ is my standard for all frontend and backend work. I enforce type safety across monorepos, migrate legacy JavaScript codebases, and build typed interfaces for REST APIs, GraphQL schemas, and component libraries. Strong typing has been essential in maintaining quality across large-scale applications.",
+      "description_short": "TypeScript 5+ standard for type-safe development. REST APIs, GraphQL, component libraries. Modernizing legacy JavaScript codebases.",
       "usages": [
         {
           "company": "Konvi",
@@ -85,6 +88,7 @@
       "title": "PHP",
       "accent": "brazil-green",
       "description": "PHP has been a serious relationship since 2007, spanning pure PHP, Yii, Zend Framework I & II, Magento 1 & 2, and Laravel. In May 2010, I told Rasmus Lerdorf at IV ENSOL that I'd keep using PHP — 16 years later, it remains a core part of my backend expertise.",
+      "description_short": "Serious backend relationship since 2007. Pure PHP, Yii, Zend, Laravel. E-commerce, REST APIs, database architectures.",
       "usages": [
         {
           "company": "Blocworx",
@@ -119,6 +123,7 @@
       "icon": "now-ui-icons education_atom",
       "title": "Python",
       "accent": "brazil-gold",
+      "description_short": "University to production. 20+ games with Pygame, FastAPI, AWS, critical backup systems, AI integrations.",
       "description": "Python has been with me since university, where I built 20+ 2D games with Pygame as part of the Firestorm team. Today I use it for backend services with FastAPI, AI integrations via the OpenAI API, critical backup systems, and automation tools. My Sperm Whale project demonstrates real-time transcription and translation using Whisper and multi-engine AI.",
       "usages": [
         {
@@ -144,6 +149,7 @@
       "icon": "now-ui-icons text_bold",
       "title": "Bash & Linux",
       "accent": "brazil-gold",
+      "description_short": "Linux love since 2005. Shell scripting, server automation, AWS, CI/CD pipelines, intelligent terminal workflows.",
       "description": "Bash scripting is pure Linux love, inherited from the GNU/Linux community. Since 2005, I've written scripts for server automation, AWS management, CI/CD pipelines, rollback procedures, and AI-powered diagnostics. My .bash_aliases project evolved into a cross-platform toolkit integrating Python and OpenAI for intelligent scripting.",
       "usages": [
         {
@@ -174,6 +180,7 @@
       "title": "Angular",
       "accent": "accent",
       "description": "Led frontend development with Angular 19 at Blocworx, building a high-performance no-code platform. I introduced standardised testing with Jest and Puppeteer, migrated codebases to TypeScript, and developed reusable npm packages. Implemented charting libraries like Chart.js and D3.js for complex workflow visualisation in admin dashboards.",
+      "description_short": "Angular 19 frontend expert. High-performance no-code platforms, Jest & Puppeteer testing, reusable npm packages.",
       "usages": [
         {
           "company": "Blocworx",
@@ -194,6 +201,7 @@
       "title": "Java",
       "accent": "brazil-green",
       "description": "My Java journey includes optimising backend processing for Brazil's BGSD supercomputer at Dataprev, cutting batch times from 0.01s to 0.00001s. I refactored legacy academic models into high-performance big data solutions. As an OSUM Leader, I organised events promoting Java best practices across Brazil.",
+      "description_short": "Backend optimization for BGSD supercomputer. 1000x performance improvement. Big Data, OSUM leadership.",
       "usages": [
         {
           "company": "Dataprev",
@@ -219,6 +227,7 @@
       "title": "DevOps & Tools",
       "accent": "accent",
       "description": "Docker, Git-flow, CI/CD pipelines, and Linux server administration are core to my workflow. I build containerised development environments, manage AWS scripting, and enforce code quality through ESLint, Prettier, and thorough code reviews. I use Turborepo for monorepo management and Webpack 5 for build optimisation.",
+      "description_short": "Docker, Git-flow, CI/CD pipelines, Linux admin. Containerized dev, AWS, code quality enforcement.",
       "usages": [
         {
           "company": "Blocworx",
@@ -249,6 +258,7 @@
       "title": "Databases & APIs",
       "accent": "info",
       "description": "Experience across Firebase, MongoDB, MySQL, PostgreSQL, Redis, and Oracle. I design and consume REST APIs and GraphQL endpoints, integrate blockchain wallets via thirdweb SDK (ERC-20/721), and work with DatoCMS, OAuth 2.0 providers (Google, Microsoft, Yahoo), and the OpenAI API.",
+      "description_short": "Firebase, MongoDB, MySQL, PostgreSQL, Redis, Oracle. REST APIs, GraphQL, blockchain, OAuth integration.",
       "usages": [
         {
           "company": "Konvi",
