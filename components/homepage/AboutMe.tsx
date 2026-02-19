@@ -179,6 +179,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
     const closePinnedSkill = useCallback(() => {
         setIsClosing(true);
         setPinnedSkill(null);
+        setHoveredSkill(null); // Clear hover to ensure panel closes
         if (closeTimerRef.current) {
             clearTimeout(closeTimerRef.current);
         }
