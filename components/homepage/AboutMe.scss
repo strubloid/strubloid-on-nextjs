@@ -83,7 +83,44 @@ body {
         }
       }
 
-      // ── Carousel Container ──────────────────────────────────
+      // ── Full Carousel Wrapper ────────────────────────────────
+      &-wrapper-full {
+        display: flex;
+        flex-direction: column;
+      }
+
+      // ── Carousel Section (separate from main section) ────────
+      .carousel-section {
+        position: relative;
+        padding: 60px 0 40px 0;
+        z-index: 2;
+
+        .container-fluid {
+          position: relative;
+          max-width: 1400px;
+        }
+      }
+
+      // ── Carousel Controls (Buttons) ──────────────────────────
+      .carousel-controls {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 30px;
+        pointer-events: none;
+        z-index: 10;
+
+        .carousel-btn {
+          pointer-events: auto;
+        }
+      }
+
+      // ── Carousel Container (legacy - keeping for compatibility) ──
       .carousel-container {
         display: flex;
         align-items: center;
@@ -94,10 +131,16 @@ body {
       }
 
       // ── Carousel Viewport ────────────────────────────────────
-      .carousel-viewport {
-        flex: 1;
+      .carousel-section .carousel-viewport {
+        margin: 0 auto 40px auto;
         max-width: 600px;
         height: 500px;
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+      }
+
+      .carousel-viewport {
         position: relative;
         overflow: hidden;
         border-radius: var(--radius-lg);
