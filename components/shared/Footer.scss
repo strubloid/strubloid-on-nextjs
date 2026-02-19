@@ -31,7 +31,7 @@
     padding: 0;
     list-style: none;
     &:not(.links-vertical) {
-      line-height: 3.1;
+      line-height: 2.1;
     }
     li {
       display: inline-block;
@@ -703,10 +703,12 @@
   // Grid layout for footer columns
   .footer-content {
     display: grid;
-    grid-template-columns: 1.5fr 2fr 1fr;
-    gap: 3rem;
-    padding-bottom: 3rem;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 4rem;
+    padding: 0 2rem 4rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   // Brand section — name + tagline
@@ -744,21 +746,45 @@
       list-style: none;
       padding: 0;
       margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      justify-content: center;
 
       li {
-        margin-bottom: 0.65rem;
+        margin-bottom: 0;
 
         a {
           color: rgba(255, 248, 240, 0.6);
           text-decoration: none;
           font-size: 0.95rem;
-          transition: color 0.3s var(--ease-out-expo),
-                      transform 0.3s var(--ease-out-expo);
+          transition: all 0.4s var(--ease-out-expo);
           display: inline-block;
+          padding: 8px 14px;
+          border-radius: 6px;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-brazil-gold), var(--color-accent));
+            transition: width 0.4s var(--ease-out-expo);
+          }
 
           &:hover {
             color: var(--color-cream);
-            transform: translateX(4px);
+            background: rgba(232, 182, 49, 0.1);
+            border: 1px solid rgba(232, 182, 49, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(232, 182, 49, 0.15);
+
+            &::after {
+              width: 100%;
+            }
           }
         }
       }

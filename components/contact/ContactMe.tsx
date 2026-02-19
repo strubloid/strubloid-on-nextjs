@@ -241,7 +241,11 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
                                                     }
                                                 />
                                             </FormGroup>
-
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
                                             <FormGroup>
                                                 <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_SITE_RECAPTCHA_KEY ?? ""} onChange={onChangeRecaptcha} />
                                                 {errors.captcha && <p style={{ color: "red", marginTop: "4px", fontSize: "0.85rem" }}>{errors.captcha}</p>}
