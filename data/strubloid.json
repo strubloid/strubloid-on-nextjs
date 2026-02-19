@@ -29,28 +29,115 @@
       "icon": "now-ui-icons education_paper",
       "title": "React & Next.js",
       "accent": "info",
-      "description": "React has been my frontend evolution, starting from Node.js and maturing through React 18, React Native 0.74, Next.js 13/14, and Expo. I follow SOLID principles, build reusable component architectures, and manage state with React Query, TanStack Table, React Hook Form, and Context API. I deliver pixel-perfect Figma-to-code implementations with consistent typography, spacing, and theming."
+      "description": "React has been my frontend evolution, starting from Node.js and maturing through React 18, React Native 0.74, Next.js 13/14, and Expo. I follow SOLID principles, build reusable component architectures, and manage state with React Query, TanStack Table, React Hook Form, and Context API. I deliver pixel-perfect Figma-to-code implementations with consistent typography, spacing, and theming.",
+      "usages": [
+        {
+          "company": "Konvi",
+          "period": "2025 - Present",
+          "detail": "Leading migration of internal packages in a monorepo using React 18, React Native 0.74, Next.js 13/14, and Expo. Built cross-platform features with TanStack React Query, TanStack Table, React Hook Form. Implemented enterprise-grade design systems with DatoCMS integration and OAuth 2.0 providers."
+        },
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Developed high-performance React applications for a no-code platform. Designed reusable component architectures and implemented charting libraries (Chart.js, D3.js) for admin dashboards. Migrated codebases to TypeScript and developed reusable npm packages."
+        },
+        {
+          "project": "Bazinga - LLM Developer",
+          "period": "2019 - Present",
+          "detail": "Built full-stack Next.js app with user auth and /dashboard landing. Implemented Jobs workflow: list view, detail view, multi-step accordion for Base CV upload and Job Description. Integrated OpenAI for auto-generating tailored CVs and Cover Letters with downloadable PDFs."
+        },
+        {
+          "company": "Captura.Me",
+          "period": "Dec 2012 - Sep 2016",
+          "detail": "Introduced React as core frontend technology, replacing legacy Zend views. Built scalable component architecture with React Router for client-side navigation. Managed complex state with Context API and custom hooks. Applied code-splitting and lazy loading for performance optimization."
+        }
+      ],
+      "relatedSkills": ["TypeScript", "Node.js", "Next.js", "React Query", "Design Systems"]
     },
     {
       "id": "typescript",
       "icon": "now-ui-icons design-2_html5",
       "title": "TypeScript",
       "accent": "info",
-      "description": "TypeScript 5+ is my standard for all frontend and backend work. I enforce type safety across monorepos, migrate legacy JavaScript codebases, and build typed interfaces for REST APIs, GraphQL schemas, and component libraries. Strong typing has been essential in maintaining quality across large-scale applications."
+      "description": "TypeScript 5+ is my standard for all frontend and backend work. I enforce type safety across monorepos, migrate legacy JavaScript codebases, and build typed interfaces for REST APIs, GraphQL schemas, and component libraries. Strong typing has been essential in maintaining quality across large-scale applications.",
+      "usages": [
+        {
+          "company": "Konvi",
+          "period": "2025 - Present",
+          "detail": "Using TypeScript 5+ across React 18, React Native, and Next.js applications. Enforced type safety in monorepo structure, built typed interfaces for GraphQL APIs, OAuth integrations, and blockchain (ERC-20/721) wallet interactions."
+        },
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Migrated large Angular and React codebases from JavaScript to TypeScript. Built strongly-typed npm packages and established TypeScript standards across the team. Created typed interfaces for REST APIs and database schemas with Prisma."
+        },
+        {
+          "company": "Monsoon Consulting",
+          "period": "Apr 2019 - May 2020",
+          "detail": "Introduced TypeScript to Magento II project, building typed interfaces for REST APIs and custom modules. Improved developer experience with IDE autocompletion and compile-time error checking."
+        }
+      ],
+      "relatedSkills": ["React", "Node.js", "GraphQL", "Jest", "Prisma"]
     },
     {
       "id": "php",
       "icon": "now-ui-icons education_atom",
       "title": "PHP",
       "accent": "brazil-green",
-      "description": "PHP has been a serious relationship since 2007, spanning pure PHP, Yii, Zend Framework I & II, Magento 1 & 2, and Laravel. In May 2010, I told Rasmus Lerdorf at IV ENSOL that I'd keep using PHP — 16 years later, it remains a core part of my backend expertise."
+      "description": "PHP has been a serious relationship since 2007, spanning pure PHP, Yii, Zend Framework I & II, Magento 1 & 2, and Laravel. In May 2010, I told Rasmus Lerdorf at IV ENSOL that I'd keep using PHP — 16 years later, it remains a core part of my backend expertise.",
+      "usages": [
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Built backend services in Laravel for a no-code platform. Designed REST APIs for complex workflows, integrated third-party services, and managed database operations with optimization and caching strategies."
+        },
+        {
+          "company": "Monsoon Consulting",
+          "period": "Apr 2019 - May 2020",
+          "detail": "Maintained and enhanced Magento 1 and 2 e-commerce applications. Designed custom modules, REST APIs, and conducted performance audits. Identified bottlenecks in third-party integrations and delivered improvement plans."
+        },
+        {
+          "company": "StudioForty9",
+          "period": "Sep 2016 - Dec 2018",
+          "detail": "Redesigned Magento 1 architecture to support promotional behavior. Developed backend system for promotional item management and cross-sell relationships. Built tools for structural issue identification and image asset optimization."
+        },
+        {
+          "company": "Vox Technology",
+          "period": "Aug 2011 - Nov 2012",
+          "detail": "Led migration of legacy backend to Zend Framework 1. Refactored 200+ templates with REGEX patterns, improving consistency and maintainability. Mentored frontend team via pair programming."
+        },
+        {
+          "company": "Dantel",
+          "period": "Aug 2011 - Nov 2012",
+          "detail": "Developed core backend for e-procurement platform using PHP and YII framework. Refactored Customer Support system with pattern-based architecture. Built custom JavaScript runtime importer for dynamic library loading."
+        }
+      ],
+      "relatedSkills": ["Magento", "Zend Framework", "Laravel", "REST APIs", "MySQL", "Docker"]
     },
     {
       "id": "python",
       "icon": "now-ui-icons education_atom",
       "title": "Python",
       "accent": "brazil-gold",
-      "description": "Python has been with me since university, where I built 20+ 2D games with Pygame as part of the Firestorm team. Today I use it for backend services with FastAPI, AI integrations via the OpenAI API, critical backup systems, and automation tools. My Sperm Whale project demonstrates real-time transcription and translation using Whisper and multi-engine AI."
+      "description": "Python has been with me since university, where I built 20+ 2D games with Pygame as part of the Firestorm team. Today I use it for backend services with FastAPI, AI integrations via the OpenAI API, critical backup systems, and automation tools. My Sperm Whale project demonstrates real-time transcription and translation using Whisper and multi-engine AI.",
+      "usages": [
+        {
+          "project": "Spermwhale - AI Transcription System",
+          "period": "2022 - Present",
+          "detail": "Architected real-time transcription and audio processing system with WebSocket-driven feedback. Integrated AI-based audio analysis with Whisper for automatic speech recognition. Implemented asset management and caching inspired by game-engine rendering loops for performance optimization."
+        },
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Developed Python backend services for critical tasks. Created backup and reporting systems, AWS server-side scripting, and diagnostic tools. Evolved BashAliases fork with AI-powered diagnostics for Linux server maintenance."
+        },
+        {
+          "project": "BashAliases - Shell Automation Toolkit",
+          "period": "2013 - Present",
+          "detail": "Evolved from simple Linux aliases into a complete system setup framework. Engineered advanced shell scripting utilities using Bash and Python with OOP design principles. Integrated OpenAI API for intelligent, context-aware scripting directly from the terminal."
+        }
+      ],
+      "relatedSkills": ["Bash", "FastAPI", "OpenAI API", "WebSocket", "AWS", "Docker"]
     },
     {
       "id": "bash",
@@ -58,6 +145,24 @@
       "title": "Bash & Linux",
       "accent": "brazil-gold",
       "description": "Bash scripting is pure Linux love, inherited from the GNU/Linux community. Since 2005, I've written scripts for server automation, AWS management, CI/CD pipelines, rollback procedures, and AI-powered diagnostics. My .bash_aliases project evolved into a cross-platform toolkit integrating Python and OpenAI for intelligent scripting.",
+      "usages": [
+        {
+          "project": "BashAliases - Cross-Platform Toolkit",
+          "period": "2013 - Present",
+          "detail": "Created comprehensive automation toolkit with advanced Bash and Python utilities. Engineered custom installers and environment bootstraps for Linux, macOS, and Windows (WSL). Integrated OpenAI API for intelligent terminal scripting and context-aware command generation."
+        },
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Developed Bash scripts for AWS server-side scripting, CI/CD pipelines, and rollback procedures. Created specialized fork of bash_aliases with AI-powered diagnostics for Linux environment maintenance and rapid troubleshooting."
+        },
+        {
+          "company": "Community Leadership",
+          "period": "2005 - Present",
+          "detail": "Active in GNU/Linux community since 2005. Organized events and promoted free software through GLUGPB & CETI groups. Advocated for Linux best practices and open-source culture across the Northeast Brazil developer community."
+        }
+      ],
+      "relatedSkills": ["Python", "Docker", "AWS", "Git", "Linux Server Administration"],
       "link": {
         "text": "Check it out",
         "url": "https://github.com/strubloid/.bash_aliases"
@@ -68,28 +173,110 @@
       "icon": "now-ui-icons ui-2_settings-90",
       "title": "Angular",
       "accent": "accent",
-      "description": "Led frontend development with Angular 19 at Blocworx, building a high-performance no-code platform. I introduced standardised testing with Jest and Puppeteer, migrated codebases to TypeScript, and developed reusable npm packages. Implemented charting libraries like Chart.js and D3.js for complex workflow visualisation in admin dashboards."
+      "description": "Led frontend development with Angular 19 at Blocworx, building a high-performance no-code platform. I introduced standardised testing with Jest and Puppeteer, migrated codebases to TypeScript, and developed reusable npm packages. Implemented charting libraries like Chart.js and D3.js for complex workflow visualisation in admin dashboards.",
+      "usages": [
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Led frontend development with Angular 19 for a high-performance no-code platform. Introduced standardised testing framework with Jest and Puppeteer. Migrated large codebases to TypeScript, enforcing type safety across the team. Developed reusable npm packages for internal use and open-source contribution."
+        },
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Implemented advanced charting libraries including Chart.js and D3.js for complex workflow visualization in admin dashboards. Designed responsive design systems aligned with Figma specifications. Built dynamic data tables with TanStack Table for enterprise applications."
+        }
+      ],
+      "relatedSkills": ["TypeScript", "Jest", "Puppeteer", "Chart.js", "D3.js", "Responsive Design"]
     },
     {
       "id": "java",
       "icon": "now-ui-icons ui-2_settings-90",
       "title": "Java",
       "accent": "brazil-green",
-      "description": "My Java journey includes optimising backend processing for Brazil's BGSD supercomputer at Dataprev, cutting batch times from 0.01s to 0.00001s. I refactored legacy academic models into high-performance big data solutions. As an OSUM Leader, I organised events promoting Java best practices across Brazil."
+      "description": "My Java journey includes optimising backend processing for Brazil's BGSD supercomputer at Dataprev, cutting batch times from 0.01s to 0.00001s. I refactored legacy academic models into high-performance big data solutions. As an OSUM Leader, I organised events promoting Java best practices across Brazil.",
+      "usages": [
+        {
+          "company": "Dataprev",
+          "period": "Apr 2009 - Apr 2010",
+          "detail": "Optimised Java backend processing for Brazil's BGSD (Brazilian Budget Supervision Distribution) supercomputer. Refactored legacy academic models based on Japanese theory into high-performance big data solutions, reducing batch processing time from 0.01s to 0.00001s — a 1000x improvement."
+        },
+        {
+          "company": "Dataprev",
+          "period": "Apr 2009 - Apr 2010",
+          "detail": "Built frontend components using the in-house Netuno framework. Focused on responsive UI design and computational efficiency to support the supercomputer's heavy workloads. Contributed to cost reduction through enhanced processing efficiency."
+        },
+        {
+          "company": "OSUM Leader - Community",
+          "period": "2009 - 2010",
+          "detail": "Organized events promoting Java best practices and the latest tools across Brazil. Showcased Sun Spot innovations at major conferences, fostering a vibrant developer community focused on Java excellence and emerging technologies."
+        }
+      ],
+      "relatedSkills": ["Big Data", "Performance Optimization", "Netuno Framework", "Multithreading"]
     },
     {
       "id": "devops",
       "icon": "now-ui-icons tech_laptop",
       "title": "DevOps & Tools",
       "accent": "accent",
-      "description": "Docker, Git-flow, CI/CD pipelines, and Linux server administration are core to my workflow. I build containerised development environments, manage AWS scripting, and enforce code quality through ESLint, Prettier, and thorough code reviews. I use Turborepo for monorepo management and Webpack 5 for build optimisation."
+      "description": "Docker, Git-flow, CI/CD pipelines, and Linux server administration are core to my workflow. I build containerised development environments, manage AWS scripting, and enforce code quality through ESLint, Prettier, and thorough code reviews. I use Turborepo for monorepo management and Webpack 5 for build optimisation.",
+      "usages": [
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Designed and implemented comprehensive CI/CD pipelines using Docker for local and staging environments. Created Docker containers and docker-compose configurations for app + MongoDB. Enforced code quality through ESLint, Prettier, and rigorous code reviews. Developed specialized Bash scripts for AWS server-side management."
+        },
+        {
+          "company": "Konvi",
+          "period": "2025 - Present",
+          "detail": "Managing DevOps for monorepo structure using Turborepo. Implementing CI/CD workflows for React, React Native, and Next.js applications. Handling containerization and deployment optimization across multiple platforms."
+        },
+        {
+          "company": "Monsoon Consulting",
+          "period": "Apr 2019 - May 2020",
+          "detail": "Implemented Docker-based workflows for local, stage, and live environments in Magento projects. Enforced Git Flow version control practices. Established standardised code review processes ensuring all changes met quality standards before deployment."
+        },
+        {
+          "project": "BashAliases - DevOps Toolkit",
+          "period": "2013 - Present",
+          "detail": "Created cross-platform toolkit for developer productivity with advanced Bash scripting. Engineered custom installers and environment bootstraps. Integrated with Git for version control and included AI-powered diagnostics using OpenAI API."
+        }
+      ],
+      "relatedSkills": ["Docker", "Git", "AWS", "Bash", "Turborepo", "Webpack 5"]
     },
     {
       "id": "databases",
       "icon": "now-ui-icons shopping_credit-card",
       "title": "Databases & APIs",
       "accent": "info",
-      "description": "Experience across Firebase, MongoDB, MySQL, PostgreSQL, Redis, and Oracle. I design and consume REST APIs and GraphQL endpoints, integrate blockchain wallets via thirdweb SDK (ERC-20/721), and work with DatoCMS, OAuth 2.0 providers (Google, Microsoft, Yahoo), and the OpenAI API."
+      "description": "Experience across Firebase, MongoDB, MySQL, PostgreSQL, Redis, and Oracle. I design and consume REST APIs and GraphQL endpoints, integrate blockchain wallets via thirdweb SDK (ERC-20/721), and work with DatoCMS, OAuth 2.0 providers (Google, Microsoft, Yahoo), and the OpenAI API.",
+      "usages": [
+        {
+          "company": "Konvi",
+          "period": "2025 - Present",
+          "detail": "Managing Firebase for authentication and real-time data. Integrated GraphQL APIs with full type safety. Implemented blockchain integrations using thirdweb SDK for ERC-20/721 token interactions. Configured OAuth 2.0 with Google, Microsoft, and Yahoo providers. Integrated DatoCMS for dynamic content management with GraphQL."
+        },
+        {
+          "project": "Bazinga - LLM Developer",
+          "period": "2019 - Present",
+          "detail": "Modeled data with Prisma on MongoDB. Handled schema sync via prisma db push. Designed entities for User, Job, and generated CV/Cover Letter outputs. Integrated OpenAI API for intelligent document generation. Created downloadable PDF outputs from generated content."
+        },
+        {
+          "company": "Blocworx",
+          "period": "Nov 2020 - May 2024",
+          "detail": "Designed and maintained REST APIs for complex no-code platform workflows. Integrated MongoDB with Mongoose for data modeling. Built comprehensive API documentation. Worked with third-party integrations for high-traffic enterprise operations."
+        },
+        {
+          "company": "Monsoon Consulting",
+          "period": "Apr 2019 - May 2020",
+          "detail": "Conducted performance audits identifying database bottlenecks. Designed and implemented custom REST APIs for Magento integration. Analyzed third-party integrations (e.g., Nosto) and delivered optimization recommendations."
+        },
+        {
+          "company": "Captura.Me",
+          "period": "Dec 2012 - Sep 2016",
+          "detail": "Built REST APIs with Axios integration. Managed database operations with MySQL. Implemented caching strategies for performance optimization. Applied pagination and query optimization techniques."
+        }
+      ],
+      "relatedSkills": ["GraphQL", "REST APIs", "MongoDB", "PostgreSQL", "Firebase", "Prisma", "OpenAI API"]
     }
   ],
   "experience": [

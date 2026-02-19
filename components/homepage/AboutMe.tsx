@@ -260,6 +260,36 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                                                 <div className="detail-panel__body">
                                                     <h3 className="detail-panel__title">{skill!.title}</h3>
                                                     <p className="detail-panel__description">{skill!.description}</p>
+
+                                                    {/* Usage Timeline */}
+                                                    {skill!.usages && skill!.usages.length > 0 && (
+                                                        <div className="detail-panel__usages">
+                                                            {skill!.usages.map((usage, idx) => (
+                                                                <div key={idx} className="detail-panel__usage-item">
+                                                                    <div className="detail-panel__usage-header">
+                                                                        <h4 className="detail-panel__usage-title">
+                                                                            {usage.company || usage.project}
+                                                                        </h4>
+                                                                        <span className="detail-panel__usage-period">{usage.period}</span>
+                                                                    </div>
+                                                                    <p className="detail-panel__usage-detail">{usage.detail}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+
+                                                    {/* Related Skills */}
+                                                    {skill!.relatedSkills && skill!.relatedSkills.length > 0 && (
+                                                        <div className="detail-panel__related">
+                                                            <h4 className="detail-panel__related-title">Combined with:</h4>
+                                                            <div className="detail-panel__related-tags">
+                                                                {skill!.relatedSkills.map((relatedSkill, idx) => (
+                                                                    <span key={idx} className="detail-panel__tag">{relatedSkill}</span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
                                                     {skill!.link && (
                                                         <a href={skill!.link.url} target="_blank" rel="noopener noreferrer" className="detail-panel__link">
                                                             {skill!.link.text} <i className="now-ui-icons ui-1_send" />

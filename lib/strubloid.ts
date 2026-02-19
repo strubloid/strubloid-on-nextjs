@@ -27,12 +27,21 @@ export interface SkillLink {
     url: string;
 }
 
+export interface SkillUsage {
+    project?: string;
+    company?: string;
+    period: string;
+    detail: string;
+}
+
 export interface Skill {
     id: string;
     icon: string;
     title: string;
     accent: string;
     description: string;
+    usages?: SkillUsage[];
+    relatedSkills?: string[];
     link?: SkillLink;
 }
 
