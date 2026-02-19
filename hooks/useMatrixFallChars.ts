@@ -25,7 +25,7 @@ export function useMatrixFallChars() {
             { color: "#ff8000", glow: "rgba(255, 128, 0, 0.7)" }, // Orange
         ];
 
-        const interactiveSelectors = "button:not(.scroll-to-top):not(.flickr-gallery__arrow--next):not(.flickr-gallery__arrow--prev):not(.flickr-gallery__thumb), .btn, .nav-link, .dropdown-toggle";
+        const interactiveSelectors = "button:not(.scroll-to-top):not(.flickr-gallery__arrow--next):not(.flickr-gallery__arrow--prev):not(.flickr-gallery__thumb):not(.detail-panel__close), .btn, .nav-link, .dropdown-toggle";
 
         const createCharacterWave = (target: HTMLElement) => {
             const rect = target.getBoundingClientRect();
@@ -153,6 +153,15 @@ export function useMatrixFallChars() {
                 clearInterval(intervalId);
                 delete (target as any).__waveIntervalId;
             }
+
+            // Remove all active matrix characters immediately
+            document.querySelectorAll(".matrix-char-fall").forEach((charEl) => {
+                const timeoutId = (charEl as any).__timeoutId;
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+                charEl.remove();
+            });
         };
 
         // Use event delegation for all interactive elements

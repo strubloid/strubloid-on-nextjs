@@ -364,12 +364,13 @@ body {
           text-decoration: none;
           font-weight: 600;
           font-size: 0.95em;
-          transition: all 0.4s ease;
+          transition: all 0.3s ease;
           margin-top: 16px;
           padding: 10px 16px;
           border-radius: 8px;
           background: rgba(255, 221, 153, 0.1);
           border: 1px solid rgba(255, 221, 153, 0.3);
+          cursor: pointer;
 
           i {
             font-size: 0.9em;
