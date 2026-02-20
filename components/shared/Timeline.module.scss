@@ -471,3 +471,72 @@
     }
   }
 }
+
+// Timeline Messages - Appears in the gap after timeline items
+.timeline-messages {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 5;
+  pointer-events: none;
+
+  .messages-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 1420px;
+  }
+
+  .message-item {
+    p {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #FF6B9D;
+      line-height: 1.5;
+      margin: 0;
+      letter-spacing: -0.5px;
+      text-align: center;
+      font-style: italic;
+
+      &::before {
+        content: '"';
+        margin-right: 12px;
+        color: #A8DADC;
+      }
+
+      &::after {
+        content: '"';
+        margin-left: 12px;
+        color: #A8DADC;
+      }
+    }
+
+    &.final {
+      margin-top: 60px;
+      padding-top: 60px;
+      border-top: 3px solid rgba(255, 107, 157, 0.5);
+
+      p {
+        font-size: 2.4rem;
+        color: #FF6B9D;
+        font-weight: 800;
+      }
+    }
+  }
+}
+
+// Message reveal animation
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

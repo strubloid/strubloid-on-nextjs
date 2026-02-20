@@ -20,6 +20,38 @@ interface TimelineProps {
     title?: string;
 }
 
+interface MessageItemProps {
+    progress: any;
+    index: number;
+    text: string;
+    isFinal?: boolean;
+    isTimelineComplete?: any;
+}
+
+const MessageItem: React.FC<MessageItemProps> = ({ progress, index, text, isFinal, isTimelineComplete }) => {
+    // Each message appears ONE AT A TIME, but only AFTER the timeline is complete
+    // Each message is visible for ~8% of scroll progress, then disappears completely
+    const messageWidth = 0.08; // Each message visible for 8% of scroll
+    const startScroll = 0.55 + index * messageWidth; // Start at 55% (when timeline is done)
+    const endScroll = startScroll + messageWidth;
+
+    const messageOpacity = useTransform(progress, [Math.max(0, startScroll - 0.02), startScroll, endScroll, Math.min(1, endScroll + 0.02)], [0, 1, 1, 0]);
+
+    // Only show message if timeline is complete
+    const opacity = useTransform(
+        [messageOpacity, isTimelineComplete],
+        ([msgOp, timelineComplete]: any[]) => {
+            return timelineComplete ? msgOp : 0;
+        }
+    );
+
+    return (
+        <motion.div className={`${styles["message-item"]} ${isFinal ? styles["final"] : ""}`} style={{ opacity }}>
+            <p>{text}</p>
+        </motion.div>
+    );
+};
+
 const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -69,101 +101,120 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const maxTranslate = -100 * (itemCount - 1);
     const x = useTransform(scrollYProgress, [0, 1], ["0%", `${maxTranslate}%`]);
 
+    // Determine if the last timeline item is still visible
+    // Timeline finishes roughly at 60% scroll, messages show after that
+    const timelineFinishThreshold = 0.55;
+    const isTimelineComplete = useTransform(
+        scrollYProgress,
+        [timelineFinishThreshold, timelineFinishThreshold + 0.01],
+        [false, true]
+    );
+
     return (
-        <section
-            ref={sectionRef}
-            className={styles["timeline-section"]}
-            style={{
-                height: `${400 + itemCount * 80}vh`,
-            }}
-        >
-            {/* Sticky background image - stays centered during timeline */}
-            <motion.div
-                className={styles["timeline-background"]}
+        <>
+            <section
+                ref={sectionRef}
+                className={styles["timeline-section"]}
                 style={{
-                    backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : undefined,
-                }}
-            />
-
-            <div className={styles["timeline-header"]}>
-                <h2>{title}</h2>
-                <p className={styles["timeline-subtitle"]}>Scroll down to explore my journey →</p>
-            </div>
-
-            <motion.div
-                className={styles["timeline-wrapper"]}
-                style={{
-                    x,
+                    height: `${400 + itemCount * 80}vh`,
                 }}
             >
-                {sortedItems.map((item, index) => (
-                    <div
-                        key={item.id}
-                        className={styles["timeline-item"]}
-                        onMouseEnter={() => setHoveredId(item.id)}
-                        onMouseLeave={() => setHoveredId(null)}
-                        style={
-                            {
-                                "--item-delay": `${index * 0.1}s`,
-                            } as React.CSSProperties
-                        }
-                    >
-                        {/* Year Label */}
-                        <div className={styles["year-label"]}>{item.year}</div>
+                {/* Sticky background image - stays centered during timeline */}
+                <motion.div
+                    className={styles["timeline-background"]}
+                    style={{
+                        backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : undefined,
+                    }}
+                />
 
-                        {/* Timeline Dot */}
+                <div className={styles["timeline-header"]}>
+                    <h2>{title}</h2>
+                    <p className={styles["timeline-subtitle"]}>Scroll down to explore my journey →</p>
+                </div>
+
+                <motion.div
+                    className={styles["timeline-wrapper"]}
+                    style={{
+                        x,
+                    }}
+                >
+                    {sortedItems.map((item, index) => (
                         <div
-                            className={`${styles["timeline-dot"]} ${hoveredId === item.id ? styles["active"] : ""}`}
-                            style={{
-                                backgroundColor: item.color || "#457B9D",
-                            }}
+                            key={item.id}
+                            className={styles["timeline-item"]}
+                            onMouseEnter={() => setHoveredId(item.id)}
+                            onMouseLeave={() => setHoveredId(null)}
+                            style={
+                                {
+                                    "--item-delay": `${index * 0.1}s`,
+                                } as React.CSSProperties
+                            }
                         >
-                            <div className={styles["dot-pulse"]}></div>
-                        </div>
+                            {/* Year Label */}
+                            <div className={styles["year-label"]}>{item.year}</div>
 
-                        {/* Detail Panel - appears on hover */}
-                        <div className={`${styles["timeline-detail"]} ${hoveredId === item.id ? styles["show"] : ""}`}>
-                            <div className={styles["detail-inner"]}>
-                                <div className={styles["detail-year"]}>{item.year}</div>
-                                <h3 className={styles["detail-title"]}>{item.title}</h3>
-                                {item.company && <p className={styles["detail-company"]}>{item.company}</p>}
-                                {item.position && <p className={styles["detail-position"]}>{item.position}</p>}
-                                <p className={styles["detail-description"]}>{item.description}</p>
+                            {/* Timeline Dot */}
+                            <div
+                                className={`${styles["timeline-dot"]} ${hoveredId === item.id ? styles["active"] : ""}`}
+                                style={{
+                                    backgroundColor: item.color || "#457B9D",
+                                }}
+                            >
+                                <div className={styles["dot-pulse"]}></div>
+                            </div>
 
-                                {item.skills && item.skills.length > 0 && (
-                                    <div className={styles["detail-skills"]}>
-                                        <span className={styles["skills-label"]}>Skills:</span>
-                                        <div className={styles["skills-list"]}>
-                                            {item.skills.slice(0, 5).map((skill, idx) => (
-                                                <span key={idx} className={styles["skill-tag"]}>
-                                                    {skill}
-                                                </span>
-                                            ))}
-                                            {item.skills.length > 5 && (
-                                                <span className={`${styles["skill-tag"]} ${styles["more"]}`}>
-                                                    +{item.skills.length - 5}
-                                                </span>
-                                            )}
+                            {/* Detail Panel - appears on hover */}
+                            <div className={`${styles["timeline-detail"]} ${hoveredId === item.id ? styles["show"] : ""}`}>
+                                <div className={styles["detail-inner"]}>
+                                    <div className={styles["detail-year"]}>{item.year}</div>
+                                    <h3 className={styles["detail-title"]}>{item.title}</h3>
+                                    {item.company && <p className={styles["detail-company"]}>{item.company}</p>}
+                                    {item.position && <p className={styles["detail-position"]}>{item.position}</p>}
+                                    <p className={styles["detail-description"]}>{item.description}</p>
+
+                                    {item.skills && item.skills.length > 0 && (
+                                        <div className={styles["detail-skills"]}>
+                                            <span className={styles["skills-label"]}>Skills:</span>
+                                            <div className={styles["skills-list"]}>
+                                                {item.skills.slice(0, 5).map((skill, idx) => (
+                                                    <span key={idx} className={styles["skill-tag"]}>
+                                                        {skill}
+                                                    </span>
+                                                ))}
+                                                {item.skills.length > 5 && <span className={`${styles["skill-tag"]} ${styles["more"]}`}>+{item.skills.length - 5}</span>}
+                                            </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
 
-                                {item.highlights && item.highlights.length > 0 && (
-                                    <div className={styles["detail-highlights"]}>
-                                        <span className={styles["highlights-label"]}>Highlights:</span>
-                                        <ul>
-                                            {item.highlights.slice(0, 2).map((highlight, idx) => (
-                                                <li key={idx}>{highlight}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
+                                    {item.highlights && item.highlights.length > 0 && (
+                                        <div className={styles["detail-highlights"]}>
+                                            <span className={styles["highlights-label"]}>Highlights:</span>
+                                            <ul>
+                                                {item.highlights.slice(0, 2).map((highlight, idx) => (
+                                                    <li key={idx}>{highlight}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
+                    ))}
+                </motion.div>
+
+                {/* Messages in Timeline Gap - Appears after 2025 scrolls out */}
+                <div className={styles["timeline-messages"]}>
+                    <div className={styles["messages-container"]}>
+                        <MessageItem progress={scrollYProgress} index={0} text='"It is like a box, you search for things and you always find mystery, and a way to solve them"' isTimelineComplete={isTimelineComplete} />
+                        <MessageItem progress={scrollYProgress} index={1} text='"Do you know I am more than just a number? Yeah!"' isTimelineComplete={isTimelineComplete} />
+                        <MessageItem progress={scrollYProgress} index={2} text='"I know how to read X amount of languages and... speak too!"' isTimelineComplete={isTimelineComplete} />
+                        <MessageItem progress={scrollYProgress} index={3} text='"Even guitar lyrics can be spoken by my guitar Ambrosia!"' isTimelineComplete={isTimelineComplete} />
+                        <MessageItem progress={scrollYProgress} index={4} text='"Yeah, this is the guy who will be working for you!"' isTimelineComplete={isTimelineComplete} />
+                        <MessageItem progress={scrollYProgress} index={5} text='"If you want to get more details, keep scrolling down"' isFinal={true} isTimelineComplete={isTimelineComplete} />
                     </div>
-                ))}
-            </motion.div>
-        </section>
+                </div>
+            </section>
+        </>
     );
 };
 
