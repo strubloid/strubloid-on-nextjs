@@ -1,6 +1,7 @@
 import React, { useRef, useState, useMemo } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import styles from "./Timeline.module.scss";
+import ScrollIndicator from "./ScrollIndicator";
 import flickrData from "../../data/flickr.json";
 
 export interface TimelineItem {
@@ -135,6 +136,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
 
     return (
         <>
+            <ScrollIndicator />
             <section
                 ref={sectionRef}
                 className={styles["timeline-section"]}
