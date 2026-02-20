@@ -1,0 +1,165 @@
+{
+  "designInnovations": [
+    {
+      "id": "timeline-detail-expansion",
+      "title": "Full-Screen Timeline Detail Panel",
+      "date": "2026-02-20",
+      "category": "Layout & Composition",
+      "status": "implemented",
+      "problem": "Timeline detail information was confined to a small floating box (420px), limiting visual hierarchy and making inefficient use of viewport space. Users felt cramped viewing detailed experience information.",
+      "solution": "Transformed fixed-size card into full-viewport layout (100vw × 100vh) with strategic content distribution across four zones (top-left, top-right, bottom-left, bottom-right).",
+      "techniques": [
+        {
+          "name": "CSS display: contents",
+          "description": "Used display: contents on detail-inner to distribute child elements using position: absolute without nesting constraints",
+          "benefit": "Allows semantic HTML structure while enabling absolute positioning of child elements across the viewport"
+        },
+        {
+          "name": "Radial Gradient Backdrop",
+          "description": "Layered multiple radial gradients (pink at 30%/30%, cyan at 70%/80%) with semi-transparent dark background",
+          "benefit": "Creates depth and visual interest without blocking the background image, maintains brand colors (FF6B9D, A8DADC)"
+        },
+        {
+          "name": "Asymmetric Zone Distribution",
+          "description": "Header info top-left (45% width), description top-right (40% width), skills bottom-left, highlights bottom-right",
+          "benefit": "Natural reading flow + balanced visual composition + room for future expansion"
+        },
+        {
+          "name": "Responsive Collapse",
+          "description": "At 768px and below, zones revert to flex column layout, maintaining content hierarchy without absolute positioning",
+          "benefit": "Mobile-friendly without rewriting core logic"
+        }
+      ],
+      "typography": {
+        "year": "4rem / 900 weight (expanded from 2.4rem)",
+        "title": "2.2rem / 800 weight (expanded from 1.4rem)",
+        "company": "Added badge styling with border + background",
+        "description": "0.95rem / line-height 1.8 (expanded from 0.92rem)"
+      },
+      "spacing": {
+        "horizontal": "80px padding (from 24px)",
+        "vertical": "60px top/bottom (flexible)",
+        "gap": "Strategic zone separation"
+      },
+      "animations": [
+        "opacity fade-in/out: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "Skill tag hover: scale(1.05) + translateY(-4px)",
+        "Highlight bullets: larger (1.4rem) with improved color contrast"
+      ],
+      "colorScheme": {
+        "primary": "#FF6B9D",
+        "secondary": "#A8DADC",
+        "dark": "#0F1419",
+        "text": "#D8D8D8",
+        "gradients": "135deg linear gradient for text effects"
+      },
+      "fileChanges": {
+        "modified": [
+          "components/shared/Timeline.module.scss (detail panel styles)",
+          "components/shared/Timeline.tsx (JSX structure)"
+        ]
+      },
+      "breakpoints": {
+        "desktop": "1024px+ - Full layout with 80px padding",
+        "tablet": "768px-1024px - Adjusted padding 40px, responsive zones",
+        "mobile": "<768px - Flexbox column layout, stacked content"
+      }
+    },
+    {
+      "id": "scroll-indicator-chevrons",
+      "title": "Animated Chevron Scroll Indicator",
+      "date": "2026-02-20",
+      "category": "User Guidance & UX",
+      "status": "implemented",
+      "problem": "Users loading the /about-me page felt lost - no visual indication that content exists below the fold. Full-screen timeline didn't signal scrollability.",
+      "solution": "Created reusable ScrollIndicator component with 3 staggered chevrons using gradient colors that auto-hides on scroll.",
+      "techniques": [
+        {
+          "name": "Staggered Animation",
+          "description": "Three chevrons with 0.3s delay between each, continuous 1.5s loop with easing",
+          "benefit": "Visual rhythm that attracts attention without being distracting"
+        },
+        {
+          "name": "Gradient Text Clipping",
+          "description": "Used -webkit-background-clip: text with pink→cyan gradient on SVG stroke",
+          "benefit": "Modern look matching brand palette"
+        },
+        {
+          "name": "Auto-Hide on Scroll",
+          "description": "useEffect listener hides indicator when scrollY > 100px",
+          "benefit": "Non-intrusive - appears only when needed"
+        },
+        {
+          "name": "Opacity Staggering",
+          "description": "0.5 → 0.75 → 1.0 opacity for depth effect (closer chevron more visible)",
+          "benefit": "Creates visual hierarchy and 3D appearance"
+        }
+      ],
+      "components": {
+        "file": "components/shared/ScrollIndicator.tsx",
+        "styles": "components/shared/ScrollIndicator.module.scss"
+      },
+      "features": [
+        "Fixed bottom-center positioning (40px from bottom)",
+        "Framer Motion AnimatePresence for smooth transitions",
+        "Responsive: 32px desktop → 28px tablet → 24px mobile",
+        "Drop shadow: 0 2px 8px rgba(255, 107, 157, 0.3)"
+      ]
+    }
+  ],
+  "designPatterns": [
+    {
+      "pattern": "Full-Viewport Zone Distribution",
+      "description": "Distribute content across absolute-positioned zones instead of centered card",
+      "use_when": "Need to show detailed information without modal obstruction",
+      "advantages": ["Uses full space", "Maintains background visibility", "Asymmetric balance"],
+      "disadvantages": ["Complex responsive behavior", "Requires careful spacing"],
+      "files": ["Timeline.module.scss", "Timeline.tsx"]
+    },
+    {
+      "pattern": "Gradient Color Coding",
+      "description": "Use brand gradient (pink #FF6B9D → cyan #A8DADC) for emphasis and visual cohesion",
+      "use_when": "Need to highlight primary CTAs, titles, or guide user attention",
+      "advantages": ["Consistent branding", "Modern aesthetic", "Eye-catching"],
+      "files": ["ScrollIndicator.module.scss", "Timeline.module.scss"]
+    },
+    {
+      "pattern": "Auto-Hide Overlay Components",
+      "description": "UI elements that appear on trigger and automatically fade when condition changes",
+      "use_when": "Want guided UX without blocking interaction for experienced users",
+      "advantages": ["Progressive disclosure", "Non-intrusive", "Works across all skill levels"],
+      "files": ["ScrollIndicator.tsx"]
+    }
+  ],
+  "colorPalette": {
+    "primary": {
+      "name": "Magenta Pink",
+      "hex": "#FF6B9D",
+      "usage": "Accents, highlights, primary CTA"
+    },
+    "secondary": {
+      "name": "Cyan Aqua",
+      "hex": "#A8DADC",
+      "usage": "Secondary accents, text highlights"
+    },
+    "dark": {
+      "name": "Deep Navy",
+      "hex": "#0F1419",
+      "usage": "Background overlay, text shadows"
+    },
+    "gradient": "135deg linear(#FF6B9D 0%, #A8DADC 100%)",
+    "transparentOverlay": "rgba(15, 20, 25, 0.4)",
+    "glassBackground": "rgba(29, 53, 87, 0.98)"
+  },
+  "animationEasing": {
+    "default": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    "description": "Custom easing for bouncy, modern feel"
+  },
+  "nextConsiderations": [
+    "Add parallax effect to timeline zones on mouse move",
+    "Implement keyboard navigation for detail panel",
+    "Consider dark mode variant",
+    "Add animations to highlight bullets (staggered reveal)",
+    "Create animation library for reusable framer-motion patterns"
+  ]
+}

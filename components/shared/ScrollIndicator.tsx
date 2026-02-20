@@ -8,21 +8,28 @@ interface ScrollIndicatorProps {
 }
 
 const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({ visible = true }) => {
-  const [isVisible, setIsVisible] = useState(visible);
+  const [isVisible, setIsVisible] = useState(true);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
+    // Set initial state
+    setIsVisible(true);
+    setHasScrolled(false);
+
     const handleScroll = () => {
       // Hide when user scrolls down more than a small amount
-      if (window.scrollY > 100) {
+      if (window.scrollY > 100 && !hasScrolled) {
         setIsVisible(false);
-      } else {
+        setHasScrolled(true);
+      } else if (window.scrollY <= 100) {
         setIsVisible(true);
+        setHasScrolled(false);
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [hasScrolled]);
 
   // Chevron animation variants
   const chevronVariants = {
@@ -31,13 +38,14 @@ const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({ visible = true }) => 
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isVisible && (
         <motion.div
           className={styles["scroll-indicator"]}
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div className={styles["chevrons-container"]}>
             {/* Three stacked chevrons with staggered animation */}

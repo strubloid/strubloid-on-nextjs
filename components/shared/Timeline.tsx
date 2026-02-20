@@ -191,34 +191,47 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                             {/* Detail Panel - appears on hover */}
                             <div className={`${styles["timeline-detail"]} ${hoveredId === item.id ? styles["show"] : ""}`}>
                                 <div className={styles["detail-inner"]}>
-                                    <div className={styles["detail-year"]}>{item.year}</div>
-                                    <h3 className={styles["detail-title"]}>{item.title}</h3>
-                                    {item.company && <p className={styles["detail-company"]}>{item.company}</p>}
-                                    {item.position && <p className={styles["detail-position"]}>{item.position}</p>}
-                                    <p className={styles["detail-description"]}>{item.description}</p>
+                                    {/* Top Left: Year + Company + Title */}
+                                    <div className={styles["detail-header"]}>
+                                        <div className={styles["detail-year"]}>{item.year}</div>
+                                        {item.company && <p className={styles["detail-company"]}>{item.company}</p>}
+                                        <h3 className={styles["detail-title"]}>{item.title}</h3>
+                                    </div>
 
+                                    {/* Top Right: Description + Position */}
+                                    <div className={styles["detail-right"]}>
+                                        {item.position && <p className={styles["detail-position"]}>{item.position}</p>}
+                                        <p className={styles["detail-description"]}>{item.description}</p>
+                                    </div>
+
+                                    {/* Bottom Left: Skills */}
                                     {item.skills && item.skills.length > 0 && (
-                                        <div className={styles["detail-skills"]}>
-                                            <span className={styles["skills-label"]}>Skills:</span>
-                                            <div className={styles["skills-list"]}>
-                                                {item.skills.slice(0, 5).map((skill, idx) => (
-                                                    <span key={idx} className={styles["skill-tag"]}>
-                                                        {skill}
-                                                    </span>
-                                                ))}
-                                                {item.skills.length > 5 && <span className={`${styles["skill-tag"]} ${styles["more"]}`}>+{item.skills.length - 5}</span>}
+                                        <div className={styles["detail-bottom-left"]}>
+                                            <div className={styles["detail-skills"]}>
+                                                <span className={styles["skills-label"]}>Skills</span>
+                                                <div className={styles["skills-list"]}>
+                                                    {item.skills.slice(0, 6).map((skill, idx) => (
+                                                        <span key={idx} className={styles["skill-tag"]}>
+                                                            {skill}
+                                                        </span>
+                                                    ))}
+                                                    {item.skills.length > 6 && <span className={`${styles["skill-tag"]} ${styles["more"]}`}>+{item.skills.length - 6}</span>}
+                                                </div>
                                             </div>
                                         </div>
                                     )}
 
+                                    {/* Bottom Right: Highlights */}
                                     {item.highlights && item.highlights.length > 0 && (
-                                        <div className={styles["detail-highlights"]}>
-                                            <span className={styles["highlights-label"]}>Highlights:</span>
-                                            <ul>
-                                                {item.highlights.slice(0, 2).map((highlight, idx) => (
-                                                    <li key={idx}>{highlight}</li>
-                                                ))}
-                                            </ul>
+                                        <div className={styles["detail-bottom-right"]}>
+                                            <div className={styles["detail-highlights"]}>
+                                                <span className={styles["highlights-label"]}>Highlights</span>
+                                                <ul>
+                                                    {item.highlights.slice(0, 3).map((highlight, idx) => (
+                                                        <li key={idx}>{highlight}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
