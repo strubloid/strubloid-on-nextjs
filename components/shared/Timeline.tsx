@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useState, useMemo } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import styles from "./Timeline.module.scss";
+import flickrData from "../../data/flickr.json";
 
 export interface TimelineItem {
     id: string;
@@ -22,14 +23,45 @@ interface TimelineProps {
 const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [hoveredId, setHoveredId] = useState<string | null>(null);
+    const [backgroundUrl, setBackgroundUrl] = useState<string>("");
 
     // Reverse items to show chronologically from oldest to newest (left to right)
     const sortedItems = [...items].reverse();
+
+    // Map each timeline item to a random flickr photo
+    const photoMap = useMemo(() => {
+        const map: { [key: string]: string } = {};
+        sortedItems.forEach((item) => {
+            if (flickrData.photos && flickrData.photos.length > 0) {
+                const randomPhoto = flickrData.photos[Math.floor(Math.random() * flickrData.photos.length)];
+                map[item.id] = randomPhoto.url_l || randomPhoto.url_c || randomPhoto.url_z;
+            }
+        });
+        return map;
+    }, []);
+
+    // Initialize background with first item's photo
+    React.useEffect(() => {
+        if (sortedItems.length > 0 && photoMap[sortedItems[0].id] && !backgroundUrl) {
+            setBackgroundUrl(photoMap[sortedItems[0].id]);
+        }
+    }, [photoMap, sortedItems, backgroundUrl]);
 
     // Track scroll progress of this section only
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start start", "end end"],
+    });
+
+    // Calculate which item is currently centered
+    const centeredItemIndex = useTransform(scrollYProgress, [0, 1], [0, sortedItems.length - 1]);
+
+    // Update background when centered item changes
+    useMotionValueEvent(centeredItemIndex, "change", (value) => {
+        const index = Math.round(value);
+        if (sortedItems[index] && photoMap[sortedItems[index].id]) {
+            setBackgroundUrl(photoMap[sortedItems[index].id]);
+        }
     });
 
     // Calculate horizontal translation based on scroll progress
@@ -45,6 +77,14 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                 height: `${400 + itemCount * 80}vh`,
             }}
         >
+            {/* Sticky background image - stays centered during timeline */}
+            <motion.div
+                className={styles["timeline-background"]}
+                style={{
+                    backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : undefined,
+                }}
+            />
+
             <div className={styles["timeline-header"]}>
                 <h2>{title}</h2>
                 <p className={styles["timeline-subtitle"]}>Scroll down to explore my journey →</p>
