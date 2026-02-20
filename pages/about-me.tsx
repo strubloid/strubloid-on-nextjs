@@ -1,7 +1,9 @@
 import React from "react";
 import type { NextPage, GetStaticProps } from "next";
 import AboutMe from "../components/homepage/AboutMe";
+import Timeline from "../components/shared/Timeline";
 import { getStrubloidData } from "../lib/strubloid";
+import { rafaelTimeline } from "../data/rafael-timeline";
 import type { Skill } from "../lib/strubloid";
 
 interface AboutMePageProps {
@@ -10,6 +12,7 @@ interface AboutMePageProps {
 
 const AboutMePage: NextPage<AboutMePageProps> = ({ skills }) => (
     <>
+        <Timeline items={rafaelTimeline} title="Who Am I? - IT 3.9" />
         <AboutMe skills={skills} carousel={false} />
     </>
 );
