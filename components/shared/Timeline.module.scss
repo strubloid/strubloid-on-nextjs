@@ -3,7 +3,10 @@
   background: linear-gradient(135deg, #0f1419 0%, #1a2a3a 25%, #1d3557 50%, #16213e 75%, #0f1419 100%);
   position: relative;
   overflow: visible;
+  display: flex;
+  flex-direction: column;
 
+  // Calculate height based on item count - will be set inline in component
   // Animated background elements
   &::before {
     content: "";
@@ -33,13 +36,10 @@
 
   .timeline-header {
     text-align: center;
-    padding: 60px 40px 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    padding: 60px 40px;
+    position: relative;
     z-index: 10;
-    width: 100%;
+    flex-shrink: 0;
 
     h2 {
       font-size: 2.8rem;
@@ -61,10 +61,17 @@
     }
   }
 
-  .timeline-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
+  .timeline-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 140px;
+    padding: 0 80px;
+    z-index: 2;
     background: linear-gradient(
       90deg,
       rgba(255, 107, 157, 0.05) 0%,
@@ -72,96 +79,38 @@
       transparent 80%,
       rgba(168, 218, 220, 0.05) 100%
     );
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .timeline-track {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    position: relative;
-    padding: 0 60px;
-    z-index: 2;
-    gap: 0;
-    min-width: max-content;
-  }
-
-  .timeline-line {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 6px;
-    width: 100%;
-    transform: translateY(-50%);
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      #FF6B9D 8%,
-      #A8DADC 50%,
-      #457B9D 92%,
-      transparent 100%
-    );
-    z-index: 1;
-    filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.5)) drop-shadow(0 0 40px rgba(168, 218, 220, 0.25));
-    white-space: nowrap;
-    border-radius: 3px;
-  }
-
-  .timeline-years {
-    display: flex;
-    gap: 80px;
-    position: relative;
-    z-index: 3;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    pointer-events: none;
-  }
-
-  .year-label {
-    flex-shrink: 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #A8DADC;
-    text-align: center;
-    width: 200px;
-    text-shadow: 0 2px 12px rgba(255, 107, 157, 0.4);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    letter-spacing: 0.8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 60px;
-
-    &:hover {
-      color: #FF6B9D;
-      text-shadow: 0 2px 16px rgba(255, 107, 157, 0.6);
-      transform: scale(1.05);
-    }
-  }
-
-  .timeline-items {
-    display: flex;
-    gap: 100px;
-    position: relative;
-    z-index: 2;
-    align-items: center;
   }
 
   .timeline-item {
     position: relative;
     flex-shrink: 0;
-    width: 200px;
+    width: 220px;
+    height: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    gap: 30px;
     animation: slideInItem 0.6s cubic-bezier(0.23, 1, 0.320, 1) forwards;
     animation-delay: var(--item-delay, 0s);
     opacity: 0;
+
+    .year-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #A8DADC;
+      text-align: center;
+      text-shadow: 0 2px 12px rgba(255, 107, 157, 0.4);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      letter-spacing: 0.8px;
+      order: -1;
+
+      &:hover {
+        color: #FF6B9D;
+        text-shadow: 0 2px 16px rgba(255, 107, 157, 0.6);
+        transform: scale(1.05);
+      }
+    }
   }
 
   .timeline-dot {
@@ -209,16 +158,16 @@
   }
 
   .timeline-detail {
-    position: absolute;
-    bottom: 100%;
+    position: fixed;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-30px) scale(0.85);
+    transform: translate(-50%, -50%) scale(0.85);
     background: linear-gradient(135deg, rgba(29, 53, 87, 0.98) 0%, rgba(15, 20, 25, 0.98) 100%);
     border: 2px solid #FF6B9D;
     border-radius: 20px;
     padding: 24px;
-    min-width: 380px;
-    max-width: 420px;
+    width: 420px;
+    max-width: 90vw;
     box-shadow:
       0 25px 80px rgba(255, 107, 157, 0.4),
       0 0 60px rgba(168, 218, 220, 0.25),
@@ -226,22 +175,22 @@
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 100;
+    z-index: 1000;
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     will-change: transform, opacity;
+    white-space: normal;
 
     &.show {
       opacity: 1;
       pointer-events: auto;
-      transform: translateX(-50%) translateY(-30px) scale(1);
+      transform: translate(-50%, -50%) scale(1);
     }
 
     .detail-inner {
       display: flex;
       flex-direction: column;
       gap: 14px;
-      order: 0;
     }
 
     .detail-year {
@@ -252,9 +201,9 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       line-height: 1;
-      order: -1;
       margin-bottom: 6px;
       letter-spacing: -1px;
+      margin: 0;
     }
 
     .detail-title {
@@ -377,33 +326,6 @@
       }
     }
   }
-
-  .timeline-end {
-    position: relative;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-
-    .end-dot {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #FF6B9D 0%, #A8DADC 100%);
-      border: 3px solid #ffffff;
-      box-shadow: 0 8px 32px rgba(255, 107, 157, 0.4), 0 0 20px rgba(168, 218, 220, 0.3);
-    }
-
-    .end-text {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #A8DADC;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      text-shadow: 0 2px 10px rgba(255, 107, 157, 0.2);
-    }
-  }
 }
 
 @keyframes slideInItem {
@@ -469,48 +391,18 @@
 // Responsive
 @media (max-width: 768px) {
   .timeline-section {
-    padding: 40px 0;
-
-    &::before {
-      width: 500px;
-      height: 500px;
-      right: -15%;
-    }
-
-    &::after {
-      width: 400px;
-      height: 400px;
-      left: -10%;
-    }
-
-    .timeline-header {
-      padding: 0 20px;
-
-      h2 {
-        font-size: 2rem;
-      }
-
-      .timeline-subtitle {
-        font-size: 0.95rem;
-      }
-    }
-
-    .timeline-container {
-      height: 100vh;
-    }
-
-    .timeline-track {
+    .timeline-wrapper {
+      gap: 80px;
       padding: 0 40px;
     }
 
-    .timeline-items {
-      gap: 60px;
+    .timeline-item {
+      width: 160px;
     }
 
     .timeline-detail {
       min-width: 280px;
       max-width: 320px;
-      padding: 18px;
 
       .detail-title {
         font-size: 1.1rem;
@@ -525,37 +417,18 @@
 
 @media (max-width: 480px) {
   .timeline-section {
-    &::before {
-      width: 400px;
-      height: 400px;
-      right: -20%;
-      top: -60%;
+    .timeline-wrapper {
+      gap: 60px;
+      padding: 0 30px;
     }
 
-    &::after {
-      width: 300px;
-      height: 300px;
-      left: -15%;
-      bottom: -40%;
-    }
-
-    .timeline-header {
-      h2 {
-        font-size: 1.6rem;
-      }
-    }
-
-    .timeline-container {
-      height: 100vh;
-    }
-
-    .timeline-items {
-      gap: 50px;
+    .timeline-item {
+      width: 140px;
     }
 
     .timeline-dot {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
     }
 
     .timeline-detail {

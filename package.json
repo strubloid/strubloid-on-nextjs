@@ -10,6 +10,7 @@
     "@googlemaps/react-wrapper": "^1.2.0",
     "@sendgrid/mail": "^8.1.0",
     "flickr-sdk": "^7.1.0",
+    "framer-motion": "^12.34.2",
     "gsap": "^3.14.2",
     "mongoose": "^8.0.0",
     "next": "^15.3.5",
