@@ -83,6 +83,7 @@ const MessageItem: React.FC<MessageItemProps> = ({ progress, index, text, isFina
 const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [hoveredId, setHoveredId] = useState<string | null>(null);
+    const [centeredId, setCenteredId] = useState<string | null>(null);
     const [backgroundUrl, setBackgroundUrl] = useState<string>("");
 
     // Reverse items to show chronologically from oldest to newest (left to right)
@@ -116,11 +117,15 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     // Calculate which item is currently centered
     const centeredItemIndex = useTransform(scrollYProgress, [0, 1], [0, sortedItems.length - 1]);
 
-    // Update background when centered item changes
+    // Update background and detail panel when centered item changes
     useMotionValueEvent(centeredItemIndex, "change", (value) => {
         const index = Math.round(value);
-        if (sortedItems[index] && photoMap[sortedItems[index].id]) {
-            setBackgroundUrl(photoMap[sortedItems[index].id]);
+        if (sortedItems[index]) {
+            if (photoMap[sortedItems[index].id]) {
+                setBackgroundUrl(photoMap[sortedItems[index].id]);
+            }
+            // Auto-show detail panel for centered item
+            setCenteredId(sortedItems[index].id);
         }
     });
 
@@ -141,7 +146,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                 ref={sectionRef}
                 className={styles["timeline-section"]}
                 style={{
-                    height: `${-30 + itemCount * 150}vh`,
+                    height: `${-30 + itemCount * 180}vh`,
                 }}
             >
                 {/* Sticky background image - stays centered during timeline */}
@@ -154,89 +159,109 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
 
                 <div className={styles["timeline-header"]}>
                     <h2>{title}</h2>
-                    <p className={styles["timeline-subtitle"]}>Scroll down to explore my journey →</p>
                 </div>
+
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+
+                {/* Scroll runway before horizontal movement */}
+                {/* <div style={{ height: "150vh" }} /> */}
 
                 <motion.div
                     className={styles["timeline-wrapper"]}
                     style={{
                         x,
                     }}
+                    transition={{ duration: 0.5 }}
                 >
                     {sortedItems.map((item, index) => (
-                        <div
-                            key={item.id}
-                            className={styles["timeline-item"]}
-                            onMouseEnter={() => setHoveredId(item.id)}
-                            onMouseLeave={() => setHoveredId(null)}
-                            style={
-                                {
-                                    "--item-delay": `${index * 0.1}s`,
-                                } as React.CSSProperties
-                            }
-                        >
-                            {/* Year Label */}
-                            <div className={styles["year-label"]}>{item.year}</div>
-
-                            {/* Timeline Dot */}
+                        <>
                             <div
-                                className={`${styles["timeline-dot"]} ${hoveredId === item.id ? styles["active"] : ""}`}
-                                style={{
-                                    backgroundColor: item.color || "#457B9D",
-                                }}
+                                key={item.id}
+                                className={styles["timeline-item"]}
+                                onMouseEnter={() => setHoveredId(item.id)}
+                                onMouseLeave={() => setHoveredId(null)}
+                                style={
+                                    {
+                                        "--item-delay": `${index * 0.1}s`,
+                                    } as React.CSSProperties
+                                }
                             >
-                                <div className={styles["dot-pulse"]}></div>
-                            </div>
+                                {/* Year Label */}
+                                <div className={styles["year-label"]}>{item.year}</div>
 
-                            {/* Detail Panel - appears on hover */}
-                            <div className={`${styles["timeline-detail"]} ${hoveredId === item.id ? styles["show"] : ""}`}>
-                                <div className={styles["detail-inner"]}>
-                                    {/* Top Left: Year + Company + Title */}
-                                    <div className={styles["detail-header"]}>
-                                        <div className={styles["detail-year"]}>{item.year}</div>
-                                        {item.company && <p className={styles["detail-company"]}>{item.company}</p>}
-                                        <h3 className={styles["detail-title"]}>{item.title}</h3>
-                                    </div>
+                                {/* Timeline Dot */}
+                                <div
+                                    className={`${styles["timeline-dot"]} ${hoveredId === item.id || centeredId === item.id ? styles["active"] : ""}`}
+                                    style={{
+                                        backgroundColor: item.color || "#457B9D",
+                                    }}
+                                >
+                                    <div className={styles["dot-pulse"]}></div>
+                                </div>
 
-                                    {/* Top Right: Description + Position */}
-                                    <div className={styles["detail-right"]}>
-                                        {item.position && <p className={styles["detail-position"]}>{item.position}</p>}
-                                        <p className={styles["detail-description"]}>{item.description}</p>
-                                    </div>
+                                {/* Detail Panel - appears on hover or when centered */}
+                                <div className={`${styles["timeline-detail"]} ${hoveredId === item.id || centeredId === item.id ? styles["show"] : ""}`}>
+                                    <div className={styles["detail-inner"]}>
+                                        {/* Top Left: Year + Company + Title */}
+                                        <div className={styles["detail-header"]}>
+                                            <div className={styles["detail-year"]}>{item.year}</div>
+                                            {item.company && <p className={styles["detail-company"]}>{item.company}</p>}
+                                            <h3 className={styles["detail-title"]}>{item.title}</h3>
+                                        </div>
 
-                                    {/* Bottom Left: Skills */}
-                                    {item.skills && item.skills.length > 0 && (
-                                        <div className={styles["detail-bottom-left"]}>
-                                            <div className={styles["detail-skills"]}>
-                                                <span className={styles["skills-label"]}>Skills</span>
-                                                <div className={styles["skills-list"]}>
-                                                    {item.skills.slice(0, 6).map((skill, idx) => (
-                                                        <span key={idx} className={styles["skill-tag"]}>
-                                                            {skill}
-                                                        </span>
-                                                    ))}
-                                                    {item.skills.length > 6 && <span className={`${styles["skill-tag"]} ${styles["more"]}`}>+{item.skills.length - 6}</span>}
+                                        {/* Top Right: Description + Position */}
+                                        <div className={styles["detail-right"]}>
+                                            {item.position && <p className={styles["detail-position"]}>{item.position}</p>}
+                                            <p className={styles["detail-description"]}>{item.description}</p>
+                                        </div>
+
+                                        {/* Bottom Left: Skills */}
+                                        {item.skills && item.skills.length > 0 && (
+                                            <div className={styles["detail-bottom-left"]}>
+                                                <div className={styles["detail-skills"]}>
+                                                    <span className={styles["skills-label"]}>Skills</span>
+                                                    <div className={styles["skills-list"]}>
+                                                        {item.skills.slice(0, 6).map((skill, idx) => (
+                                                            <span key={idx} className={styles["skill-tag"]}>
+                                                                {skill}
+                                                            </span>
+                                                        ))}
+                                                        {item.skills.length > 6 && <span className={`${styles["skill-tag"]} ${styles["more"]}`}>+{item.skills.length - 6}</span>}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
 
-                                    {/* Bottom Right: Highlights */}
-                                    {item.highlights && item.highlights.length > 0 && (
-                                        <div className={styles["detail-bottom-right"]}>
-                                            <div className={styles["detail-highlights"]}>
-                                                <span className={styles["highlights-label"]}>Highlights</span>
-                                                <ul>
-                                                    {item.highlights.slice(0, 3).map((highlight, idx) => (
-                                                        <li key={idx}>{highlight}</li>
-                                                    ))}
-                                                </ul>
+                                        {/* Bottom Right: Highlights */}
+                                        {item.highlights && item.highlights.length > 0 && (
+                                            <div className={styles["detail-bottom-right"]}>
+                                                <div className={styles["detail-highlights"]}>
+                                                    <span className={styles["highlights-label"]}>Highlights</span>
+                                                    <ul>
+                                                        {item.highlights.slice(0, 3).map((highlight, idx) => (
+                                                            <li key={idx}>{highlight}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </>
                     ))}
                 </motion.div>
 
