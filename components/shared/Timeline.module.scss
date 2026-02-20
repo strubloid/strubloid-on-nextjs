@@ -69,8 +69,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 140px;
-    padding: 0 80px;
+    gap: 300px;
+    padding: 0 80px 0 80%;
     z-index: 2;
     background: linear-gradient(
       90deg,
@@ -159,15 +159,17 @@
 
   .timeline-detail {
     position: fixed;
-    top: 50%;
+    top: 150px;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.85);
+    transform: translateX(-50%) scale(0.85);
     background: linear-gradient(135deg, rgba(29, 53, 87, 0.98) 0%, rgba(15, 20, 25, 0.98) 100%);
     border: 2px solid #FF6B9D;
     border-radius: 20px;
     padding: 24px;
     width: 420px;
     max-width: 90vw;
+    max-height: 70vh;
+    overflow-y: auto;
     box-shadow:
       0 25px 80px rgba(255, 107, 157, 0.4),
       0 0 60px rgba(168, 218, 220, 0.25),
@@ -184,7 +186,7 @@
     &.show {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translateX(-50%) scale(1);
     }
 
     .detail-inner {
