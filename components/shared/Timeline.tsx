@@ -32,18 +32,15 @@ const MessageItem: React.FC<MessageItemProps> = ({ progress, index, text, isFina
     // Each message appears ONE AT A TIME, but only AFTER the timeline is complete
     // Each message is visible for ~8% of scroll progress, then disappears completely
     const messageWidth = 0.08; // Each message visible for 8% of scroll
-    const startScroll = 0.55 + index * messageWidth; // Start at 55% (when timeline is done)
+    const startScroll = 0.33 + index * messageWidth; // Start at 33% (when timeline is done)
     const endScroll = startScroll + messageWidth;
 
     const messageOpacity = useTransform(progress, [Math.max(0, startScroll - 0.02), startScroll, endScroll, Math.min(1, endScroll + 0.02)], [0, 1, 1, 0]);
 
     // Only show message if timeline is complete
-    const opacity = useTransform(
-        [messageOpacity, isTimelineComplete],
-        ([msgOp, timelineComplete]: any[]) => {
-            return timelineComplete ? msgOp : 0;
-        }
-    );
+    const opacity = useTransform([messageOpacity, isTimelineComplete], ([msgOp, timelineComplete]: any[]) => {
+        return timelineComplete ? msgOp : 0;
+    });
 
     return (
         <motion.div className={`${styles["message-item"]} ${isFinal ? styles["final"] : ""}`} style={{ opacity }}>
@@ -102,13 +99,9 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const x = useTransform(scrollYProgress, [0, 1], ["0%", `${maxTranslate}%`]);
 
     // Determine if the last timeline item is still visible
-    // Timeline finishes roughly at 60% scroll, messages show after that
-    const timelineFinishThreshold = 0.55;
-    const isTimelineComplete = useTransform(
-        scrollYProgress,
-        [timelineFinishThreshold, timelineFinishThreshold + 0.01],
-        [false, true]
-    );
+    // Timeline finishes at 63% scroll, messages show after that (starting from second message)
+    const timelineFinishThreshold = 0.38;
+    const isTimelineComplete = useTransform(scrollYProgress, [timelineFinishThreshold, timelineFinishThreshold + 0.01], [false, true]);
 
     return (
         <>
@@ -116,7 +109,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                 ref={sectionRef}
                 className={styles["timeline-section"]}
                 style={{
-                    height: `${400 + itemCount * 80}vh`,
+                    height: `${-30 + itemCount * 150}vh`,
                 }}
             >
                 {/* Sticky background image - stays centered during timeline */}
@@ -205,12 +198,33 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                 {/* Messages in Timeline Gap - Appears after 2025 scrolls out */}
                 <div className={styles["timeline-messages"]}>
                     <div className={styles["messages-container"]}>
-                        <MessageItem progress={scrollYProgress} index={0} text='"It is like a box, you search for things and you always find mystery, and a way to solve them"' isTimelineComplete={isTimelineComplete} />
+                        <MessageItem
+                            progress={scrollYProgress}
+                            index={0}
+                            text='"It is like a box, you search for things and you always find mystery, and a way to solve them"'
+                            isTimelineComplete={isTimelineComplete}
+                        />
                         <MessageItem progress={scrollYProgress} index={1} text='"Do you know I am more than just a number? Yeah!"' isTimelineComplete={isTimelineComplete} />
-                        <MessageItem progress={scrollYProgress} index={2} text='"I know how to read X amount of languages and... speak too!"' isTimelineComplete={isTimelineComplete} />
-                        <MessageItem progress={scrollYProgress} index={3} text='"Even guitar lyrics can be spoken by my guitar Ambrosia!"' isTimelineComplete={isTimelineComplete} />
+                        <MessageItem
+                            progress={scrollYProgress}
+                            index={2}
+                            text='"I know how to read X amount of languages and... speak too!"'
+                            isTimelineComplete={isTimelineComplete}
+                        />
+                        <MessageItem
+                            progress={scrollYProgress}
+                            index={3}
+                            text='"Even guitar lyrics can be spoken by my guitar Ambrosia!"'
+                            isTimelineComplete={isTimelineComplete}
+                        />
                         <MessageItem progress={scrollYProgress} index={4} text='"Yeah, this is the guy who will be working for you!"' isTimelineComplete={isTimelineComplete} />
-                        <MessageItem progress={scrollYProgress} index={5} text='"If you want to get more details, keep scrolling down"' isFinal={true} isTimelineComplete={isTimelineComplete} />
+                        <MessageItem
+                            progress={scrollYProgress}
+                            index={5}
+                            text='"If you want to get more details, keep scrolling down"'
+                            isFinal={true}
+                            isTimelineComplete={isTimelineComplete}
+                        />
                     </div>
                 </div>
             </section>

@@ -474,21 +474,22 @@
 
 // Timeline Messages - Appears in the gap after timeline items
 .timeline-messages {
-  position: absolute;
-  bottom: 100px;
+  position: fixed;
+  top: 50%;
   left: 0;
   right: 0;
   width: 100%;
   z-index: 5;
   pointer-events: none;
+  transform: translateY(-50%);
 
   .messages-container {
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 34% auto 0 auto;
     padding: 0 40px;
     display: flex;
     flex-direction: column;
-    gap: 1420px;
+    gap: 930px;
   }
 
   .message-item {
