@@ -182,9 +182,9 @@
 
   .timeline-detail {
     position: fixed;
-    top: 150px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%) scale(0.85);
+    transform: translate(calc(-50% - 20px), -50%);
     background: linear-gradient(135deg, rgba(29, 53, 87, 0.98) 0%, rgba(15, 20, 25, 0.98) 100%);
     border: 2px solid #FF6B9D;
     border-radius: 20px;
@@ -209,7 +209,7 @@
     &.show {
       opacity: 1;
       pointer-events: auto;
-      transform: translateX(-50%) scale(1);
+      transform: translate(-50%, -50%);
     }
 
     .detail-inner {
