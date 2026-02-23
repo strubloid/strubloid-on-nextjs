@@ -1,0 +1,99 @@
+// Bootstrap 4 navbar-expand-lg responsive rules (missing from Now UI Kit)
+@media (min-width: 992px) {
+  .navbar-expand-lg {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+
+    > .container {
+      display: flex;
+      flex-wrap: nowrap;
+
+      > * {
+        flex: 1;
+      }
+    }
+
+    .navbar-nav {
+      flex-direction: row;
+
+      .dropdown-menu {
+        position: absolute;
+      }
+
+      .nav-link {
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+      }
+    }
+
+    .navbar-translate {
+      width: auto;
+    }
+
+    .navbar-collapse {
+      display: flex !important;
+      flex-basis: auto;
+    }
+
+    .navbar-toggler {
+      display: none;
+    }
+  }
+}
+
+#__next{
+  .wrapper{
+    .container{
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+// Tablet  (portrait)
+@media (min-width: 768px) and (max-width: 1024px) {
+  #__next{
+    .wrapper{
+      .container{
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+// Tablet  (landscape)
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  #__next{
+    .wrapper{
+      .container{
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+// Mobile Landscaoe
+@media (min-width: 481px) and (max-width: 767px) {
+  #__next{
+    .wrapper{
+      .container{
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+// Mobile Portrait
+@media (min-width: 320px) and (max-width: 480px) {
+  #__next{
+    .wrapper{
+      .container{
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
