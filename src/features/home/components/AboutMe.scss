@@ -1,0 +1,1642 @@
+// ============================================================
+// Homepage — About Me Section (Matrix Reveal + 3D Cards)
+// ============================================================
+
+body {
+  .wrapper {
+    .homepage-about-me {
+      background-image: url("/img/rafael-mendes.jpg");
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      padding: 80px 0;
+
+      // Dark overlay for background image
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(15, 12, 10, 0.7) 0%,
+          rgba(20, 15, 12, 0.7) 100%
+        );
+        z-index: 0;
+      }
+
+      .container-fluid {
+        position: relative;
+        z-index: 1;
+        max-width: 1400px;
+      }
+
+      // ── Modern centered header ──────────────────────────────
+      .about-me-header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding: 0 15px;
+
+        &__inner {
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+
+        &__accent {
+          display: block;
+          width: 60px;
+          height: 4px;
+          border-radius: 2px;
+          background: linear-gradient(
+            90deg,
+            var(--color-brazil-green),
+            var(--color-accent),
+            var(--color-accent-light)
+          );
+          opacity: 0.9;
+          box-shadow: 0 0 20px rgba(45, 155, 85, 0.4);
+          transition: all 0.3s ease;
+        }
+
+        &__category {
+          color: var(--color-accent-light);
+          font-weight: 600;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-size: 0.8em;
+          margin: 8px 0 0;
+        }
+
+        &__title {
+          color: #ffffff;
+          font-family: var(--font-heading);
+          font-size: 2.8em;
+          font-weight: 700;
+          margin: 0;
+          padding: 0;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+          letter-spacing: -0.01em;
+        }
+      }
+
+      // ── Two-Column Layout ──────────────────────────────────────
+      .skills-layout {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+        margin-top: 60px;
+        padding: 0 20px 400px 20px;
+        position: relative;
+      }
+
+      .skills-layout__left {
+        flex: 0 0 auto;
+        min-height: 600px;
+        padding: 0;
+      }
+
+      .skills-layout__right {
+        flex: 1;
+        padding: 0;
+      }
+
+      // ── Detail Panel (Glass morphism) ───────────────────────────
+      .detail-panel {
+        position: fixed;
+        left: 10%;
+        top: 0;
+        width: 33%;
+        height: fit-content;
+        max-height: 80vh;
+        padding: 32px;
+        border-radius: 24px;
+        background: linear-gradient(
+          135deg,
+          var(--panel-color-from, rgba(45, 155, 85, 0.2)) 0%,
+          var(--panel-color-to, rgba(45, 155, 85, 0.1)) 100%
+        );
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        box-shadow:
+          0 15px 40px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+        overflow-y: auto;
+        overflow-x: hidden;
+        pointer-events: none;
+        z-index: 100;
+        transform: translateY(-50%);
+        will-change: top, --panel-color-from, --panel-color-to;
+
+        // Custom scrollbar
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 10px;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.3);
+          }
+        }
+
+        // Instant close without transition delay
+        &--closing {
+          transition: none;
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+        }
+
+        &__background {
+          position: absolute;
+          top: 0;
+          right: -40px;
+          width: 280px;
+          height: 280px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.08;
+          pointer-events: none;
+          z-index: 0;
+          animation: backgroundFade 0.8s ease-out forwards;
+
+          i {
+            font-size: 280px;
+            color: #ffffff;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+          }
+        }
+
+        &__content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+          gap: 24px;
+          width: 100%;
+          animation: panelSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        // Show when content exists
+        &:has(> .detail-panel__content) {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+
+        &__close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          color: #ffffff;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          font-size: 16px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          padding: 0;
+          backdrop-filter: blur(10px);
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.15);
+          }
+
+          &:active {
+            transform: scale(0.9);
+          }
+        }
+
+        &__icon {
+          font-size: 60px;
+          filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+          animation: iconPulse 2s ease-in-out infinite;
+          flex-shrink: 0;
+        }
+
+        &__body {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          width: 100%;
+        }
+
+        &__title {
+          color: #ffffff;
+          font-weight: 700;
+          font-size: 1.5em;
+          margin: 0;
+          letter-spacing: 0.01em;
+          text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+          line-height: 1.2;
+        }
+
+        &__description {
+          color: rgba(255, 255, 255, 0.85);
+          font-weight: 400;
+          line-height: 1.6;
+          font-size: 0.9em;
+          margin: 0;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        &__usages {
+          width: 100%;
+          padding-top: 14px;
+          border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        &__usage-item {
+          margin-bottom: 12px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        &__usage-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 8px;
+          margin-bottom: 4px;
+        }
+
+        &__usage-title {
+          color: rgba(255, 255, 255, 0.95);
+          font-weight: 600;
+          font-size: 0.9em;
+          margin: 0;
+          flex: 1;
+        }
+
+        &__usage-period {
+          color: rgba(255, 255, 255, 0.6);
+          font-weight: 500;
+          font-size: 0.75em;
+          white-space: nowrap;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        &__usage-detail {
+          color: rgba(255, 255, 255, 0.75);
+          font-weight: 400;
+          line-height: 1.5;
+          font-size: 0.85em;
+          margin: 0;
+        }
+
+        &__related {
+          width: 100%;
+          padding-top: 14px;
+          border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        &__related-title {
+          color: rgba(255, 255, 255, 0.8);
+          font-weight: 600;
+          font-size: 0.8em;
+          margin: 0 0 10px 0;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+
+        &__related-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+
+        &__tag {
+          display: inline-block;
+          padding: 5px 10px;
+          background: rgba(255, 255, 255, 0.12);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          border-radius: 10px;
+          color: rgba(255, 255, 255, 0.9);
+          font-weight: 500;
+          font-size: 0.8em;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+          &:hover {
+            background: linear-gradient(
+              135deg,
+              rgba(45, 155, 85, 0.3) 0%,
+              rgba(45, 155, 85, 0.2) 100%
+            );
+            border-color: rgba(45, 155, 85, 0.6);
+            box-shadow: 0 0 12px rgba(45, 155, 85, 0.2);
+          }
+        }
+
+        &__link {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          color: #ffdd99;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 0.95em;
+          transition: all 0.3s ease;
+          margin-top: 16px;
+          padding: 10px 16px;
+          border-radius: 8px;
+          background: rgba(255, 221, 153, 0.1);
+          border: 1px solid rgba(255, 221, 153, 0.3);
+          cursor: pointer;
+
+          i {
+            font-size: 0.9em;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
+
+          &:hover {
+            color: #fff;
+            background: rgba(255, 221, 153, 0.2);
+            border-color: rgba(255, 221, 153, 0.5);
+
+            i {
+              transform: translateX(4px);
+            }
+          }
+        }
+      }
+
+      // ── Showcase Skills List (GitHub-style) ──────────────────
+      .skills-list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin: 0;
+        padding: 0;
+      }
+
+      .skill-item {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        padding: 10px 15px;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          rgba(65, 72, 68, 0.6) 0%,
+          rgba(52, 60, 56, 0.6) 100%
+        );
+        border: 2px solid rgba(200, 160, 80, 0.4);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        position: relative;
+        overflow: visible;
+        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        opacity: 0;
+        transform: translateX(-30px);
+        animation: slideInUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        animation-delay: var(--skill-delay, 0ms);
+        cursor: pointer;
+
+        // Gradient overlay on hover
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(
+            circle at 30% 50%,
+            rgba(224, 123, 76, 0.1) 0%,
+            transparent 50%
+          );
+          opacity: 0;
+          transition: opacity 0.5s ease;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        &:hover {
+          border-color: rgba(224, 123, 76, 0.7);
+          background: linear-gradient(
+            135deg,
+            rgba(65, 72, 68, 0.8) 0%,
+            rgba(52, 60, 56, 0.8) 100%
+          );
+          box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.6),
+            0 0 40px rgba(224, 123, 76, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+          transform: translateX(12px) translateY(-4px);
+
+          &::before {
+            opacity: 1;
+          }
+        }
+
+        &__icon {
+          flex-shrink: 0;
+          width: 60px;
+          height: 60px;
+          min-width: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 14px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.08) 100%
+          );
+          border: 2px solid rgba(255, 255, 255, 0.2);
+          transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 20px rgba(255, 255, 255, 0.05);
+          position: relative;
+          z-index: 2;
+
+          i {
+            font-size: 56px;
+            filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
+        }
+
+        &:hover &__icon {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.12) 100%
+          );
+          border-color: rgba(255, 255, 255, 0.5);
+          box-shadow:
+            0 12px 48px rgba(0, 0, 0, 0.4),
+            0 0 40px rgba(255, 255, 255, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+          i {
+            transform: scale(1.15);
+            filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.5));
+          }
+        }
+
+        &__content {
+          flex: 1;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          position: relative;
+          z-index: 2;
+        }
+
+        &__title {
+          color: #ffffff;
+          font-weight: 700;
+          font-size: 1.8em;
+          margin: 0;
+          letter-spacing: 0.01em;
+          text-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+          transition: all 0.4s ease;
+          line-height: 1.2;
+        }
+
+        &__desc {
+          color: #e8e8e8;
+          font-weight: 400;
+          line-height: 1.7;
+          font-size: 1.05em;
+          margin: 0;
+          text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+          opacity: 0.95;
+        }
+
+        &__link {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          color: #ffdd99;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 1em;
+          transition: all 0.4s ease;
+          margin-top: 8px;
+          width: fit-content;
+
+          i {
+            font-size: 0.9em;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
+
+          &:hover {
+            color: #fff;
+            gap: 14px;
+
+            i {
+              transform: translateX(6px) rotate(-45deg);
+            }
+          }
+        }
+
+        &:hover &__title {
+          color: #ffdd99;
+          transform: translateY(-2px);
+        }
+      }
+
+      // ── Grid layout (for about-me page) ────────────────────
+      .skills-grid {
+        display: flex;
+        gap: 32px;
+        perspective: 1200px;
+        align-items: stretch;
+
+        // Make both columns equal height
+        > * {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      .skills-column {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 20px;
+
+        // Cards grow to fit content
+        .skill-card {
+          flex: 0 1 auto;
+          display: flex;
+          flex-direction: column;
+          min-height: auto;
+          align-items: flex-end;
+        }
+      }
+
+      // ── Matrix canvas overlay ───────────────────────────────
+      .matrix-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: inherit;
+        z-index: 5;
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 0.5s ease-out;
+
+        &--fade {
+          opacity: 0;
+        }
+      }
+
+      // ── 3D Skill cards ──────────────────────────────────────
+      .skill-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        flex: 0 1 auto;
+        transform-style: preserve-3d;
+        transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+        will-change: transform, opacity;
+        display: flex;
+        flex-direction: column;
+
+        // ── Initial hidden state (pre-reveal) ──
+        opacity: 0;
+        border: 3px solid rgba(200, 160, 80, 0.4);
+        background: transparent;
+
+        transition:
+          transform 0.5s var(--ease-spring),
+          box-shadow 0.5s var(--ease-spring),
+          border-color 0.4s ease,
+          background 0.4s ease;
+
+        // ── Carousel variant ──
+        &--carousel {
+          height: 100%;
+          opacity: 0;
+          border: 3px solid rgba(200, 160, 80, 0.6);
+        }
+
+        // Add accent color border
+        &[style*="--rotateX"] {
+          border-left: 4px solid currentColor;
+        }
+
+        // ── Card becomes visible shell when matrix starts ──
+        &.matrix-active {
+          opacity: 1;
+          border-color: rgba(45, 155, 85, 0.35);
+          background: linear-gradient(
+            135deg,
+            rgba(65, 72, 68, 0.85) 0%,
+            rgba(52, 60, 56, 0.85) 100%
+          );
+          box-shadow:
+            0 0 20px rgba(45, 155, 85, 0.12),
+            inset 0 0 30px rgba(45, 155, 85, 0.05);
+        }
+
+        // ── Matrix hiding: briefly show again ──
+        &.matrix-hiding {
+          opacity: 1;
+          border-color: rgba(45, 155, 85, 0.25);
+          background: linear-gradient(
+            135deg,
+            rgba(65, 72, 68, 0.85) 0%,
+            rgba(52, 60, 56, 0.85) 100%
+          );
+        }
+
+        // ── Fully revealed state ──
+        &.revealed {
+          opacity: 1;
+          border-color: rgba(200, 160, 80, 0.8);
+          background: linear-gradient(
+            135deg,
+            rgba(45, 40, 35, 0.95) 0%,
+            rgba(35, 30, 25, 0.95) 100%
+          );
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 20px rgba(200, 160, 80, 0.2),
+            inset 0 0 30px rgba(200, 160, 80, 0.05);
+          position: relative;
+          animation: postRevealBounce 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+
+          // Colored accent bar
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(
+              180deg,
+              currentColor,
+              rgba(255, 255, 255, 0.3)
+            );
+            z-index: 10;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, width 0.3s ease;
+          }
+
+          .skill-card__content {
+            opacity: 1;
+            transform: translateZ(0) translateY(0);
+          }
+
+          .skill-card__edge-glow {
+            opacity: 1;
+          }
+        }
+
+        // ── Carousel variant revealed ──
+        &--carousel.revealed {
+          border-color: rgba(200, 160, 80, 0.9);
+          box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 30px rgba(200, 160, 80, 0.25),
+            inset 0 0 40px rgba(200, 160, 80, 0.08);
+        }
+
+        // ── 3D tilt on hover ──
+        &--tilting {
+          transform: perspective(800px) rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg));
+          box-shadow:
+            0 15px 40px rgba(0, 0, 0, 0.25),
+            0 0 15px rgba(45, 155, 85, 0.06);
+        }
+
+        &--tilting .skill-card__glare {
+          opacity: 1;
+        }
+
+        // Linked cards — clickable
+        &--linked {
+          cursor: pointer;
+          user-select: none;
+        }
+
+        &:hover {
+          border-color: rgba(224, 123, 76, 0.3);
+        }
+
+        &--linked:hover {
+          border-color: rgba(224, 123, 76, 0.8);
+          box-shadow:
+            0 24px 48px rgba(0, 0, 0, 0.4),
+            0 0 30px rgba(224, 123, 76, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 60px rgba(45, 155, 85, 0.15);
+          transform: translateY(-12px) scaleX(1.02);
+          animation: jellyBounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+          &::before {
+            width: 6px;
+            opacity: 1;
+          }
+        }
+
+        // ── Holographic glare ──
+        &__glare {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: inherit;
+          z-index: 4;
+          pointer-events: none;
+          opacity: 0;
+          background: radial-gradient(
+            circle at var(--lightX, 50%) var(--lightY, 50%),
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.03) 40%,
+            transparent 70%
+          );
+          transition: opacity 0.3s ease;
+          mix-blend-mode: overlay;
+        }
+
+        // ── Edge glow (subtle border highlight) ──
+        &__edge-glow {
+          position: absolute;
+          top: -1px;
+          left: -1px;
+          right: -1px;
+          bottom: -1px;
+          border-radius: inherit;
+          z-index: 1;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.6s ease;
+          background: linear-gradient(
+            135deg,
+            rgba(45, 155, 85, 0.3) 0%,
+            transparent 30%,
+            transparent 70%,
+            rgba(232, 182, 49, 0.2) 100%
+          );
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          -webkit-mask-composite: xor;
+          padding: 1px;
+        }
+
+        // ── Background icon ────────────────────────────────────
+        &__background {
+          position: absolute;
+          top: 0;
+          right: -40px;
+          width: 280px;
+          height: 280px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.08;
+          pointer-events: none;
+          z-index: 2;
+          animation: backgroundFade 0.8s ease-out forwards;
+
+          i {
+            font-size: 280px;
+            color: #ffffff;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+          }
+        }
+
+        // ── Accent line for grid layout cards ───────────────
+        &:not(.skill-card--carousel)::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 4px;
+          height: 100%;
+          background: linear-gradient(
+            180deg,
+            rgba(200, 160, 80, 0.8) 0%,
+            rgba(200, 160, 80, 0.4) 50%,
+            rgba(200, 160, 80, 0.1) 100%
+          );
+          z-index: 3;
+          border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+        }
+
+        // ── MTG Top Bar ─────────────────────────────────────────
+        &__top-bar {
+          flex-shrink: 0;
+          padding: 12px 16px;
+          background: linear-gradient(
+            90deg,
+            rgba(200, 160, 80, 0.3) 0%,
+            rgba(232, 182, 49, 0.15) 100%
+          );
+          border-bottom: 1px solid rgba(200, 160, 80, 0.4);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          z-index: 4;
+        }
+
+        &__category {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.75em;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        // ── MTG Bottom Bar ───────────────────────────────────────
+        &__bottom-bar {
+          flex-shrink: 0;
+          padding: 12px 16px;
+          background: linear-gradient(
+            90deg,
+            rgba(200, 160, 80, 0.2) 0%,
+            rgba(232, 182, 49, 0.1) 100%
+          );
+          border-top: 1px solid rgba(200, 160, 80, 0.4);
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          z-index: 4;
+          margin-top: auto;
+        }
+
+        &__power {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 0.8em;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+        }
+
+        // ── Content layer ──
+        &__content {
+          position: relative;
+          z-index: 3;
+          display: flex;
+          align-items: flex-start;
+          gap: 24px;
+          padding: 10px 16px 10px 28px;
+          opacity: 0;
+          transform: translateZ(20px) translateY(8px);
+          transition:
+            opacity 0.5s var(--ease-out-expo),
+            transform 0.6s var(--ease-out-expo);
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        &__icon {
+          flex-shrink: 0;
+          padding-top: 8px;
+          transform: translateZ(30px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 60px;
+          height: 60px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.08);
+          border: 2px solid rgba(255, 255, 255, 0.15);
+          transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+          position: relative;
+          margin: 18px 28px -28px 28px;
+
+          &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: radial-gradient(
+              circle at 30% 30%,
+              rgba(255, 255, 255, 0.2) 0%,
+              rgba(255, 255, 255, 0) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+          }
+
+          i {
+            font-size: 42px;
+            filter: drop-shadow(0 0 12px currentColor);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+            position: relative;
+            z-index: 2;
+          }
+        }
+
+        // Grid layout icon styling (positioned at top-left)
+        &:not(.skill-card--carousel) &__icon {
+          position: absolute;
+          top: 16px;
+          left: 16px;
+          width: 50px;
+          height: 50px;
+          padding: 0;
+          background: rgba(255, 255, 255, 0.06);
+          border: 2px solid currentColor;
+          border-radius: 10px;
+          z-index: 5;
+          opacity: 0.9;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+          i {
+            font-size: 28px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+          }
+        }
+
+        &--linked:hover &__icon {
+          background: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.3);
+          box-shadow:
+            0 0 25px rgba(255, 255, 255, 0.15),
+            0 8px 20px rgba(0, 0, 0, 0.2),
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+          animation: iconContainerBounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+          &::before {
+            opacity: 1;
+            animation: iconShine 0.38s ease;
+          }
+        }
+
+        &--linked:hover &__icon i {
+          transform: scale(1.18) translateY(-8px);
+          filter: drop-shadow(0 0 20px currentColor);
+        }
+
+        // Grid card icon hover effects
+        &:not(.skill-card--carousel):hover &__icon {
+          opacity: 1;
+          transform: translateY(-4px);
+          background: rgba(255, 255, 255, 0.12);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.1), 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        &:not(.skill-card--carousel):hover &__icon i {
+          transform: scale(1.12) rotate(5deg);
+          filter: drop-shadow(0 4px 12px currentColor);
+        }
+
+        // Grid card content hover effects (coordinated with icon)
+        &:not(.skill-card--carousel):hover &__content {
+          transform: translateZ(20px) translateY(4px);
+        }
+
+        &:not(.skill-card--carousel):hover &__title {
+          transform: translateY(-2px);
+        }
+
+        &:not(.skill-card--carousel):hover &__title::after {
+          width: 40%;
+          opacity: 0.6;
+        }
+
+        &__body {
+          flex: 1;
+          min-width: 0;
+          transform: translateZ(15px);
+        }
+
+        &__title {
+          color: #ffffff !important;
+          font-weight: 700;
+          font-size: 1.4em;
+          margin: 0 0 14px;
+          letter-spacing: 0.01em;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+          line-height: 1.3;
+          transition: all 0.3s ease;
+          position: relative;
+          top: -20px;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: currentColor;
+            transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 2px;
+            box-shadow: 0 0 10px currentColor;
+          }
+        }
+
+        &--linked:hover &__title::after {
+          width: 100%;
+          opacity: 0.8;
+          animation: underlineWave 0.6s ease-in-out;
+        }
+
+        &__desc {
+          color: #f5f5f5 !important;
+          font-weight: 400;
+          line-height: 1.8;
+          font-size: 1.05em;
+          margin: 0;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+          transition: color 0.3s ease;
+        }
+
+        &--linked:hover &__desc {
+          color: #ffffff !important;
+        }
+
+        &__link-label {
+          color: #ffdd99;
+          font-weight: 600;
+          white-space: nowrap;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+          i {
+            font-size: 0.8em;
+            margin-left: 2px;
+            transition: transform 0.3s var(--ease-spring);
+          }
+        }
+
+        &--linked:hover &__link-label i {
+          transform: translateX(4px);
+        }
+
+        // ── Scanline overlay for extra sci-fi depth ──
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          z-index: 6;
+          opacity: 0;
+          background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(45, 155, 85, 0.03) 2px,
+            rgba(45, 155, 85, 0.03) 4px
+          );
+          transition: opacity 0.5s ease;
+        }
+
+        &.matrix-active::after {
+          opacity: 1;
+        }
+
+        &.revealed::after {
+          opacity: 0;
+        }
+      }
+
+      // ── Slide In Up Animation (Skills List) ──────────────────
+      @keyframes slideInUp {
+        0% {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      // ── Detail Panel Enter Animation ────────────────────────
+      @keyframes detailPanelEnter {
+        0% {
+          opacity: 0;
+          transform: translateX(-40px) translateY(20px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0) translateY(0) scale(1);
+        }
+      }
+
+      // ── Float Animation (Icon hover effect) ─────────────────
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+
+      // ── Carousel Card Enter Animation ──────────────────────
+      @keyframes cardEnter {
+        0% {
+          transform: translateX(100%) rotateY(20deg) scale(0.9);
+          opacity: 0;
+        }
+        50% {
+          transform: translateX(5%) rotateY(5deg) scale(1.02);
+        }
+        100% {
+          transform: translateX(0) rotateY(0deg) scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes cardExit {
+        0% {
+          transform: translateX(0) rotateY(0deg) scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: translateX(-5%) rotateY(-5deg) scale(1.02);
+        }
+        100% {
+          transform: translateX(-100%) rotateY(-20deg) scale(0.9);
+          opacity: 0;
+        }
+      }
+
+      // ── Post-Reveal Bounce (After Matrix) ──────────────────
+      @keyframes postRevealBounce {
+        0% {
+          transform: scale(0.85) translateY(20px);
+        }
+        40% {
+          transform: scale(1.12) translateY(-15px);
+        }
+        60% {
+          transform: scale(0.95) translateY(5px);
+        }
+        80% {
+          transform: scale(1.05) translateY(-3px);
+        }
+        100% {
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      // ── Reveal animations (Bouncy Jelly) ──────────────────
+      @keyframes cardRevealBounceRight {
+        0% {
+          opacity: 0;
+          transform: translateX(-60px) scaleY(0.6) scaleX(0.85);
+        }
+        40% {
+          transform: translateX(15px) scaleY(1.15) scaleX(0.95);
+        }
+        70% {
+          transform: translateX(-5px) scaleY(0.95) scaleX(1.05);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0) scaleY(1) scaleX(1);
+        }
+      }
+
+      @keyframes cardRevealBounceLeft {
+        0% {
+          opacity: 0;
+          transform: translateX(60px) scaleY(0.6) scaleX(0.85);
+        }
+        40% {
+          transform: translateX(-15px) scaleY(1.15) scaleX(0.95);
+        }
+        70% {
+          transform: translateX(5px) scaleY(0.95) scaleX(1.05);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0) scaleY(1) scaleX(1);
+        }
+      }
+
+      @keyframes jellyWiggle {
+        0%, 100% {
+          transform: skewX(0deg);
+        }
+        25% {
+          transform: skewX(-1deg);
+        }
+        75% {
+          transform: skewX(1deg);
+        }
+      }
+
+      .skill-card[data-direction="fade-right"] {
+        animation: cardRevealBounceRight 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
+
+      .skill-card[data-direction="fade-left"] {
+        animation: cardRevealBounceLeft 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
+
+      .skill-card[data-reveal-delay="200"] {
+        animation-delay: 0.05s;
+      }
+      .skill-card[data-reveal-delay="400"] {
+        animation-delay: 0.1s;
+      }
+      .skill-card[data-reveal-delay="600"] {
+        animation-delay: 0.15s;
+      }
+      .skill-card[data-reveal-delay="800"] {
+        animation-delay: 0.2s;
+      }
+      .skill-card[data-reveal-delay="1000"] {
+        animation-delay: 0.25s;
+      }
+      .skill-card[data-reveal-delay="1200"] {
+        animation-delay: 0.3s;
+      }
+
+      // ── Jelly Bounce Animation ──────────────────────────────
+      @keyframes jellyBounce {
+        0% {
+          transform: translateY(-12px) scaleX(0.95) scaleY(1.05);
+        }
+        25% {
+          transform: translateY(-12px) scaleX(1.05) scaleY(0.95);
+        }
+        50% {
+          transform: translateY(-12px) scaleX(0.98) scaleY(1.02);
+        }
+        100% {
+          transform: translateY(-12px) scaleX(1) scaleY(1);
+        }
+      }
+
+      // ── Icon Bounce Animation ───────────────────────────────
+      @keyframes iconBounce {
+        0%, 100% {
+          transform: scale(1.15) translateY(-5px);
+        }
+        25% {
+          transform: scale(1.35) translateY(-15px);
+        }
+        50% {
+          transform: scale(1.25) translateY(-8px);
+        }
+        75% {
+          transform: scale(1.3) translateY(-12px);
+        }
+      }
+
+      .skill-card--linked:hover .skill-card__icon i {
+        animation: iconBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      // ── Icon Container Squish & Bounce ─────────────────────
+      @keyframes iconContainerBounce {
+        0%, 100% {
+          transform: scaleY(1) scaleX(1);
+        }
+        25% {
+          transform: scaleY(1.15) scaleX(0.92);
+        }
+        50% {
+          transform: scaleY(0.95) scaleX(1.08);
+        }
+        75% {
+          transform: scaleY(1.08) scaleX(0.95);
+        }
+      }
+
+      // ── Icon Shine Effect ──────────────────────────────────
+      @keyframes iconShine {
+        0% {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+      }
+
+      // ── Jelly Pulse on Hover ───────────────────────────────
+      @keyframes jellyPulse {
+        0%, 100% {
+          box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 20px rgba(45, 155, 85, 0.05);
+        }
+        50% {
+          box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            0 0 30px rgba(45, 155, 85, 0.15),
+            0 0 60px rgba(224, 123, 76, 0.1);
+        }
+      }
+
+      .skill-card--linked:hover {
+        animation: jellyPulse 0.8s ease-in-out infinite;
+      }
+
+      // ── Underline Wave Animation ───────────────────────────
+      @keyframes underlineWave {
+        0% {
+          width: 0;
+        }
+        50% {
+          width: 110%;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+
+      // ── Panel Slide In Animation ───────────────────────────
+      @keyframes panelSlideIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      // ── Icon Pulse Animation ───────────────────────────
+      @keyframes iconPulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      // ── Background Fade Animation ───────────────────────────
+      @keyframes backgroundFade {
+        0% {
+          opacity: 0;
+          transform: scale(0.8) rotate(-10deg);
+        }
+        100% {
+          opacity: 0.08;
+          transform: scale(1) rotate(0deg);
+        }
+      }
+
+      .skill-card--linked:hover &__title::after {
+        animation: underlineWave 0.4s ease-in-out;
+      }
+    }
+  }
+}
+
+// ============================================================
+// Responsive Design for Carousel
+// ============================================================
+
+// Tablet Portrait
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    .wrapper {
+      .homepage-about-me {
+        padding: 60px 0;
+
+        .about-me-header__title {
+          font-size: 2.2em;
+        }
+
+        .carousel-viewport {
+          max-width: 500px;
+          height: 450px;
+        }
+
+        .carousel-btn {
+          width: 44px;
+          height: 44px;
+          font-size: 1.1em;
+        }
+
+        .skill-card__content {
+          padding: 24px 20px;
+        }
+
+        .skill-card__title {
+          font-size: 1.2em !important;
+        }
+
+        .skill-card__desc {
+          font-size: 0.95em !important;
+        }
+
+        .skill-card__icon i {
+          font-size: 36px;
+        }
+      }
+    }
+  }
+}
+
+// Tablet Landscape
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  body {
+    .wrapper {
+      .homepage-about-me {
+        padding: 50px 0;
+
+        .about-me-header__title {
+          font-size: 2.4em;
+        }
+
+        .carousel-viewport {
+          max-width: 480px;
+          height: 400px;
+        }
+      }
+    }
+  }
+}
+
+// Mobile Landscape
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    .wrapper {
+      .homepage-about-me {
+        padding: 50px 0;
+
+        .about-me-header__title {
+          font-size: 1.8em;
+        }
+
+        .carousel-container {
+          gap: 16px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .carousel-btn {
+          width: 40px;
+          height: 40px;
+          font-size: 1em;
+        }
+
+        .carousel-viewport {
+          max-width: 100%;
+          width: 100%;
+          height: 380px;
+          order: 2;
+          flex-basis: 100%;
+        }
+
+        .carousel-btn--prev {
+          order: 1;
+        }
+
+        .carousel-btn--next {
+          order: 3;
+        }
+
+        .skill-card__content {
+          padding: 20px 16px;
+        }
+
+        .skill-card__title {
+          font-size: 1.1em !important;
+        }
+
+        .skill-card__desc {
+          font-size: 0.9em !important;
+        }
+
+        .skill-card__icon i {
+          font-size: 30px;
+        }
+
+        .skill-card__icon {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
+  }
+}
+
+// Mobile Portrait
+@media (min-width: 320px) and (max-width: 480px) {
+  body {
+    .wrapper {
+      .homepage-about-me {
+        padding: 40px 0;
+
+        .about-me-header {
+          margin-bottom: 28px;
+        }
+
+        .about-me-header__title {
+          font-size: 1.6em;
+        }
+
+        .about-me-header__category {
+          font-size: 0.72em;
+        }
+
+        .carousel-container {
+          gap: 12px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .carousel-btn {
+          width: 36px;
+          height: 36px;
+          font-size: 0.9em;
+        }
+
+        .carousel-viewport {
+          max-width: 100%;
+          width: 100%;
+          height: 340px;
+          order: 2;
+          flex-basis: 100%;
+        }
+
+        .carousel-btn--prev {
+          order: 1;
+        }
+
+        .carousel-btn--next {
+          order: 3;
+        }
+
+        .skill-card__content {
+          padding: 16px 14px;
+          gap: 16px;
+        }
+
+        .skill-card__title {
+          font-size: 1em !important;
+          margin: 0 0 6px;
+        }
+
+        .skill-card__desc {
+          font-size: 0.85em !important;
+          line-height: 1.6;
+        }
+
+        .skill-card__icon i {
+          font-size: 24px;
+        }
+
+        .skill-card__icon {
+          width: 44px;
+          height: 44px;
+          min-width: 44px;
+        }
+
+        .paginator-dot {
+          width: 10px;
+          height: 10px;
+        }
+      }
+    }
+  }
+}

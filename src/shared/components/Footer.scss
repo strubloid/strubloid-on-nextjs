@@ -1,0 +1,938 @@
+// ==========================================================================
+// Footer
+// Base footer styles, legacy data-background-color theme overrides, and
+// modern Organic & Warm footer (2025 redesign).
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Section: Base Footer Styles
+// --------------------------------------------------------------------------
+.footer {
+  padding: 1.125rem 0;
+  text-align: center;
+
+  nav {
+    display: inline-block;
+    float: left;
+  }
+  .content {
+    text-align: left;
+  }
+  .nav-link {
+    display: inline;
+  }
+  .footer-brand {
+    float: left;
+    font-size: 0.875rem;
+    line-height: 44px;
+  }
+  ul {
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+    &:not(.links-vertical) {
+      line-height: 2.1;
+    }
+    li {
+      display: inline-block;
+      a {
+        color: inherit;
+        padding: 13px 0.5rem;
+        font-size: 0.8571em;
+        text-transform: uppercase;
+        text-decoration: none;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  ul.links-vertical {
+    line-height: 1.6;
+    li {
+      display: block;
+      margin-left: -5px;
+      margin-right: -5px;
+      margin-bottom: 0px;
+      a {
+        padding: 5px;
+        display: block;
+      }
+    }
+  }
+  .social-buttons {
+    a {
+      margin: 0;
+    }
+    .btn {
+      margin: 0;
+    }
+  }
+  .pull-center {
+    display: inline-block;
+    float: none;
+  }
+  .copyright {
+    font-size: 0.8571em;
+    line-height: 3.5;
+  }
+  &:after {
+    display: table;
+    clear: both;
+    content: " ";
+  }
+
+  // --------------------------------------------------------------------------
+  // Variant: Default (gray background)
+  // --------------------------------------------------------------------------
+  &.footer-default {
+    background-color: #f2f2f2;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variant: White
+  // --------------------------------------------------------------------------
+  &.footer-white {
+    background-color: #FFFFFF;
+  }
+
+  // --------------------------------------------------------------------------
+  // Variant: Big (social feed + gallery)
+  // --------------------------------------------------------------------------
+  &.footer-big {
+    padding: 30px 0;
+
+    .social-feed i {
+      font-size: 20px;
+      float: left;
+      padding-right: 10px;
+      padding-bottom: 30px;
+    }
+
+    .gallery-feed img {
+      width: 20%;
+      margin-right: 5%;
+      margin-bottom: 5%;
+      float: left;
+    }
+  }
+}
+// --------------------------------------------------------------------------
+// Section: Legacy — Data Background Color Theme Overrides
+// These utility classes override text/element colors on dark backgrounds.
+// Inherited from Now UI Kit — kept as-is for framework compatibility.
+// --------------------------------------------------------------------------
+[data-background-color="orange"] {
+  background-color: #e95e38;
+}
+
+[data-background-color="black"] {
+  background-color: #2c2c2c;
+}
+
+[data-background-color] {
+  &:not([data-background-color="gray"]) {
+    color: #FFFFFF;
+    .title {
+      color: #FFFFFF;
+    }
+    .social-description {
+      h2 {
+        color: #FFFFFF;
+      }
+      p {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+    p {
+      color: #FFFFFF;
+    }
+    p.blockquote {
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.2);
+      small {
+        color: #FFFFFF;
+      }
+    }
+    .separator {
+      background-color: #FFFFFF;
+    }
+    .navbar.bg-white {
+      p {
+        color: #888888;
+      }
+    }
+    h1 {
+      color: #FFFFFF;
+      color: #FFFFFF;
+    }
+    h2 {
+      color: #FFFFFF;
+      color: #FFFFFF;
+    }
+    h3 {
+      color: #FFFFFF;
+      color: #FFFFFF;
+    }
+    h4 {
+      color: #FFFFFF;
+      color: #FFFFFF;
+    }
+    h5 {
+      color: #FFFFFF;
+      color: #FFFFFF;
+    }
+    h6 {
+      color: #FFFFFF;
+      color: #FFFFFF;
+    }
+    a {
+      &:not(.btn) {
+        &:not(.dropdown-item) {
+          color: #FFFFFF;
+          &:not(.card-link) {
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
+    .icons-container {
+      color: #FFFFFF;
+      i {
+        color: #FFFFFF;
+      }
+    }
+    .input-group-text {
+      color: rgba(255, 255, 255, 0.8);
+      background-color: transparent;
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #FFFFFF;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .form-group.no-border {
+      .input-group-text {
+        color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: #FFFFFF;
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #FFFFFF;
+        &:focus {
+          background-color: rgba(255, 255, 255, 0.2);
+          color: #FFFFFF;
+          + {
+            .input-group-text {
+              background-color: rgba(255, 255, 255, 0.2);
+              color: #FFFFFF;
+            }
+          }
+        }
+        &:active {
+          background-color: rgba(255, 255, 255, 0.2);
+          background-color: rgba(255, 255, 255, 0.2);
+          color: #FFFFFF;
+          color: #FFFFFF;
+        }
+        + {
+          .input-group-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            &:focus {
+              background-color: rgba(255, 255, 255, 0.2);
+              color: #FFFFFF;
+            }
+            &:active {
+              background-color: rgba(255, 255, 255, 0.2);
+              background-color: rgba(255, 255, 255, 0.2);
+              color: #FFFFFF;
+              color: #FFFFFF;
+            }
+          }
+        }
+      }
+    }
+    .input-group.no-border {
+      .input-group-text {
+        color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: #FFFFFF;
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #FFFFFF;
+        &:focus {
+          background-color: rgba(255, 255, 255, 0.2);
+          color: #FFFFFF;
+          + {
+            .input-group-text {
+              background-color: rgba(255, 255, 255, 0.2);
+              color: #FFFFFF;
+            }
+          }
+        }
+        &:active {
+          background-color: rgba(255, 255, 255, 0.2);
+          background-color: rgba(255, 255, 255, 0.2);
+          color: #FFFFFF;
+          color: #FFFFFF;
+        }
+        + {
+          .input-group-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            &:focus {
+              background-color: rgba(255, 255, 255, 0.2);
+              color: #FFFFFF;
+            }
+            &:active {
+              background-color: rgba(255, 255, 255, 0.2);
+              background-color: rgba(255, 255, 255, 0.2);
+              color: #FFFFFF;
+              color: #FFFFFF;
+            }
+          }
+        }
+      }
+    }
+    .description {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .checkbox {
+      label {
+        &::before {
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+        &::after {
+          border-color: rgba(255, 255, 255, 0.2);
+          color: #FFFFFF;
+        }
+        color: #FFFFFF;
+      }
+      input[type="checkbox"] {
+        &:disabled {
+          + {
+            label {
+              color: #FFFFFF;
+            }
+          }
+        }
+      }
+    }
+    .radio {
+      label {
+        &::before {
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+        &::after {
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+        color: #FFFFFF;
+      }
+      input[type="radio"] {
+        &:disabled {
+          + {
+            label {
+              color: #FFFFFF;
+            }
+          }
+        }
+        &:not(:disabled) {
+          &:hover {
+            + {
+              label {
+                &::after {
+                  background-color: #FFFFFF;
+                  border-color: #FFFFFF;
+                }
+              }
+            }
+          }
+        }
+        &:checked {
+          + {
+            label {
+              &::after {
+                background-color: #FFFFFF;
+                border-color: #FFFFFF;
+              }
+            }
+          }
+        }
+      }
+    }
+    .form-control {
+      &::-moz-placeholder {
+        color: #ebebeb;
+        opacity: 1;
+        filter: alpha(opacity=100);
+      }
+      &:-moz-placeholder {
+        color: #ebebeb;
+        opacity: 1;
+        filter: alpha(opacity=100);
+      }
+      &::-webkit-input-placeholder {
+        color: #ebebeb;
+        opacity: 1;
+        filter: alpha(opacity=100);
+      }
+      &:-ms-input-placeholder {
+        color: #ebebeb;
+        opacity: 1;
+        filter: alpha(opacity=100);
+      }
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #FFFFFF;
+      &:focus {
+        border-color: #FFFFFF;
+        background-color: transparent;
+        color: #FFFFFF;
+      }
+    }
+    .has-success {
+      &:after {
+        color: #FFFFFF;
+      }
+    }
+    .has-danger {
+      &:after {
+        color: #FFFFFF;
+      }
+      .form-control {
+        background-color: transparent;
+      }
+    }
+    .input-group-focus {
+      .input-group-text {
+        background-color: transparent;
+        border-color: #FFFFFF;
+        color: #FFFFFF;
+      }
+    }
+    .form-group.no-border.input-group-focus {
+      .input-group-text {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #FFFFFF;
+      }
+    }
+    .input-group.no-border.input-group-focus {
+      .input-group-text {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #FFFFFF;
+      }
+    }
+    .btn[class*="btn-outline-"] {
+      background-color: transparent;
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #FFFFFF;
+      &:hover {
+        background-color: transparent;
+        border-color: #FFFFFF;
+        color: #FFFFFF;
+      }
+      &:focus {
+        background-color: transparent;
+        border-color: #FFFFFF;
+        color: #FFFFFF;
+      }
+      &:not(:disabled) {
+        &:not(.disabled) {
+          &:active {
+            background-color: transparent;
+            border-color: #FFFFFF;
+            color: #FFFFFF;
+            &:focus {
+              background-color: transparent;
+              border-color: #FFFFFF;
+              color: #FFFFFF;
+            }
+          }
+        }
+        &:not(.disabled).active {
+          background-color: transparent;
+          border-color: #FFFFFF;
+          color: #FFFFFF;
+          &:focus {
+            background-color: transparent;
+            border-color: #FFFFFF;
+            color: #FFFFFF;
+          }
+        }
+      }
+      &:active {
+        &:hover {
+          background-color: transparent;
+          border-color: #FFFFFF;
+          color: #FFFFFF;
+        }
+      }
+    }
+    .btn[class*="btn-outline-"].active {
+      &:hover {
+        background-color: transparent;
+        border-color: #FFFFFF;
+        color: #FFFFFF;
+      }
+    }
+    .nav-tabs {
+      >.nav-item {
+        >.nav-link {
+          i.now-ui-icons {
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
+    .separator-line {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+    .footer.footer-white {
+      .footer-brand {
+        color: initial;
+      }
+      ul {
+        li {
+          >a.nav-link {
+            &:not(.btn-icon) {
+              color: initial;
+            }
+          }
+        }
+      }
+    }
+    .card {
+      &:not(.card-plain) {
+        .category {
+          color: #9A9A9A;
+          color: #9A9A9A;
+          color: #9A9A9A;
+        }
+        .card-description {
+          color: #9A9A9A;
+        }
+        .card-title {
+          color: initial;
+          color: initial;
+        }
+      }
+    }
+    .carousel {
+      .carousel-inner {
+        box-shadow: none;
+      }
+    }
+    .info.info-horizontal {
+      .icon {
+        i {
+          color: #FFFFFF;
+        }
+      }
+    }
+    .card-pricing.card-plain {
+      ul {
+        li {
+          color: #FFFFFF;
+          b {
+            color: rgba(255, 255, 255, 0.8) !important;
+          }
+          i {
+            color: rgba(255, 255, 255, 0.8) !important;
+          }
+        }
+      }
+    }
+    .card-footer {
+      .stats {
+        i {
+          color: rgba(255, 255, 255, 0.5);
+        }
+      }
+    }
+    .card-plain {
+      .category {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+    .card-header {
+      &:after {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+    .card-category {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    .author {
+      span {
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+    }
+    .subscribe-line {
+      .form-control {
+        background-color: transparent;
+        border: 1px solid #E3E3E3;
+        color: #2c2c2c;
+        &:last-child {
+          border-left: 0 none;
+        }
+      }
+      .input-group-text {
+        color: #555555;
+        border: 1px solid #E3E3E3;
+      }
+      .form-group.no-border {
+        .input-group-text {
+          color: #555555;
+          border: 1px solid #E3E3E3;
+        }
+      }
+      .input-group.no-border {
+        .input-group-text {
+          color: #555555;
+          border: 1px solid #E3E3E3;
+        }
+      }
+    }
+  }
+  &:not([data-background-color="gray"]).section-nucleo-icons {
+    .icons-container {
+      i {
+        &:nth-child(6) {
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+  &:not([data-background-color="gray"]).card-pricing {
+    ul {
+      li {
+        color: #FFFFFF;
+        border-color: rgba(255, 255, 255, 0.2);
+        i {
+          color: rgba(255, 255, 255, 0.8) !important;
+        }
+        b {
+          color: rgba(255, 255, 255, 0.8) !important;
+        }
+      }
+    }
+    .icon {
+      i {
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+  &:not([data-background-color="gray"]).card {
+    a {
+      &:not(.btn) {
+        &:not(.dropdown-item) {
+          color: #FFFFFF;
+          &:hover {
+            border-color: #FFFFFF;
+          }
+          &:focus {
+            border-color: #FFFFFF;
+          }
+        }
+      }
+    }
+  }
+  &:not([data-background-color="gray"]).footer {
+    hr {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  &:not([data-background-color="gray"]).card-plain {
+    .category {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+  .social-line {
+    h1 {
+      color: initial;
+    }
+    h2 {
+      color: initial;
+    }
+    h3 {
+      color: initial;
+    }
+    h4 {
+      color: initial;
+    }
+    h5 {
+      color: initial;
+    }
+    h6 {
+      color: initial;
+    }
+    .btn.btn-simple {
+      border: 0;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Section: Modern Organic & Warm Footer (2025 Redesign)
+// --------------------------------------------------------------------------
+.footer.footer-modern {
+  background: var(--color-charcoal);
+  padding: 4rem 0 0;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+
+  // Top gradient accent line
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      var(--color-brazil-green) 0%,
+      var(--color-brazil-gold) 50%,
+      var(--color-accent) 100%
+    );
+  }
+
+  // Grid layout for footer columns
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 4rem;
+    padding: 0 2rem 4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  // Brand section — name + tagline
+  .footer-brand-section {
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-cream);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-tagline {
+      color: rgba(255, 248, 240, 0.5);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+  }
+
+  // Navigation links column
+  .footer-nav-section {
+    .footer-nav-title {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-brazil-gold);
+      margin-bottom: 1.25rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      justify-content: center;
+
+      li {
+        margin-bottom: 0;
+
+        a {
+          color: rgba(255, 248, 240, 0.6);
+          text-decoration: none;
+          font-size: 0.95rem;
+          transition: all 0.4s var(--ease-out-expo);
+          display: inline-block;
+          padding: 8px 14px;
+          border-radius: 6px;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-brazil-gold), var(--color-accent));
+            transition: width 0.4s var(--ease-out-expo);
+          }
+
+          &:hover {
+            color: var(--color-cream);
+            background: rgba(232, 182, 49, 0.1);
+            border: 1px solid rgba(232, 182, 49, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(232, 182, 49, 0.15);
+
+            &::after {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Social links column
+  .footer-social-section {
+    .footer-nav-title {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-brazil-gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(255, 248, 240, 0.6);
+        font-size: 1.2rem;
+        transition: all 0.4s var(--ease-out-expo);
+        text-decoration: none;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: var(--color-brazil-gold);
+          color: var(--color-brazil-gold);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 24px rgba(232, 182, 49, 0.15);
+        }
+      }
+    }
+  }
+
+  // Bottom bar — copyright + accent line
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1.5rem 0;
+
+    .copyright {
+      color: rgba(255, 248, 240, 0.35);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-accent-line {
+      width: 60px;
+      height: 3px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(
+        90deg,
+        var(--color-brazil-green),
+        var(--color-brazil-gold)
+      );
+      margin-top: 1rem;
+      opacity: 0.6;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Responsive — Tablet Portrait (768px – 1024px)
+  // --------------------------------------------------------------------------
+  @media (min-width: 768px) and (max-width: 1024px) {
+    padding: 3rem 0 0;
+
+    .footer-content {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .footer-brand-section {
+      grid-column: 1 / -1;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Responsive — Tablet Landscape (768px – 1024px, landscape)
+  // --------------------------------------------------------------------------
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .footer-content {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+
+    .footer-brand-section {
+      grid-column: auto;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Responsive — Mobile Landscape (481px – 767px)
+  // --------------------------------------------------------------------------
+  @media (min-width: 481px) and (max-width: 767px) {
+    padding: 2.5rem 0 0;
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .footer-brand-section .footer-tagline {
+      max-width: none;
+    }
+
+    .footer-social-section .social-links {
+      justify-content: center;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Responsive — Mobile Portrait (320px – 480px)
+  // --------------------------------------------------------------------------
+  @media (min-width: 320px) and (max-width: 480px) {
+    padding: 2rem 0 0;
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .footer-brand-section .footer-tagline {
+      max-width: none;
+      font-size: 0.9rem;
+    }
+
+    .footer-social-section .social-links {
+      justify-content: center;
+    }
+
+    .footer-bottom .copyright {
+      font-size: 0.8rem;
+    }
+  }
+}

@@ -1,0 +1,443 @@
+// ============================================================
+// Homepage — GitHub Section
+// ============================================================
+
+// Keyframes
+@keyframes fontgradient {
+  0%   { background-position: 0% 92%; }
+  50%  { background-position: 100% 9%; }
+  100% { background-position: 0% 92%; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+body {
+  .wrapper {
+    .section-github {
+      background: var(--surface-primary);
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+
+      // Organic wave separator at top
+      &::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -5%;
+        width: 110%;
+        height: 80px;
+        background: linear-gradient(135deg, #2B5876 0%, #4E4376 50%, #6B5B4E 100%);
+        border-radius: 0 0 50% 50%;
+        z-index: 1;
+      }
+
+      // ------------------------------------------------
+      // Section header
+      // ------------------------------------------------
+      .section-description {
+        .title {
+          color: var(--color-espresso);
+          font-family: var(--font-heading);
+          font-size: 2.8em;
+          font-weight: 700;
+        }
+
+        .title + .category {
+          margin-top: 0;
+        }
+
+        .category {
+          color: var(--color-accent);
+          font-weight: 600;
+          letter-spacing: 0.1em;
+        }
+
+        .description {
+          color: var(--text-secondary);
+          line-height: 1.8;
+        }
+      }
+
+      // CTA button
+      .github-buttons {
+        a {
+          background: linear-gradient(135deg, var(--color-brazil-green), var(--color-brazil-gold));
+          border: none;
+          border-radius: var(--radius-full);
+          padding: 12px 32px;
+          font-weight: 600;
+          letter-spacing: 0.03em;
+          box-shadow: 0 4px 15px rgba(45, 155, 85, 0.3);
+          transition: all 0.4s var(--ease-spring);
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 155, 85, 0.4);
+            background: linear-gradient(135deg, var(--color-brazil-emerald), var(--color-brazil-gold));
+          }
+        }
+      }
+
+      // GitHub icon column
+      .github-column {
+        .github-background-container {
+          display: flex;
+          align-items: flex-end;
+          justify-content: end;
+
+          .fa-github {
+            font-size: 18rem;
+            padding: 0 0 0 20px;
+            float: left;
+            background: linear-gradient(135deg, var(--color-brazil-green), var(--color-brazil-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            width: auto;
+            text-align: center;
+            -webkit-text-fill-color: transparent;
+            animation: fontgradient 4s ease infinite;
+            opacity: 0.15;
+            transition: opacity 0.5s ease;
+          }
+
+          &:hover .fa-github {
+            opacity: 0.3;
+          }
+        }
+      }
+
+      // ------------------------------------------------
+      // Project cards grid — full width, 3 columns
+      // ------------------------------------------------
+      .github-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        margin-top: 20px;
+
+        > a {
+          text-decoration: none;
+          color: inherit;
+          display: block;
+        }
+      }
+
+      // ------------------------------------------------
+      // Individual project card
+      // ------------------------------------------------
+      .github-project-card {
+        background: var(--surface-elevated);
+        border: none;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.5s var(--ease-spring);
+
+        &:hover {
+          transform: translateY(-8px) scale(1.02);
+          box-shadow:
+            0 20px 60px rgba(61, 46, 34, 0.15),
+            0 8px 24px rgba(61, 46, 34, 0.1);
+
+          .card-image-header {
+            &::after { opacity: 0.6; }
+
+            .fa-github {
+              transform: scale(1.15) rotate(5deg);
+              opacity: 0.5;
+            }
+
+            // Keep github icon hidden on screenshot cards during hover
+            &.has-image .fa-github {
+              opacity: 0;
+            }
+          }
+        }
+
+        // --- Gradient image header ---
+        .card-image-header {
+          position: relative;
+          height: 140px;
+          background: linear-gradient(135deg, #2B5876 0%, #4E4376 40%, #6B5B4E 70%, var(--color-brazil-green) 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+
+          // Animated shimmer overlay
+          &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+              90deg,
+              transparent 0%,
+              rgba(255, 255, 255, 0.08) 45%,
+              rgba(255, 255, 255, 0.15) 50%,
+              rgba(255, 255, 255, 0.08) 55%,
+              transparent 100%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 6s ease-in-out infinite;
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
+          }
+
+          // When a project screenshot is available
+          &.has-image {
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+
+            .fa-github {
+              opacity: 0;
+            }
+
+            // Subtle overlay so star badge stays readable
+            &::before {
+              content: '';
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.25) 100%);
+              z-index: 0;
+            }
+          }
+
+          .fa-github {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.25);
+            z-index: 1;
+            transition: all 0.5s var(--ease-spring);
+          }
+
+          // Star badge
+          .star-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            color: var(--color-brazil-gold);
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+
+            .fa-star { margin-right: 3px; }
+          }
+        }
+
+        // --- Card body ---
+        .card-body {
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+
+        .card-title {
+          color: var(--color-espresso);
+          font-weight: 700;
+          font-size: 1.3rem;
+          margin-bottom: 8px;
+        }
+
+        .card-description {
+          color: var(--text-secondary);
+          font-size: 0.9rem;
+          line-height: 1.6;
+          margin-bottom: 16px;
+          flex: 1;
+          // Clamp long descriptions
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        // --- Language bar ---
+        .language-section {
+          margin-top: auto;
+          padding-top: 12px;
+          border-top: 1px solid var(--color-warm-gray);
+        }
+
+        .language-bar {
+          display: flex;
+          width: 100%;
+          height: 8px;
+          border-radius: var(--radius-full);
+          overflow: hidden;
+          background: var(--color-sand);
+          margin-bottom: 12px;
+
+          .language-bar-segment {
+            height: 100%;
+            transition: width 0.6s var(--ease-out-expo);
+            min-width: 2px;
+          }
+        }
+
+        .language-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px 14px;
+
+          li {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+
+            i {
+              color: var(--color-accent);
+              font-size: 0.75rem;
+            }
+
+            .lang-dot {
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              flex-shrink: 0;
+            }
+
+            .lang-pct {
+              color: var(--text-muted);
+              font-size: 0.75rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive: Tablet (portrait)
+// ------------------------------------------------------------
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    .wrapper {
+      .section-github {
+        padding: 80px 0;
+
+        .github-column { display: none; }
+
+        .section-description .title {
+          font-size: 2.4em;
+        }
+
+        .github-cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 24px;
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive: Tablet (landscape)
+// ------------------------------------------------------------
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  body {
+    .wrapper {
+      .section-github {
+        .github-column {
+          display: flex;
+
+          .github-background-container {
+            align-items: center;
+
+            .fa-github { font-size: 7rem; }
+          }
+        }
+
+        .github-cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 24px;
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive: Mobile (landscape)
+// ------------------------------------------------------------
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    .wrapper {
+      .section-github {
+        padding: 60px 0;
+
+        .section-description .title {
+          font-size: 2em;
+        }
+
+        .github-column { display: none; }
+
+        .github-cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+        }
+
+        .github-project-card {
+          .card-image-header { height: 100px; }
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive: Mobile (portrait)
+// ------------------------------------------------------------
+@media (min-width: 320px) and (max-width: 480px) {
+  body {
+    .wrapper {
+      .section-github {
+        padding: 50px 0;
+
+        .section-description .title {
+          font-size: 1.8em;
+        }
+
+        .github-buttons a {
+          display: flex;
+          justify-content: center;
+          margin: 30px auto -10px auto;
+          max-width: 180px;
+          background: linear-gradient(166deg, #009C3B, green, #ffdf00);
+        }
+
+        .github-column { display: none; }
+
+        .github-cards-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .github-project-card {
+          .card-image-header { height: 100px; }
+
+          .card-description {
+            -webkit-line-clamp: 3;
+          }
+        }
+      }
+    }
+  }
+}

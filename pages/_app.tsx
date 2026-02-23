@@ -26,9 +26,18 @@ import "../public/scss/global/_pages.scss";
 import "../public/scss/global/_sections.scss";
 import "../public/scss/global/_responsive.scss";
 
-// Component SCSS moved to component co-location or public/scss/
-// These are now either imported directly in component files using CSS Modules
-// or managed in public/scss/pages/ and public/scss/components/ directories
+// Component SCSS from new feature-based locations
+import "../src/features/scrapbook/components/Notes.scss";
+import "../src/features/scrapbook/components/Header.scss";
+import "../src/features/contact/components/ContactMe.scss";
+import "../src/features/contact/components/ContactMeHeader.scss";
+import "../src/shared/components/BasicHeader.scss";
+import "../src/shared/components/TransparentNavbar.scss";
+import "../src/shared/components/Footer.scss";
+import "../src/features/home/components/AboutMe.scss";
+import "../src/features/home/components/Art.scss";
+import "../src/features/home/components/Github.scss";
+import "../src/features/home/components/Header.scss";
 
 import "../public/scss/pages/artistic.scss";
 

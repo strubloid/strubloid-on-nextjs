@@ -1,0 +1,71 @@
+// ============================================================
+// Basic Page Header
+// ============================================================
+
+body {
+  .wrapper {
+    .basic-page-header {
+      min-height: 8vh;
+      max-height: 80px;
+      background: linear-gradient(
+        135deg,
+        var(--color-espresso, #3D2E22) 0%,
+        var(--color-charcoal, #1A1412) 100%
+      );
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive: Tablet (portrait)
+// ------------------------------------------------------------
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    .wrapper {
+      .basic-page-header {
+        min-height: 7vh;
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive: Tablet (landscape)
+// ------------------------------------------------------------
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  body {
+    .wrapper {
+      .basic-page-header {
+        min-height: 6vh;
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive: Mobile (landscape)
+// ------------------------------------------------------------
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    .wrapper {
+      .basic-page-header {
+        min-height: 6vh;
+        max-height: 60px;
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive: Mobile (portrait)
+// ------------------------------------------------------------
+@media (min-width: 320px) and (max-width: 480px) {
+  body {
+    .wrapper {
+      .basic-page-header {
+        min-height: 5vh;
+        max-height: 50px;
+      }
+    }
+  }
+}
