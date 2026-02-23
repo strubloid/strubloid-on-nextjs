@@ -575,6 +575,13 @@ body {
         display: flex;
         gap: 32px;
         perspective: 1200px;
+        align-items: stretch;
+
+        // Make both columns equal height
+        > * {
+          display: flex;
+          flex-direction: column;
+        }
       }
 
       .skills-column {
@@ -582,6 +589,14 @@ body {
         flex-direction: column;
         flex: 1;
         gap: 20px;
+
+        // Cards grow to fit content
+        .skill-card {
+          flex: 0 1 auto;
+          display: flex;
+          flex-direction: column;
+          min-height: auto;
+        }
       }
 
       // ── Matrix canvas overlay ───────────────────────────────
@@ -605,7 +620,7 @@ body {
         position: relative;
         overflow: hidden;
         border-radius: var(--radius-lg);
-        flex: 1;
+        flex: 0 1 auto;
         transform-style: preserve-3d;
         transform: perspective(800px) rotateX(0deg) rotateY(0deg);
         will-change: transform, opacity;

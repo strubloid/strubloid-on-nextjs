@@ -22,8 +22,8 @@
       "icon": "now-ui-icons users_single-02",
       "title": "A little bit about me",
       "accent": "accent",
-      "description": "Born into brush strokes and colour palettes, I danced between paint and canvas until binary whispers and the elegance of code seduced my soul. 🎨→💻 Now, as a Brazilian Software Engineer with 16+ years of crafting digital experiences, I blend artistic sensibility with technical precision—building clean architectures, pixel-perfect interfaces, and systems that feel alive.\n\nWhen I'm not architecting code, you'll find me chasing light through a camera lens 📸, strumming guitars into the night 🎸, or curating moments of beauty that have graced exibit into galleries from the Louvre to the streets of João Pessoa. I believe great software—like great art tells a story, stirs emotion, and leaves the world slightly more beautiful.\n\nDesign patterns are poetry. Linux is freedom. And every line of code is a brushstroke in something larger. Let's build something extraordinary together. 🚀",
-      "description_short": "Brazilian Software Engineer with 16+ years crafting digital experiences. Artist, guitarist, photographer. Blending clean code with creative passion. 🎨💻"
+      "description": "Born into brush strokes and colour palettes, I danced between paint and canvas until binary whispers and the elegance of code seduced my soul. Brazilian Software Engineer with 16+ years of crafting digital experiences, I blend artistic sensibility with technical precision building clean architectures, pixel-perfect interfaces, and systems that feel alive.\n\nWhen I'm not architecting code, you'll find me chasing light through a camera lens, strumming guitars into the night, or curating moments of beauty that have graced exibit into galleries from the Louvre to the streets of João Pessoa. I believe great software like great art tells a story, stirs emotion, and leaves the world slightly more beautiful.\n\nDesign patterns are poetry. Linux is freedom. And every line of code is a brushstroke in something larger. Let's build something extraordinary together.",
+      "description_short": "Brazilian Software Engineer with 16+ years crafting digital experiences. Artist, guitarist, photographer. Blending clean code with creative passion."
     },
     {
       "id": "react",
@@ -87,7 +87,7 @@
       "icon": "now-ui-icons education_atom",
       "title": "PHP",
       "accent": "brazil-green",
-      "description": "PHP has been a serious relationship since 2007, spanning pure PHP, Yii, Zend Framework I & II, Magento 1 & 2, and Laravel. In May 2010, I told Rasmus Lerdorf at IV ENSOL that I'd keep using PHP — 16 years later, it remains a core part of my backend expertise.",
+      "description": "PHP has been a serious relationship since 2007, spanning pure PHP, Yii, Zend Framework I & II, Magento 1 & 2, and Laravel. In May 2010, I told Rasmus Lerdorf at IV ENSOL that I'd keep using PHP, 16 years later, it remains a core part of my backend expertise.",
       "description_short": "Serious backend relationship since 2007. Pure PHP, Yii, Zend, Laravel. E-commerce, REST APIs, database architectures.",
       "usages": [
         {
@@ -206,7 +206,7 @@
         {
           "company": "Dataprev",
           "period": "Apr 2009 - Apr 2010",
-          "detail": "Optimised Java backend processing for Brazil's BGSD (Brazilian Budget Supervision Distribution) supercomputer. Refactored legacy academic models based on Japanese theory into high-performance big data solutions, reducing batch processing time from 0.01s to 0.00001s — a 1000x improvement."
+          "detail": "Optimised Java backend processing for Brazil's BGSD (Brazilian Budget Supervision Distribution) supercomputer. Refactored legacy academic models based on Japanese theory into high-performance big data solutions, reducing batch processing time from 0.01s to 0.00001s, a 1000x improvement."
         },
         {
           "company": "Dataprev",
