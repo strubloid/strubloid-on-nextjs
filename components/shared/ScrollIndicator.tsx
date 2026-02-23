@@ -9,27 +9,32 @@ interface ScrollIndicatorProps {
 
 const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({ visible = true }) => {
   const [isVisible, setIsVisible] = useState(true);
-  const [hasScrolled, setHasScrolled] = useState(false);
+  const scrollThreshold = 3; // Hide after 3 scroll events
 
   useEffect(() => {
     // Set initial state
     setIsVisible(true);
-    setHasScrolled(false);
+    let scrollCount = 0;
+    let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
-      // Hide when user scrolls down more than a small amount
-      if (window.scrollY > 100 && !hasScrolled) {
-        setIsVisible(false);
-        setHasScrolled(true);
-      } else if (window.scrollY <= 100) {
-        setIsVisible(true);
-        setHasScrolled(false);
+      const currentScrollY = window.scrollY;
+
+      // Count as a scroll event only if significant movement
+      if (Math.abs(currentScrollY - lastScrollY) > 10) {
+        scrollCount++;
+        lastScrollY = currentScrollY;
+
+        // Hide after threshold number of scrolls
+        if (scrollCount >= scrollThreshold) {
+          setIsVisible(false);
+        }
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasScrolled]);
+  }, [scrollThreshold]);
 
   // Chevron animation variants
   const chevronVariants = {
