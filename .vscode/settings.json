@@ -1,0 +1,5 @@
+{
+  "terminal.integrated.enablePersistentSessions": false,
+  "git.enableSmartCommit": false,
+  "git.confirmSync": true
+}
