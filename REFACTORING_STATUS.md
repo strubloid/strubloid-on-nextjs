@@ -309,6 +309,11 @@ Each feature folder now includes:
 - ✅ `pages/scrapbook/[id]/index.tsx` - Updated to import BasicHeader from `@shared/components`
 - ✅ Data import paths fixed (../../ → ../../../ for facebook.json)
 
+### Cleanup data
+ - Check if we have any component that isnt being used at this project, if isnt used you can remove
+ - check if all scss files arent in a public folder, if they are move to src/[find the place to put]
+ - all scss must follow the sccs whole structure, so please do like C:\apps\strubloid-on-nextjs\src\shared\components\ScrollIndicator.module.scss structure
+
 ### Import Pattern Examples
 ```typescript
 // Home feature
