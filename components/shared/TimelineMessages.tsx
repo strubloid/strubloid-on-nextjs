@@ -21,7 +21,9 @@ const TimelineMessages: React.FC<TimelineMessagesProps> = ({ scrollYProgress }) 
 
     // Messages start after timeline-wrapper animation finishes (delayed to avoid overlap)
     const timelineFinishThreshold = 0.69;
-    const messageWidth = (1 - timelineFinishThreshold) / messages.length;
+    const messageDuration = 0.081; // How long each message stays fully visible
+    const messageGap = 0.015; // Gap/spacing between messages
+    const messageWidth = messageDuration + messageGap;
 
     // Calculate current message index to only render visible message
     const currentMessageIndex = useTransform(scrollYProgress, (progress) => {
