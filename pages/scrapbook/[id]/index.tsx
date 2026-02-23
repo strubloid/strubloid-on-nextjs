@@ -3,7 +3,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { Confirm, Button, Loader } from "semantic-ui-react";
 import { BasicHeader } from "@shared/components";
-import { server } from "@components/shared/Server";
+import { server } from "@utils/constants/server";
 import type { INote } from "@types";
 
 interface NotePageProps {

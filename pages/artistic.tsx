@@ -1,6 +1,6 @@
 import React from "react";
 import type { GetStaticProps, NextPage } from "next";
-import Art from "../components/homepage/Art";
+import { Art } from "@features/home/components";
 import { getFlickrData } from "@lib/services/flickr";
 import type { FlickrPhoto, FlickrAlbum } from "@lib/services/flickr";
 

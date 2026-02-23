@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import { Button, Form, Loader } from "semantic-ui-react";
 import { useRouter } from "next/router";
-import { server } from "@components/shared/Server";
+import { server } from "@utils/constants/server";
 import type { INote, INoteForm, IFormErrors } from "@types";
 
 interface EditNoteProps {

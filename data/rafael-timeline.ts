@@ -1,4 +1,4 @@
-import { TimelineItem } from "../components/shared/Timeline";
+import { TimelineItem } from "@shared/components";
 
 export const rafaelTimeline: TimelineItem[] = [
   {
