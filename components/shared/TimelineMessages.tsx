@@ -27,14 +27,16 @@ const TimelineMessages: React.FC<TimelineMessagesProps> = ({ scrollYProgress, on
         { text: "Even the love language I know! usualy you will hear from my guitar Ambrosia!    ", speaker: "Strubloid" },
 
         { text: "Yeah, this is the guy who will be working with you!  ", speaker: "Strubloid" },
+        { text: "A curious mind, living at the command line ...", speaker: "Strubloid" },
+        { text: "Born to debug. Love to document. Ship to production.   ", speaker: "Strubloid" },
         { text: "If you want to get more details, keep scrolling down  ", speaker: "Strubloid" },
     ];
 
     // Messages start after timeline-wrapper animation finishes (delayed to avoid overlap)
-    const timelineFinishThreshold = 0.54; // Start messages after timeline finishes scrolling
+    const timelineFinishThreshold = 0.5; // Start messages after timeline finishes scrolling
     const messageDuration = 0.04; // How long each message stays fully visible
     const messageGap = 0.004; // Gap/spacing between messages
-    const messageBuffer = 0.035; // Extra scroll space to see accumulated words before fade out
+    const messageBuffer = 0.02; // Extra scroll space to see accumulated words before fade out
     const messageWidth = messageDuration + messageGap; // 0.04 per message = fits 9 messages in 0.35 range
 
     // Word-by-word rendering control

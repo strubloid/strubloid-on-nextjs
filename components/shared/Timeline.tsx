@@ -118,7 +118,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                 ref={sectionRef}
                 className={styles["timeline-section"]}
                 style={{
-                    height: `${-30 + itemCount * 1000}vh`,
+                    height: `${itemCount * 500}vh`,
                 }}
             >
                 {/* Sticky background image */}
@@ -129,13 +129,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                     }}
                 />
 
-                <TimelineJobs
-                    items={items}
-                    title={title}
-                    scrollYProgress={scrollYProgress}
-                    onActiveItemChange={setActiveItem}
-                    onBackgroundChange={setBackgroundUrl}
-                />
+                <TimelineJobs items={items} title={title} scrollYProgress={scrollYProgress} onActiveItemChange={setActiveItem} onBackgroundChange={setBackgroundUrl} />
 
                 <TimelineMessages scrollYProgress={scrollYProgress} onMessageChange={handleMessageChange} />
             </section>
