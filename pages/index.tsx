@@ -4,12 +4,12 @@ import Header from "../components/homepage/Header";
 import Github from "../components/homepage/Github";
 import AboutMe from "../components/homepage/AboutMe";
 import Art from "../components/homepage/Art";
-import { getGithubProjects } from "../lib/github";
-import { getStrubloidData } from "../lib/strubloid";
-import { getFlickrData } from "../lib/flickr";
-import type { CachedProject } from "../lib/github";
-import type { Skill } from "../lib/strubloid";
-import type { FlickrPhoto, FlickrAlbum } from "../lib/flickr";
+import { getGithubProjects } from "@lib/services/github";
+import { getStrubloidData } from "@lib/services/strubloid";
+import { getFlickrData } from "@lib/services/flickr";
+import type { CachedProject } from "@lib/services/github";
+import type { Skill } from "@lib/services/strubloid";
+import type { FlickrPhoto, FlickrAlbum } from "@lib/services/flickr";
 
 interface HomeProps {
     githubProjects: CachedProject[];

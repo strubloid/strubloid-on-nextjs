@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import dbConnect from '../../../components/DatabaseConnection';
-import Note from '../../../components/scrapbook/models/Note';
-import type { IApiResponse } from '../../../types';
-import type { INoteDocument } from '../../../components/scrapbook/models/Note';
+import dbConnect from "@lib/db";
+import { Note } from "@lib/db";
+import type { IApiResponse } from "@types";
+import type { INoteDocument } from "@lib/db";
 
 export default async function handler(
     req: NextApiRequest,

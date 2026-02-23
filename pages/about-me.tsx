@@ -2,9 +2,9 @@ import React from "react";
 import type { NextPage, GetStaticProps } from "next";
 import AboutMe from "../components/homepage/AboutMe";
 import Timeline from "../components/shared/Timeline";
-import { getStrubloidData } from "../lib/strubloid";
+import { getStrubloidData } from "@lib/services/strubloid";
 import { rafaelTimeline } from "../data/rafael-timeline";
-import type { Skill } from "../lib/strubloid";
+import type { Skill } from "@lib/services/strubloid";
 
 interface AboutMePageProps {
     skills: Skill[];

@@ -1,8 +1,8 @@
 import React from "react";
 import type { GetStaticProps, NextPage } from "next";
 import Art from "../components/homepage/Art";
-import { getFlickrData } from "../lib/flickr";
-import type { FlickrPhoto, FlickrAlbum } from "../lib/flickr";
+import { getFlickrData } from "@lib/services/flickr";
+import type { FlickrPhoto, FlickrAlbum } from "@lib/services/flickr";
 
 interface ArtisticProps {
     flickrPhotos: FlickrPhoto[];
