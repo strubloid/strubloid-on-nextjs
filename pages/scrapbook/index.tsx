@@ -1,9 +1,8 @@
 import React from "react";
 import type { GetServerSideProps, NextPage } from "next";
-import Body from "../../components/scrapbook/Body";
-import ScrapbookHeader from "../../components/scrapbook/Header";
-import { server } from "../../components/shared/Server";
-import type { INote } from "../../types";
+import { Body, Header as ScrapbookHeader } from "@features/scrapbook/components";
+import { server } from "@components/shared/Server";
+import type { INote } from "@types";
 
 interface ScrapbookIndexProps {
     notes: INote[];

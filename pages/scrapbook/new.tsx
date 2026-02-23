@@ -1,7 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
-import NewNote from "../../components/scrapbook/NewNote";
-import ScrapbookHeader from "../../components/scrapbook/Header";
+import { NewNote, Header as ScrapbookHeader } from "@features/scrapbook/components";
 
 const NewNotePage: NextPage = () => (
     <>
