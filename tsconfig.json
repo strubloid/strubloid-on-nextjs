@@ -22,6 +22,7 @@
       "@types/*": ["src/shared/types/*"],
       "@hooks/*": ["src/shared/hooks/*"],
       "@components/*": ["src/shared/components/*", "components/*"],
+      "@utils": ["src/shared/utils"],
       "@utils/*": ["src/shared/utils/*"],
       "@pages/*": ["pages/*"],
       "@public/*": ["public/*"]

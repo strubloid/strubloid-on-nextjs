@@ -3,7 +3,7 @@ import { FormGroup, InputGroup, InputGroupText, Container, Row, Col } from "reac
 import { Button, Input, TextArea, Form, Loader, Message } from "semantic-ui-react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { MapWrapper } from "./MapWrapper";
-import { server } from "@utils/constants/server";
+import { server, validateContactForm } from "@utils";
 import { useScrollReveal } from "@hooks/animations";
 import type { IGoogleKeyProps, IContactInputs, IContactStatus, IFormErrors } from "@types";
 
@@ -55,16 +55,6 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
         setStatus(INITIAL_STATUS);
     };
 
-    /** Validate all required fields */
-    const validate = (): IFormErrors => {
-        const error: IFormErrors = {};
-        if (!inputs.name) error.name = "Name is required";
-        if (!inputs.email) error.email = "Email is required";
-        if (!inputs.subject) error.subject = "Subject is required";
-        if (!inputs.message) error.message = "Message is required";
-        if (!inputs.captcha) error.captcha = "Please confirm you are not a robot";
-        return error;
-    };
 
     /** Trigger sending once validation passes */
     useEffect(() => {
@@ -104,7 +94,7 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
     /** Handle form submission */
     const handleOnSubmit = (e: React.FormEvent): void => {
         e.preventDefault();
-        setErrors(validate());
+        setErrors(validateContactForm(inputs));
         setIsSubmitting(true);
     };
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Loader } from "semantic-ui-react";
 import { useRouter } from "next/router";
-import { server } from "@utils/constants/server";
-import type { INoteForm, IFormErrors } from "@types";
+import { server, validateNoteForm } from "@utils";
+import type { INoteForm } from "@types";
 
 const NewNote: React.FC = () => {
     const [form, setForm] = useState<INoteForm>({ title: "", description: "" });
@@ -38,17 +38,9 @@ const NewNote: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [errors]);
 
-    /** Validate required fields */
-    const validate = (): IFormErrors => {
-        const error: IFormErrors = {};
-        if (!form.title) error.title = "Title is required";
-        if (!form.description) error.description = "Description is required";
-        return error;
-    };
-
     const handleSubmit = (e: React.FormEvent): void => {
         e.preventDefault();
-        setErrors(validate());
+        setErrors(validateNoteForm(form));
         setIsSubmitting(true);
     };
 
