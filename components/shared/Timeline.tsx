@@ -1,5 +1,5 @@
-import React, { useRef, useState, useMemo } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import React, { useRef, useState, useMemo, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./Timeline.module.scss";
 import ScrollIndicator from "./ScrollIndicator";
 import flickrData from "../../data/flickr.json";
@@ -30,28 +30,22 @@ interface MessageItemProps {
 }
 
 const MessageItem: React.FC<MessageItemProps> = ({ progress, index, text, isFinal, isTimelineComplete }) => {
-    // Each message appears ONE AT A TIME, but only AFTER the timeline is complete
-    // Each message is visible for ~8% of scroll progress, words reveal progressively
-    const messageWidth = 0.08; // Each message visible for 8% of scroll
-    const startScroll = 0.33 + index * messageWidth; // Start at 33% (when timeline is done)
+    const messageWidth = 0.08;
+    const startScroll = 0.33 + index * messageWidth;
     const endScroll = startScroll + messageWidth;
 
-    // Clean text (remove quotes and extra spaces)
     const cleanText = text.replace(/"/g, "").trim();
     const words = cleanText.split(" ");
 
-    // Group words in pairs (2 words at a time for smoother reveal)
     const wordPairs: string[][] = [];
     for (let i = 0; i < words.length; i += 2) {
         wordPairs.push(words.slice(i, i + 2));
     }
 
-    // Slower reveal - each pair gets more scroll time
     const pairDuration = messageWidth / (wordPairs.length + 1);
 
     const messageOpacity = useTransform(progress, [Math.max(0, startScroll - 0.02), startScroll, endScroll, Math.min(1, endScroll + 0.02)], [0, 1, 1, 0]);
 
-    // Only show message if timeline is complete
     const opacity = useTransform([messageOpacity, isTimelineComplete], ([msgOp, timelineComplete]: any[]) => {
         return timelineComplete ? msgOp : 0;
     });
@@ -62,11 +56,7 @@ const MessageItem: React.FC<MessageItemProps> = ({ progress, index, text, isFina
                 {wordPairs.map((pair, pairIndex) => {
                     const pairStartScroll = startScroll + pairIndex * pairDuration;
 
-                    const pairOpacity = useTransform(
-                        progress,
-                        [pairStartScroll - 0.005, pairStartScroll, endScroll],
-                        [0, 1, 1], // Fade in, then stay visible until message ends
-                    );
+                    const pairOpacity = useTransform(progress, [pairStartScroll - 0.005, pairStartScroll, endScroll], [0, 1, 1]);
 
                     return (
                         <motion.span key={pairIndex} style={{ opacity: pairOpacity }}>
@@ -80,16 +70,60 @@ const MessageItem: React.FC<MessageItemProps> = ({ progress, index, text, isFina
     );
 };
 
+// Static Content Panel Component
+const TimelineContentPanel: React.FC<{ item: TimelineItem | null }> = ({ item }) => {
+    if (!item) return null;
+
+    return (
+        <motion.div className={styles["timeline-content-panel"]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+            <div className={styles["content-header"]}>
+                <div className={styles["content-year"]}>{item.year}</div>
+                {item.company && <p className={styles["content-company"]}>{item.company}</p>}
+                <h3 className={styles["content-title"]}>{item.title}</h3>
+            </div>
+
+            <div className={styles["content-right"]}>
+                {item.position && <p className={styles["content-position"]}>{item.position}</p>}
+                <p className={styles["content-description"]}>{item.description}</p>
+            </div>
+
+            {item.skills && item.skills.length > 0 && (
+                <div className={styles["content-skills"]}>
+                    <span className={styles["skills-label"]}>Skills</span>
+                    <div className={styles["skills-list"]}>
+                        {item.skills.map((skill, idx) => (
+                            <span key={idx} className={styles["skill-tag"]}>
+                                {skill}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {item.highlights && item.highlights.length > 0 && (
+                <div className={styles["content-highlights"]}>
+                    <span className={styles["highlights-label"]}>Highlights</span>
+                    <ul>
+                        {item.highlights.map((highlight, idx) => (
+                            <li key={idx}>{highlight}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </motion.div>
+    );
+};
+
 const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const sectionRef = useRef<HTMLDivElement>(null);
-    const [hoveredId, setHoveredId] = useState<string | null>(null);
-    const [centeredId, setCenteredId] = useState<string | null>(null);
+    const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+    const observerRef = useRef<IntersectionObserver | null>(null);
+
+    const [activeId, setActiveId] = useState<string | null>(null);
     const [backgroundUrl, setBackgroundUrl] = useState<string>("");
 
-    // Reverse items to show chronologically from oldest to newest (left to right)
     const sortedItems = [...items].reverse();
 
-    // Map each timeline item to a random flickr photo
     const photoMap = useMemo(() => {
         const map: { [key: string]: string } = {};
         sortedItems.forEach((item) => {
@@ -102,42 +136,63 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     }, []);
 
     // Initialize background with first item's photo
-    React.useEffect(() => {
+    useEffect(() => {
         if (sortedItems.length > 0 && photoMap[sortedItems[0].id] && !backgroundUrl) {
             setBackgroundUrl(photoMap[sortedItems[0].id]);
         }
     }, [photoMap, sortedItems, backgroundUrl]);
 
-    // Track scroll progress of this section only
+    // Setup Intersection Observer for 50% viewport threshold
+    useEffect(() => {
+        observerRef.current = new IntersectionObserver(
+            (entries) => {
+                const intersectingEntries = entries.filter((entry) => entry.isIntersecting);
+
+                if (intersectingEntries.length > 0) {
+                    const itemId = intersectingEntries[0].target.getAttribute("data-item-id");
+                    if (itemId) {
+                        setActiveId(itemId);
+                        // Update background for active item
+                        if (photoMap[itemId]) {
+                            setBackgroundUrl(photoMap[itemId]);
+                        }
+                    }
+                } else {
+                    // Clear active item when no items are in viewport
+                    setActiveId(null);
+                }
+            },
+            {
+                root: null,
+                threshold: 0.5, // Triggers when 50% of item is visible in viewport
+            },
+        );
+
+        return () => {
+            observerRef.current?.disconnect();
+        };
+    }, [photoMap]);
+
+    // Observe all timeline items
+    useEffect(() => {
+        itemRefs.current.forEach((element) => {
+            observerRef.current?.observe(element);
+        });
+    }, []);
+
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start start", "end end"],
     });
 
-    // Calculate which item is currently centered
-    const centeredItemIndex = useTransform(scrollYProgress, [0, 1], [0, sortedItems.length - 1]);
-
-    // Update background and detail panel when centered item changes
-    useMotionValueEvent(centeredItemIndex, "change", (value) => {
-        const index = Math.round(value);
-        if (sortedItems[index]) {
-            if (photoMap[sortedItems[index].id]) {
-                setBackgroundUrl(photoMap[sortedItems[index].id]);
-            }
-            // Auto-show detail panel for centered item
-            setCenteredId(sortedItems[index].id);
-        }
-    });
-
-    // Calculate horizontal translation based on scroll progress
     const itemCount = sortedItems.length;
     const maxTranslate = -100 * (itemCount - 1);
     const x = useTransform(scrollYProgress, [0, 1], ["0%", `${maxTranslate}%`]);
 
-    // Determine if the last timeline item is still visible
-    // Timeline finishes at 63% scroll, messages show after that (starting from second message)
     const timelineFinishThreshold = 0.38;
     const isTimelineComplete = useTransform(scrollYProgress, [timelineFinishThreshold, timelineFinishThreshold + 0.01], [false, true]);
+
+    const activeItem = sortedItems.find((item) => item.id === activeId) || null;
 
     return (
         <>
@@ -149,7 +204,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                     height: `${-30 + itemCount * 400}vh`,
                 }}
             >
-                {/* Sticky background image - stays centered during timeline */}
+                {/* Sticky background image */}
                 <motion.div
                     className={styles["timeline-background"]}
                     style={{
@@ -161,23 +216,13 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                     <h2>{title}</h2>
                 </div>
 
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
+                <div className={styles["timeline-header"]}>
+                    <h2>IT</h2>
+                </div>
 
-                {/* Scroll runway before horizontal movement */}
-                {/* <div style={{ height: "150vh" }} /> */}
+                <div className={styles["timeline-header"]}>
+                    <h2>3.9</h2>
+                </div>
 
                 <motion.div
                     className={styles["timeline-wrapper"]}
@@ -187,85 +232,39 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                     transition={{ duration: 0.5 }}
                 >
                     {sortedItems.map((item, index) => (
-                        <>
+                        <div
+                            key={item.id}
+                            data-item-id={item.id}
+                            ref={(el) => {
+                                if (el) itemRefs.current.set(item.id, el);
+                            }}
+                            className={styles["timeline-item"]}
+                            style={
+                                {
+                                    "--item-delay": `${index * 0.1}s`,
+                                } as React.CSSProperties
+                            }
+                        >
+                            {/* Year Label */}
+                            <div className={styles["year-label"]}>{item.year}</div>
+
+                            {/* Timeline Dot */}
                             <div
-                                key={item.id}
-                                className={styles["timeline-item"]}
-                                onMouseEnter={() => setHoveredId(item.id)}
-                                onMouseLeave={() => setHoveredId(null)}
-                                style={
-                                    {
-                                        "--item-delay": `${index * 0.1}s`,
-                                    } as React.CSSProperties
-                                }
+                                className={`${styles["timeline-dot"]} ${activeId === item.id ? styles["active"] : ""}`}
+                                style={{
+                                    backgroundColor: item.color || "#457B9D",
+                                }}
                             >
-                                {/* Year Label */}
-                                <div className={styles["year-label"]}>{item.year}</div>
-
-                                {/* Timeline Dot */}
-                                <div
-                                    className={`${styles["timeline-dot"]} ${hoveredId === item.id || centeredId === item.id ? styles["active"] : ""}`}
-                                    style={{
-                                        backgroundColor: item.color || "#457B9D",
-                                    }}
-                                >
-                                    <div className={styles["dot-pulse"]}></div>
-                                </div>
-
-                                {/* Detail Panel - appears on hover or when centered */}
-                                <div className={`${styles["timeline-detail"]} ${hoveredId === item.id || centeredId === item.id ? styles["show"] : ""}`}>
-                                    <div className={styles["detail-inner"]}>
-                                        {/* Top Left: Year + Company + Title */}
-                                        <div className={styles["detail-header"]}>
-                                            <div className={styles["detail-year"]}>{item.year}</div>
-                                            {item.company && <p className={styles["detail-company"]}>{item.company}</p>}
-                                            <h3 className={styles["detail-title"]}>{item.title}</h3>
-                                        </div>
-
-                                        {/* Top Right: Description + Position */}
-                                        <div className={styles["detail-right"]}>
-                                            {item.position && <p className={styles["detail-position"]}>{item.position}</p>}
-                                            <p className={styles["detail-description"]}>{item.description}</p>
-                                        </div>
-
-                                        {/* Bottom Left: Skills */}
-                                        {item.skills && item.skills.length > 0 && (
-                                            <div className={styles["detail-bottom-left"]}>
-                                                <div className={styles["detail-skills"]}>
-                                                    <span className={styles["skills-label"]}>Skills</span>
-                                                    <div className={styles["skills-list"]}>
-                                                        {item.skills.slice(0, 6).map((skill, idx) => (
-                                                            <span key={idx} className={styles["skill-tag"]}>
-                                                                {skill}
-                                                            </span>
-                                                        ))}
-                                                        {item.skills.length > 6 && <span className={`${styles["skill-tag"]} ${styles["more"]}`}>+{item.skills.length - 6}</span>}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Bottom Right: Highlights */}
-                                        {item.highlights && item.highlights.length > 0 && (
-                                            <div className={styles["detail-bottom-right"]}>
-                                                <div className={styles["detail-highlights"]}>
-                                                    <span className={styles["highlights-label"]}>Highlights</span>
-                                                    <ul>
-                                                        {item.highlights.slice(0, 3).map((highlight, idx) => (
-                                                            <li key={idx}>{highlight}</li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
+                                <div className={styles["dot-pulse"]}></div>
                             </div>
-                        </>
+                        </div>
                     ))}
                 </motion.div>
 
-                {/* Messages in Timeline Gap - Appears after 2025 scrolls out */}
+                {/* Static Content Panel */}
+                <TimelineContentPanel item={activeItem} />
+
+                {/* Messages */}
                 <div className={styles["timeline-messages"]}>
                     <div className={styles["messages-container"]}>
                         <MessageItem

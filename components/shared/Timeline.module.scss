@@ -568,6 +568,186 @@
   }
 }
 
+// Static Content Panel - Sticky panel for active timeline item
+.timeline-content-panel {
+  position: sticky;
+  top: 20vh;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  pointer-events: auto;
+  padding: 60px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .content-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .content-year {
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FF6B9D 0%, #A8DADC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 0.9;
+    margin: 0;
+    letter-spacing: -2px;
+    display: inline-block;
+  }
+
+  .content-company {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #FF6B9D;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 10px rgba(255, 107, 157, 0.3);
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(255, 107, 157, 0.1);
+    border: 1px solid rgba(255, 107, 157, 0.3);
+  }
+
+  .content-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .content-right {
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+
+  .content-position {
+    font-size: 1rem;
+    color: #A8DADC;
+    margin: 0 0 15px 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .content-description {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #D8D8D8;
+    margin: 0;
+  }
+
+  .content-skills {
+    margin-bottom: 40px;
+
+    .skills-label {
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #FF6B9D;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 15px;
+      opacity: 1;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-start;
+
+      .skill-tag {
+        background: linear-gradient(135deg, #FF6B9D 0%, #E8B631 100%);
+        color: white;
+        padding: 10px 18px;
+        border-radius: 25px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        white-space: nowrap;
+        box-shadow: 0 8px 24px rgba(255, 107, 157, 0.35);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        letter-spacing: 0.5px;
+
+        &:hover {
+          transform: translateY(-4px) scale(1.05);
+          box-shadow: 0 12px 32px rgba(255, 107, 157, 0.5);
+        }
+      }
+    }
+  }
+
+  .content-highlights {
+    .highlights-label {
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #FF6B9D;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 15px;
+      opacity: 1;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      li {
+        font-size: 0.9rem;
+        color: #D8D8D8;
+        margin-bottom: 0;
+        padding-left: 24px;
+        position: relative;
+        line-height: 1.5;
+        font-weight: 500;
+
+        &::before {
+          content: "▸";
+          position: absolute;
+          left: 0;
+          color: #FF6B9D;
+          font-weight: bold;
+          font-size: 1.4rem;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    padding: 40px;
+    top: 15vh;
+  }
+
+  @media (max-width: 768px) {
+    padding: 30px 20px;
+    top: 10vh;
+
+    .content-year {
+      font-size: 2.5rem;
+    }
+
+    .content-title {
+      font-size: 1.5rem;
+    }
+  }
+}
+
 // Timeline Messages - Appears in the gap after timeline items
 .timeline-messages {
   position: fixed;

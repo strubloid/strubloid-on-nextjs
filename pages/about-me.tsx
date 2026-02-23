@@ -12,7 +12,7 @@ interface AboutMePageProps {
 
 const AboutMePage: NextPage<AboutMePageProps> = ({ skills }) => (
     <>
-        <Timeline items={rafaelTimeline} title="Who Am I? - IT 3.9" />
+        <Timeline items={rafaelTimeline} title="Who Am I ?" />
         <AboutMe skills={skills} carousel={false} />
     </>
 );
