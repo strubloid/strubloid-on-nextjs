@@ -3,7 +3,7 @@ import { FormGroup, InputGroup, InputGroupText, Container, Row, Col } from "reac
 import { Button, Input, TextArea, Form, Loader, Message } from "semantic-ui-react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { MapWrapper } from "./MapWrapper";
-import { server } from "@components/shared/Server";
+import { server } from "@utils/constants/server";
 import { useScrollReveal } from "@hooks/animations";
 import type { IGoogleKeyProps, IContactInputs, IContactStatus, IFormErrors } from "@types";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Loader } from "semantic-ui-react";
 import { useRouter } from "next/router";
-import { server } from "@components/shared/Server";
+import { server } from "@utils/constants/server";
 import type { INoteForm, IFormErrors } from "@types";
 
 const NewNote: React.FC = () => {

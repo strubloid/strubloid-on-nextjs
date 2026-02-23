@@ -26,18 +26,9 @@ import "../public/scss/global/_pages.scss";
 import "../public/scss/global/_sections.scss";
 import "../public/scss/global/_responsive.scss";
 
-// Component SCSS (compiled at build time by Next.js)
-import "../components/scrapbook/Notes.scss";
-import "../components/scrapbook/Header.scss";
-import "../components/contact/ContactMe.scss";
-import "../components/contact/ContactMeHeader.scss";
-import "../components/shared/BasicHeader.scss";
-import "../components/shared/TransparentNavbar.scss";
-import "../components/shared/Footer.scss";
-import "../components/homepage/AboutMe.scss";
-import "../components/homepage/Art.scss";
-import "../components/homepage/Github.scss";
-import "../components/homepage/Header.scss";
+// Component SCSS moved to component co-location or public/scss/
+// These are now either imported directly in component files using CSS Modules
+// or managed in public/scss/pages/ and public/scss/components/ directories
 
 import "../public/scss/pages/artistic.scss";
 

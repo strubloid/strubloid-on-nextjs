@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import BrushTransition from "@components/shared/BrushTransition";
+import { BrushTransition } from "@shared/components";
 import type { FlickrPhoto } from "@lib/services/flickr";
 
 interface FlickrGalleryProps {
