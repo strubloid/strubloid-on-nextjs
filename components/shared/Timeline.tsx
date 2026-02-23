@@ -1,9 +1,9 @@
-import React, { useRef, useState, useMemo, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useScroll } from "framer-motion";
 import styles from "./Timeline.module.scss";
 import ScrollIndicator from "./ScrollIndicator";
+import TimelineJobs from "./TimelineJobs";
 import TimelineMessages from "./TimelineMessages";
-import flickrData from "../../data/flickr.json";
 
 export interface TimelineItem {
     id: string;
@@ -68,85 +68,15 @@ const TimelineContentPanel: React.FC<{ item: TimelineItem | null }> = ({ item })
 
 const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const sectionRef = useRef<HTMLDivElement>(null);
-    const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-    const observerRef = useRef<IntersectionObserver | null>(null);
-
-    const [activeId, setActiveId] = useState<string | null>(null);
+    const [activeItem, setActiveItem] = useState<TimelineItem | null>(null);
     const [backgroundUrl, setBackgroundUrl] = useState<string>("");
-
-    const sortedItems = [...items].reverse();
-
-    const photoMap = useMemo(() => {
-        const map: { [key: string]: string } = {};
-        sortedItems.forEach((item) => {
-            if (flickrData.photos && flickrData.photos.length > 0) {
-                const randomPhoto = flickrData.photos[Math.floor(Math.random() * flickrData.photos.length)];
-                map[item.id] = randomPhoto.url_l || randomPhoto.url_c || randomPhoto.url_z;
-            }
-        });
-        return map;
-    }, []);
-
-    // Initialize background with first item's photo
-    useEffect(() => {
-        if (sortedItems.length > 0 && photoMap[sortedItems[0].id] && !backgroundUrl) {
-            setBackgroundUrl(photoMap[sortedItems[0].id]);
-        }
-    }, [photoMap, sortedItems, backgroundUrl]);
-
-    // Setup Intersection Observer for 50% viewport threshold
-    useEffect(() => {
-        observerRef.current = new IntersectionObserver(
-            (entries) => {
-                const intersectingEntries = entries.filter((entry) => entry.isIntersecting);
-
-                if (intersectingEntries.length > 0) {
-                    const itemId = intersectingEntries[0].target.getAttribute("data-item-id");
-                    if (itemId) {
-                        setActiveId(itemId);
-                        // Update background for active item
-                        if (photoMap[itemId]) {
-                            setBackgroundUrl(photoMap[itemId]);
-                        }
-                    }
-                } else {
-                    // Clear active item when no items are in viewport
-                    setActiveId(null);
-                }
-            },
-            {
-                root: null,
-                threshold: 0.1, // Triggers when 10% of item is visible (more reliable detection)
-            },
-        );
-
-        return () => {
-            observerRef.current?.disconnect();
-        };
-    }, [photoMap]);
-
-    // Observe all timeline items
-    useEffect(() => {
-        // Unobserve all previous items
-        itemRefs.current.forEach((element) => {
-            observerRef.current?.unobserve(element);
-        });
-        // Re-observe all items when they change
-        itemRefs.current.forEach((element) => {
-            observerRef.current?.observe(element);
-        });
-    }, [sortedItems]);
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start start", "end end"],
     });
 
-    const itemCount = sortedItems.length;
-    const maxTranslate = -100 * (itemCount - 1);
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", `${maxTranslate}%`]);
-
-    const activeItem = sortedItems.find((item) => item.id === activeId) || null;
+    const itemCount = items.length;
 
     return (
         <>
@@ -168,91 +98,13 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                     }}
                 />
 
-                <div className={styles["timeline-header"]}>
-                    <h2>{title}</h2>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                </div>
-
-                <div className={styles["timeline-header"]}>
-                    <h2>IT</h2>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                </div>
-
-                <div className={styles["timeline-header"]}>
-                    <h2>3.9</h2>
-                </div>
-
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-
-                <motion.div
-                    className={styles["timeline-wrapper"]}
-                    style={{
-                        x,
-                    }}
-                    transition={{ duration: 0.5 }}
-                >
-                    {sortedItems.map((item, index) => (
-                        <div
-                            key={item.id}
-                            data-item-id={item.id}
-                            ref={(el) => {
-                                if (el) itemRefs.current.set(item.id, el);
-                            }}
-                            className={styles["timeline-item"]}
-                            style={
-                                {
-                                    "--item-delay": `${index * 0.1}s`,
-                                } as React.CSSProperties
-                            }
-                        >
-                            {/* Year Label */}
-                            <div className={styles["year-label"]}>{item.year}</div>
-
-                            {/* Timeline Dot */}
-                            <div
-                                className={`${styles["timeline-dot"]} ${activeId === item.id ? styles["active"] : ""}`}
-                                style={{
-                                    backgroundColor: item.color || "#457B9D",
-                                }}
-                            >
-                                <div className={styles["dot-pulse"]}></div>
-                            </div>
-                        </div>
-                    ))}
-                </motion.div>
+                <TimelineJobs
+                    items={items}
+                    title={title}
+                    scrollYProgress={scrollYProgress}
+                    onActiveItemChange={setActiveItem}
+                    onBackgroundChange={setBackgroundUrl}
+                />
 
                 <TimelineMessages scrollYProgress={scrollYProgress} />
             </section>
