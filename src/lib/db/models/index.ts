@@ -4,4 +4,3 @@
  */
 
 export { default as Contact, type IContactDocument } from "./contact.model";
-export { default as Note, type INoteDocument } from "./note.model";

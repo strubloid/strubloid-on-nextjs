@@ -4,5 +4,5 @@
  */
 
 export { default, default as dbConnect } from "./connection";
-export { Contact, Note } from "./models";
-export type { IContactDocument, INoteDocument } from "./models";
+export { Contact } from "./models";
+export type { IContactDocument } from "./models";

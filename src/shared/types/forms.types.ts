@@ -21,9 +21,3 @@ export interface IContactStatus {
         msg: string | null;
     };
 }
-
-/** Form shape for creating/editing a Note */
-export interface INoteForm {
-    title: string;
-    description: string;
-}
