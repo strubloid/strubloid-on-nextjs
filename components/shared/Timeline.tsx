@@ -164,7 +164,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
             },
             {
                 root: null,
-                threshold: 0.5, // Triggers when 50% of item is visible in viewport
+                threshold: 0.1, // Triggers when 10% of item is visible (more reliable detection)
             },
         );
 
@@ -175,10 +175,15 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
 
     // Observe all timeline items
     useEffect(() => {
+        // Unobserve all previous items
+        itemRefs.current.forEach((element) => {
+            observerRef.current?.unobserve(element);
+        });
+        // Re-observe all items when they change
         itemRefs.current.forEach((element) => {
             observerRef.current?.observe(element);
         });
-    }, []);
+    }, [sortedItems]);
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -216,15 +221,52 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
 
                 <div className={styles["timeline-header"]}>
                     <h2>{title}</h2>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
                 </div>
 
                 <div className={styles["timeline-header"]}>
                     <h2>IT</h2>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
                 </div>
 
                 <div className={styles["timeline-header"]}>
                     <h2>3.9</h2>
                 </div>
+
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
 
                 <motion.div
                     className={styles["timeline-wrapper"]}

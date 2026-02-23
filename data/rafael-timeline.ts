@@ -6,13 +6,14 @@ export const rafaelTimeline: TimelineItem[] = [
     year: "2025",
     title: "Software Engineer",
     company: "Konvi",
-    position: "Present",
+    position: "Dublin, Ireland",
     description:
-      "Leading package migration from @neo/ to @eip/ in monorepo. Building cross-platform features with React 18, React Native 0.74, and Next.js 13/14.",
-    skills: ["React 18", "React Native", "Next.js", "TypeScript", "GraphQL", "Firebase"],
+      "Led migration of internal packages from @neo/ to @eip/ in monorepo, ensuring stability and compatibility. Blended backend troubleshooting with frontend development, delivering polished design-system-driven UI/UX. Built cross-platform features with React 18, React Native 0.74, Next.js 13/14, Expo, and TypeScript 5+, implementing state management via React Query, TanStack Table, and React Hook Form. Integrated GraphQL, Firebase, REST APIs, and blockchain (ERC-20/721) for wallet interactions and tokenised assets.",
+    skills: ["React 18", "React Native", "Next.js", "TypeScript", "GraphQL", "Firebase", "Blockchain", "Expo"],
     highlights: [
       "Migrated legacy styled-components to modern responsive patterns",
       "Implemented OAuth providers (Google, Microsoft, Yahoo)",
+      "Developed enterprise-grade design systems with DatoCMS and dynamic internationalisation",
     ],
     color: "#FF6B9D",
   },
@@ -23,11 +24,11 @@ export const rafaelTimeline: TimelineItem[] = [
     company: "Blocworx",
     position: "Cork, Ireland",
     description:
-      "Led frontend and backend development for no-code platform with Angular and React. Implemented services in Laravel and Node.js with Bash/Python scripting.",
-    skills: ["Angular", "React", "Laravel", "Node.js", "Bash", "Python", "Docker"],
+      "Led both frontend and backend development for no-code platform, delivering high-performance Angular and React applications. Implemented services in Laravel and Node.js with Bash for AWS server-side scripting and Python for critical backup/reporting systems. Evolved bash scripts into bash_aliases fork—robust toolkit blending server configuration, rollback, AI diagnostics, and Linux maintenance. Bridged Blocworx with enterprise clients (Eir) handling high-traffic operations. Designed/consumed REST APIs for third-party integrations. Developed Docker pipelines for local/staging with CI/CD via Git. Introduced standardised frontend testing with Jest and Puppeteer, migrated codebases to TypeScript, created reusable npm packages, and implemented Chart.js for data visualisation.",
+    skills: ["Angular", "React", "Laravel", "Node.js", "Bash", "Python", "Docker", "Jest", "TypeScript"],
     highlights: [
-      "Developed bash_aliases fork for server configuration and AI diagnostics",
-      "Designed standardized frontend testing with Jest and Puppeteer",
+      "Developed bash_aliases fork for server configuration and AI-powered diagnostics",
+      "Designed standardized frontend testing framework with Jest and Puppeteer",
       "Migrated codebases to TypeScript and created reusable npm packages",
     ],
     color: "#457B9D",
@@ -39,8 +40,8 @@ export const rafaelTimeline: TimelineItem[] = [
     company: "Monsoon Consulting",
     position: "Dublin, Ireland",
     description:
-      "Maintained and enhanced e-commerce applications using Magento 1 and 2. Designed custom modules and REST APIs for performance optimization.",
-    skills: ["Magento", "PHP", "REST APIs", "Docker", "Git", "JavaScript"],
+      "Maintained and enhanced e-commerce web applications using Magento 1 and 2 across multiple client projects, ensuring performance, scalability, and reliability. Designed and implemented custom modules and REST APIs to manage database load and improve system integration. Conducted performance audits analysing third-party integrations (Nosto), identifying bottlenecks, and delivering improvement plans. Used webpack with Docker for local, stage, and live environments. Collaborated across QA, DevOps, and design teams to deliver deployment pipelines on Linux. Followed Git Flow for version control with thorough code reviews before pushing.",
+    skills: ["Magento", "PHP", "REST APIs", "Docker", "Git", "JavaScript", "webpack"],
     highlights: [
       "Conducted performance audits and identified third-party integration bottlenecks",
       "Implemented webpack with Docker for multi-environment development",
@@ -55,8 +56,8 @@ export const rafaelTimeline: TimelineItem[] = [
     company: "StudioForty9",
     position: "Cork, Ireland",
     description:
-      "Redesigned Magento 1 architecture to support promotional campaigns. Built backend systems for promotional item management.",
-    skills: ["Magento", "PHP", "MySQL", "JavaScript", "Docker", "SEO"],
+      "Redesigned Magento 1 architecture to support single-product promotional behaviour, improving campaign execution and efficiency. Developed backend system to manage promotional items leveraging cross-sell relationships for seamless integration. Built tools within Magento framework to identify structural issues, optimise image assets, and improve SEO via Google Analytics. Contributed to CI/CD setup and local development workflows using Docker. Mentored junior developers on Magento standards, architectural decisions, and best practices. Managed code with Git and documented processes using Markdown for team onboarding.",
+    skills: ["Magento", "PHP", "MySQL", "JavaScript", "Docker", "SEO", "Git"],
     highlights: [
       "Improved campaign execution efficiency through architectural redesign",
       "Developed tools for image asset optimization and SEO improvements",
@@ -71,8 +72,8 @@ export const rafaelTimeline: TimelineItem[] = [
     company: "Captura.Me",
     position: "João Pessoa, Brazil",
     description:
-      "Led full-stack development with Zend Framework II and pioneered React adoption. Built scalable component architecture with advanced performance optimization.",
-    skills: ["React", "Zend Framework", "PHP", "JavaScript", "REST APIs"],
+      "Led full-stack development with Zend Framework II and pioneered React adoption as core frontend technology, replacing legacy views. Built scalable component architecture with reusable UI modules, implemented React Router for client-side navigation, and managed complex state with Context API and custom hooks. Focused heavily on performance with code-splitting, lazy loading, and memoisation to improve load times. Integrated RESTful APIs with Axios and ensured clean separation of concerns through container/presentational component patterns. Identified and fixed critical Zend Framework II Beta bug (PR #3017), merged into official repo Jan 4, 2013. Maintained code with Git and introduced Git-flow.",
+    skills: ["React", "Zend Framework", "PHP", "JavaScript", "REST APIs", "Git"],
     highlights: [
       "Replaced legacy views with React component architecture",
       "Implemented code-splitting, lazy loading, and memoization for performance",
@@ -87,7 +88,7 @@ export const rafaelTimeline: TimelineItem[] = [
     company: "Vox Technology",
     position: "João Pessoa, Brazil",
     description:
-      "Led migration of legacy in-house backend system to Zend Framework 1. Managed architecture documentation and REGEX-driven template refactoring.",
+      "Led migration of legacy in-house backend system to Zend Framework 1, significantly improving maintainability, scalability, and team onboarding. Managed and documented new architecture, replacing undocumented legacy code with structured, modular components. Led REGEX-driven refactor of 200+ templates, improving consistency across applications. Developed backend features for SigPlan. Mentored frontend team via pair programming, strengthening skills in jQuery. Used Git to manage and support smooth framework transition.",
     skills: ["Zend Framework", "PHP", "MySQL", "jQuery", "Git"],
     highlights: [
       "Migrated legacy system to Zend Framework with improved maintainability",
@@ -97,14 +98,14 @@ export const rafaelTimeline: TimelineItem[] = [
     color: "#A8DADC",
   },
   {
-    id: "2011-dantel",
-    year: "2011-2012",
+    id: "2010-dantel",
+    year: "2010-2011",
     title: "Full-stack YII Developer",
     company: "Dantel",
     position: "João Pessoa, Brazil",
     description:
-      "Developed core backend for e-procurement platform. Integrated Ext JS frontend with YII framework backend.",
-    skills: ["YII Framework", "PHP", "Ext JS", "JavaScript", "MySQL"],
+      "Developed core backend for company's e-procurement platform, ensuring scalability and performance. Integrated Ext JS frontend with YII framework backend, improving responsiveness and UX. Refactored legacy Customer Support system with pattern-based architecture for better maintainability. Built custom JavaScript runtime importer to support dynamic library loading, boosting development speed. Presented this innovation at major IT event, raising Dantel's tech profile. Used Git to manage version history.",
+    skills: ["YII Framework", "PHP", "Ext JS", "JavaScript", "MySQL", "Git"],
     highlights: [
       "Engineered scalable backend for high-performance e-procurement system",
       "Built custom JavaScript runtime importer for dynamic library loading",
@@ -119,14 +120,30 @@ export const rafaelTimeline: TimelineItem[] = [
     company: "Dataprev",
     position: "João Pessoa, Brazil",
     description:
-      "Optimized Java backend processing for Brazil's BGSD supercomputer. Refactored legacy Java model into high-performance big data solution.",
-    skills: ["Java", "BigData", "Performance Optimization", "Netuno Framework"],
+      "Optimised Java backend processing for Brazil's BGSD supercomputer, reducing operational costs through enhanced computational efficiency. Refactored legacy Java model based on Japanese academic theory into high-performance big data solution, cutting batch processing time from 0.01s to 0.00001s (10,000% improvement). Helped with backend optimisation efforts that earned internal recognition. Built frontend components for Netuno framework with responsive UI.",
+    skills: ["Java", "BigData", "Performance Optimization", "Netuno Framework", "Oracle"],
     highlights: [
-      "Reduced batch processing time from 0.01s to 0.00001s",
+      "Reduced batch processing time from 0.01s to 0.00001s (10,000% improvement)",
       "Refactored legacy model based on Japanese academic theory",
       "Recognized internally for backend optimization efforts",
     ],
     color: "#FF6B9D",
+  },
+  {
+    id: "2009-pbprev",
+    year: "2007-2009",
+    title: "Internship in C and PHP",
+    company: "PBPrev",
+    position: "João Pessoa, Brazil",
+    description:
+      "Engineered and maintained performance-optimised C application that accelerated legacy intranet-connected workstations by 20–30%, leveraging low-level process control through fork() and exec() system calls while providing ongoing internal IT support. Developed operational tooling to streamline communication and workflow between Campina Grande social welfare branch and central service in João Pessoa. Led major refactoring and feature expansion of institutional website (pbprev.pb.gov.br), restructuring codebase using PHP with MVC architectural patterns to enhance maintainability and scalability. Contributed to incident response team that eradicated Conficker worm across all organisational endpoints.",
+    skills: ["C", "PHP", "MVC", "Systems Programming", "Linux", "Git"],
+    highlights: [
+      "Optimized legacy systems achieving 20–30% performance improvement",
+      "Redesigned institutional website using PHP with MVC architecture",
+      "Led incident response team to eradicate Conficker worm across endpoints",
+    ],
+    color: "#F2A07A",
   },
   {
     id: "2007-education",
