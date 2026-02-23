@@ -1,7 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
-import ContactMe from "../components/contact/ContactMe";
-import ContactMeHeader from "../components/contact/ContactMeHeader";
+import { ContactMe, ContactMeHeader } from "@features/contact/components";
 
 const ContactMePage: NextPage = () => {
     const googleKey = process.env.NEXT_PUBLIC_GOOGLE_KEY;
