@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { Confirm, Button, Loader } from "semantic-ui-react";
-import BasicHeader from "../../../components/shared/BasicHeader";
-import { server } from "../../../components/shared/Server";
-import type { INote } from "../../../types";
+import { BasicHeader } from "@shared/components";
+import { server } from "@components/shared/Server";
+import type { INote } from "@types";
 
 interface NotePageProps {
     note: INote;

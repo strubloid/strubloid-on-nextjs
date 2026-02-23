@@ -1,7 +1,7 @@
 import React from "react";
 import type { NextPage, GetStaticProps } from "next";
-import AboutMe from "../components/homepage/AboutMe";
-import Timeline from "../components/shared/Timeline";
+import { AboutMe } from "@features/home/components";
+import { Timeline } from "@shared/components";
 import { getStrubloidData } from "@lib/services/strubloid";
 import { rafaelTimeline } from "../data/rafael-timeline";
 import type { Skill } from "@lib/services/strubloid";

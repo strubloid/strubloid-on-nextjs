@@ -46,7 +46,7 @@ import "../public/scss/global/_cool_effects.scss";
 import "../public/scss/global/_quote.scss";
 import "../public/scss/global/_basic.scss";
 
-import Layout from "../components/Layout";
+import Layout from "@shared/components/Layout";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
