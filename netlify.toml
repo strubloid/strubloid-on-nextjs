@@ -1,5 +1,5 @@
 [build]
-  command   = "rm -rf .next .netlify && node components/netifly-environment.js && npm run build"
+  command   = "rm -rf .next .netlify && node src/netifly-environment.js && npm run build"
   publish   = ".next"
 
 [build.environment]
