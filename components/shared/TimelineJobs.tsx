@@ -32,29 +32,46 @@ const TimelineJobs: React.FC<TimelineJobsProps> = ({
 }) => {
     const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
     const observerRef = useRef<IntersectionObserver | null>(null);
+    const photoMapRef = useRef<{ [key: string]: string }>({});
+    const initialPhotoIndexRef = useRef<number | null>(null);
 
     const [activeId, setActiveId] = useState<string | null>(null);
 
-    const sortedItems = useMemo(() => [...items].reverse(), [items.length]);
+    const sortedItems = useMemo(() => [...items].reverse(), [items]);
 
+    // Create photo map with unique assignments, ensuring first item gets a different photo than initial
     const photoMap = useMemo(() => {
-        const map: { [key: string]: string } = {};
-        sortedItems.forEach((item) => {
-            if (facebookData.photos && facebookData.photos.length > 0) {
-                const randomPhoto = facebookData.photos[Math.floor(Math.random() * facebookData.photos.length)];
-                map[item.id] = randomPhoto.url;
-            }
-        });
-        return map;
-    }, [items.length]);
-    
+        if (Object.keys(photoMapRef.current).length === 0 && facebookData.photos && facebookData.photos.length > 0) {
+            const map: { [key: string]: string } = {};
+            const usedIndices = new Set<number>();
 
-    // Initialize background with first item's photo on mount (only once)
-    useEffect(() => {
-        if (sortedItems.length > 0 && Object.keys(photoMap).length > 0 && photoMap[sortedItems[0].id]) {
-            onBackgroundChange(photoMap[sortedItems[0].id]);
+            sortedItems.forEach((item, index) => {
+                let randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+                let attempts = 0;
+
+                // For first item, avoid the initial load photo
+                while ((usedIndices.has(randomIndex) || (index === 0 && randomIndex === initialPhotoIndexRef.current)) && attempts < 5) {
+                    randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+                    attempts++;
+                }
+
+                usedIndices.add(randomIndex);
+                map[item.id] = facebookData.photos[randomIndex].url;
+            });
+
+            photoMapRef.current = map;
         }
-    }, [photoMap]);
+        return photoMapRef.current;
+    }, [sortedItems]);
+
+    // Initialize background with a random photo on mount
+    useEffect(() => {
+        if (!initialPhotoIndexRef.current && facebookData.photos && facebookData.photos.length > 0) {
+            const randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+            initialPhotoIndexRef.current = randomIndex;
+            onBackgroundChange(facebookData.photos[randomIndex].url);
+        }
+    }, [onBackgroundChange]);
 
     // Setup effect to track which item is closest to center
     useEffect(() => {
