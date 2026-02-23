@@ -350,6 +350,30 @@ import { BrushTransition, DetailPanel } from '@shared/components';
 - ✅ Import paths updated across all pages using TypeScript aliases (@features/*, @shared/*)
 - ✅ Phase 4 refactoring fully complete
 
+---
+
+## Phase 5: ✅ COMPLETED - Cleanup & Remove Unused Files
+
+### Old Directories Removed ✅
+- ✅ Deleted `/hooks/` directory (6 files - all migrated to `src/shared/hooks/`)
+  - useScrollReveal.ts → src/shared/hooks/animations/useScrollReveal.ts
+  - useCardReveal.ts → src/shared/hooks/animations/useCardReveal.ts
+  - useMatrixReveal.ts → src/shared/hooks/animations/useMatrixReveal.ts
+  - useCustomCursor.ts → src/shared/hooks/effects/useCustomCursor.ts
+  - useScrollProgress.ts → src/shared/hooks/effects/useScrollProgress.ts
+  - useMatrixFallChars.ts → src/shared/hooks/effects/useMatrixFallChars.ts
+
+- ✅ Deleted `/types/` directory (2 files - all migrated to `src/shared/types/`)
+  - index.ts → src/shared/types/index.ts (barrel export)
+  - rellax.d.ts → src/shared/types/ (type definitions)
+
+### Import Verification ✅
+- ✅ Verified no imports reference old `/hooks/` locations
+- ✅ Verified no imports reference old `/types/` locations
+- ✅ All code uses new `@hooks/` and `@types/` import aliases
+
+---
+
 **Remaining Work:**
-- Phase 5: Shared utilities organization (/src/shared/utils with constants, validators, helpers)
-- Phase 6: Full feature-based architecture completion with remaining pages (artistic.tsx, etc.)
+- Phase 6: Shared utilities organization (/src/shared/utils with constants, validators, helpers)
+- Phase 7: Full feature-based architecture completion with remaining pages (artistic.tsx, etc.)
