@@ -1,7 +1,7 @@
 import React, { useRef, useState, useMemo, useEffect } from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
 import styles from "./Timeline.module.scss";
-import flickrData from "../../data/flickr.json";
+import facebookData from "../../data/facebook.json";
 
 export interface TimelineItem {
     id: string;
@@ -40,13 +40,14 @@ const TimelineJobs: React.FC<TimelineJobsProps> = ({
     const photoMap = useMemo(() => {
         const map: { [key: string]: string } = {};
         sortedItems.forEach((item) => {
-            if (flickrData.photos && flickrData.photos.length > 0) {
-                const randomPhoto = flickrData.photos[Math.floor(Math.random() * flickrData.photos.length)];
-                map[item.id] = randomPhoto.url_l || randomPhoto.url_c || randomPhoto.url_z;
+            if (facebookData.photos && facebookData.photos.length > 0) {
+                const randomPhoto = facebookData.photos[Math.floor(Math.random() * facebookData.photos.length)];
+                map[item.id] = randomPhoto.url;
             }
         });
         return map;
     }, [items.length]);
+    
 
     // Initialize background with first item's photo on mount (only once)
     useEffect(() => {
