@@ -1,9 +1,10 @@
-import React from "react";
-import { motion, useTransform, MotionValue } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion, useTransform, MotionValue, useMotionValueEvent } from "framer-motion";
 import styles from "./Timeline.module.scss";
 
 interface TimelineMessagesProps {
     scrollYProgress: MotionValue<number>;
+    onMessageChange?: () => void;
 }
 
 interface Message {
@@ -11,12 +12,13 @@ interface Message {
     speaker: string;
 }
 
-const TimelineMessages: React.FC<TimelineMessagesProps> = ({ scrollYProgress }) => {
+const TimelineMessages: React.FC<TimelineMessagesProps> = ({ scrollYProgress, onMessageChange }) => {
+    const lastMessageIndexRef = useRef<number>(-1);
     const messages: Message[] = [
         { text: "IT is like a box for hackers, it will be a new mystery, that you will be having fun with it     ", speaker: "Strubloid" },
         { text: "Do you know I dont deploy on Friday?   ", speaker: "Strubloid" },
 
-        { text: "I know how to read few languages and... speak too!    ", speaker: "Strubloid" },
+        { text: "I know how to read few languages and... speaking them too!    ", speaker: "Strubloid" },
         { text: "English, Portuguese, Nordestinês, French, Japanese, and Recently... Italian    ", speaker: "Strubloid" },
 
         { text: "I also know a few machine languages:    ", speaker: "Strubloid" },
@@ -24,7 +26,7 @@ const TimelineMessages: React.FC<TimelineMessagesProps> = ({ scrollYProgress }) 
 
         { text: "Even the love language I know! usualy you will hear from my guitar Ambrosia!    ", speaker: "Strubloid" },
 
-        { text: "Yeah, this is the guy who will be working for you!  ", speaker: "Strubloid" },
+        { text: "Yeah, this is the guy who will be working with you!  ", speaker: "Strubloid" },
         { text: "If you want to get more details, keep scrolling down  ", speaker: "Strubloid" },
     ];
 
@@ -44,6 +46,14 @@ const TimelineMessages: React.FC<TimelineMessagesProps> = ({ scrollYProgress }) 
         const relativeProgress = progress - timelineFinishThreshold;
         const index = Math.floor(relativeProgress / messageWidth);
         return Math.min(index, messages.length - 1);
+    });
+
+    // Listen for message changes and trigger background update
+    useMotionValueEvent(currentMessageIndex, "change", (latest) => {
+        if (latest >= 0 && latest !== lastMessageIndexRef.current && onMessageChange) {
+            lastMessageIndexRef.current = latest;
+            onMessageChange();
+        }
     });
 
     return (

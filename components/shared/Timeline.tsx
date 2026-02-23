@@ -70,6 +70,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [activeItem, setActiveItem] = useState<TimelineItem | null>(null);
     const [backgroundUrl, setBackgroundUrl] = useState<string>("");
+    const lastPhotoIndexRef = useRef<number | null>(null);
 
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -77,6 +78,36 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     });
 
     const itemCount = items.length;
+
+    // Function to get a random photo avoiding the last one shown
+    const getRandomPhoto = (facebookData: any) => {
+        if (!facebookData.photos || facebookData.photos.length === 0) return null;
+
+        let randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+        let attempts = 0;
+
+        // Avoid picking the same photo as last time
+        while (lastPhotoIndexRef.current !== null && randomIndex === lastPhotoIndexRef.current && attempts < 5) {
+            randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+            attempts++;
+        }
+
+        lastPhotoIndexRef.current = randomIndex;
+        return facebookData.photos[randomIndex].url;
+    };
+
+    // Handler for message changes - updates background with new random photo
+    const handleMessageChange = async () => {
+        try {
+            const facebookData = await import("../../data/facebook.json");
+            const newPhoto = getRandomPhoto(facebookData.default);
+            if (newPhoto) {
+                setBackgroundUrl(newPhoto);
+            }
+        } catch (error) {
+            console.error("Error loading facebook data:", error);
+        }
+    };
 
     return (
         <>
@@ -106,7 +137,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                     onBackgroundChange={setBackgroundUrl}
                 />
 
-                <TimelineMessages scrollYProgress={scrollYProgress} />
+                <TimelineMessages scrollYProgress={scrollYProgress} onMessageChange={handleMessageChange} />
             </section>
         </>
     );
