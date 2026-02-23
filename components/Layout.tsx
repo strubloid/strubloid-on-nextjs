@@ -4,9 +4,7 @@ import { useRouter } from "next/router";
 import TransparentNavbar from "./shared/TransparentNavbar";
 import ExternalImports from "./shared/ExternalImports";
 import Footer from "./shared/Footer";
-import { useCustomCursor } from "../hooks/useCustomCursor";
-import { useScrollProgress } from "../hooks/useScrollProgress";
-import { useMatrixFallChars } from "../hooks/useMatrixFallChars";
+import { useCustomCursor, useScrollProgress, useMatrixFallChars } from "@hooks/effects";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
     const [mounted, setMounted] = useState(false);

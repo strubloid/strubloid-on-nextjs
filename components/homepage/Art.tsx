@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "reactstrap";
-import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useScrollReveal } from "@hooks/animations";
 import FlickrGallery from "./art/FlickrGallery";
-import type { FlickrPhoto, FlickrAlbum } from "../../lib/flickr";
+import type { FlickrPhoto, FlickrAlbum } from "@lib/services/flickr";
 
 interface ArtProps {
     photos: FlickrPhoto[];

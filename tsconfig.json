@@ -18,6 +18,7 @@
       "@features/*": ["src/features/*"],
       "@shared/*": ["src/shared/*"],
       "@lib/*": ["src/lib/*"],
+      "@types": ["src/shared/types"],
       "@types/*": ["src/shared/types/*"],
       "@hooks/*": ["src/shared/hooks/*"],
       "@components/*": ["src/shared/components/*", "components/*"],

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button, Card } from "semantic-ui-react";
-import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useScrollReveal } from "@hooks/animations";
 import type { INote } from "../../types";
 
 interface BodyProps {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useScrollReveal } from "@hooks/animations";
 
 const MIN_DESKTOP_WIDTH = 991;
 const PARALLAX_FACTOR = 3;

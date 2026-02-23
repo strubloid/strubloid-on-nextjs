@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Rellax from "rellax";
-import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useScrollReveal } from "@hooks/animations";
 
 const RELLAX_INIT_DELAY_MS = 5000;
 const MIN_DESKTOP_WIDTH = 991;

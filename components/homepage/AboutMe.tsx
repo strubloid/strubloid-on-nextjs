@@ -1,9 +1,8 @@
 import React, { useCallback, useRef, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import gsap from "gsap";
-import { useScrollReveal } from "../../hooks/useScrollReveal";
-import { useMatrixReveal } from "../../hooks/useMatrixReveal";
-import type { Skill } from "../../lib/strubloid";
+import { useScrollReveal, useMatrixReveal } from "@hooks/animations";
+import type { Skill } from "@lib/services/strubloid";
 
 /** Map accent shorthand from JSON to CSS variable */
 const ACCENT_MAP: Record<string, string> = {

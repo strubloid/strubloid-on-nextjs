@@ -1,8 +1,7 @@
 import React from "react";
 import { Button, Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
-import { useScrollReveal } from "../../hooks/useScrollReveal";
-import { useCardReveal } from "../../hooks/useCardReveal";
-import type { CachedProject } from "../../lib/github";
+import { useScrollReveal, useCardReveal } from "@hooks/animations";
+import type { CachedProject } from "@lib/services/github";
 
 /* ------------------------------------------------------------------ */
 /*  Language → icon mapping                                            */

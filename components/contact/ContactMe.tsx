@@ -4,7 +4,7 @@ import { Button, Input, TextArea, Form, Loader, Message } from "semantic-ui-reac
 import ReCAPTCHA from "react-google-recaptcha";
 import { MapWrapper } from "./MapWrapper";
 import { server } from "../shared/Server";
-import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useScrollReveal } from "@hooks/animations";
 import type { IGoogleKeyProps, IContactInputs, IContactStatus, IFormErrors } from "../../types";
 
 const INITIAL_STATUS: IContactStatus = {
