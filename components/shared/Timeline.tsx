@@ -2,6 +2,7 @@ import React, { useRef, useState, useMemo, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./Timeline.module.scss";
 import ScrollIndicator from "./ScrollIndicator";
+import TimelineMessages from "./TimelineMessages";
 import flickrData from "../../data/flickr.json";
 
 export interface TimelineItem {
@@ -20,55 +21,6 @@ interface TimelineProps {
     items: TimelineItem[];
     title?: string;
 }
-
-interface MessageItemProps {
-    progress: any;
-    index: number;
-    text: string;
-    isFinal?: boolean;
-    isTimelineComplete?: any;
-}
-
-const MessageItem: React.FC<MessageItemProps> = ({ progress, index, text, isFinal, isTimelineComplete }) => {
-    const messageWidth = 0.08;
-    const startScroll = 0.33 + index * messageWidth;
-    const endScroll = startScroll + messageWidth;
-
-    const cleanText = text.replace(/"/g, "").trim();
-    const words = cleanText.split(" ");
-
-    const wordPairs: string[][] = [];
-    for (let i = 0; i < words.length; i += 2) {
-        wordPairs.push(words.slice(i, i + 2));
-    }
-
-    const pairDuration = messageWidth / (wordPairs.length + 1);
-
-    const messageOpacity = useTransform(progress, [Math.max(0, startScroll - 0.02), startScroll, endScroll, Math.min(1, endScroll + 0.02)], [0, 1, 1, 0]);
-
-    const opacity = useTransform([messageOpacity, isTimelineComplete], ([msgOp, timelineComplete]: any[]) => {
-        return timelineComplete ? msgOp : 0;
-    });
-
-    return (
-        <motion.div className={`${styles["message-item"]} ${isFinal ? styles["final"] : ""}`} style={{ opacity }}>
-            <p>
-                {wordPairs.map((pair, pairIndex) => {
-                    const pairStartScroll = startScroll + pairIndex * pairDuration;
-
-                    const pairOpacity = useTransform(progress, [pairStartScroll - 0.005, pairStartScroll, endScroll], [0, 1, 1]);
-
-                    return (
-                        <motion.span key={pairIndex} style={{ opacity: pairOpacity }}>
-                            {pair.join(" ")}
-                            {pairIndex < wordPairs.length - 1 ? " " : ""}
-                        </motion.span>
-                    );
-                })}
-            </p>
-        </motion.div>
-    );
-};
 
 // Static Content Panel Component
 const TimelineContentPanel: React.FC<{ item: TimelineItem | null }> = ({ item }) => {
@@ -194,9 +146,6 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const maxTranslate = -100 * (itemCount - 1);
     const x = useTransform(scrollYProgress, [0, 1], ["0%", `${maxTranslate}%`]);
 
-    const timelineFinishThreshold = 0.38;
-    const isTimelineComplete = useTransform(scrollYProgress, [timelineFinishThreshold, timelineFinishThreshold + 0.01], [false, true]);
-
     const activeItem = sortedItems.find((item) => item.id === activeId) || null;
 
     return (
@@ -305,36 +254,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                     ))}
                 </motion.div>
 
-                {/* Messages */}
-                <div className={styles["timeline-messages"]}>
-                    <div className={styles["messages-container"]}>
-                        <MessageItem
-                            progress={scrollYProgress}
-                            index={0}
-                            text="IT is like a box for hackers, it will be a new mystery, that you will be having fun with it, Dance baby!"
-                            isTimelineComplete={isTimelineComplete}
-                        />
-                        <MessageItem progress={scrollYProgress} index={1} text="Do you know I am more than just a number? Yeah!" isTimelineComplete={isTimelineComplete} />
-                        <MessageItem
-                            progress={scrollYProgress}
-                            index={2}
-                            text="I know how to read X amount of languages and... speak too!"
-                            isTimelineComplete={isTimelineComplete}
-                        />
-                        <MessageItem progress={scrollYProgress} index={3} text="Even guitar lyrics can be spoken by my guitar Ambrosia!" isTimelineComplete={isTimelineComplete} />
-                        <MessageItem progress={scrollYProgress} index={4} text="English, Portuguese..." isTimelineComplete={isTimelineComplete} />
-                        <MessageItem progress={scrollYProgress} index={5} text="Recently... Italian" isTimelineComplete={isTimelineComplete} />
-                        <MessageItem progress={scrollYProgress} index={6} text="Japanese curious!" isTimelineComplete={isTimelineComplete} />
-                        <MessageItem progress={scrollYProgress} index={7} text="Yeah, this is the guy who will be working for you!" isTimelineComplete={isTimelineComplete} />
-                        <MessageItem
-                            progress={scrollYProgress}
-                            index={8}
-                            text="If you want to get more details, keep scrolling down"
-                            isFinal={true}
-                            isTimelineComplete={isTimelineComplete}
-                        />
-                    </div>
-                </div>
+                <TimelineMessages scrollYProgress={scrollYProgress} />
             </section>
         </>
     );
