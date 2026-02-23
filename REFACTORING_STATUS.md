@@ -374,6 +374,63 @@ import { BrushTransition, DetailPanel } from '@shared/components';
 
 ---
 
+---
+
+## Phase 6: ✅ COMPLETED - Shared Utilities Organization
+
+### Utilities Directory Structure ✅
+**Directory Layout:**
+```
+src/shared/utils/
+├── constants/
+│   ├── server.ts - Server URL constant
+│   └── index.ts - Constants barrel export
+├── validators/
+│   ├── contact.validator.ts - Contact form validation
+│   ├── note.validator.ts - Note form validation
+│   └── index.ts - Validators barrel export
+├── helpers/ - Reserved for future helper utilities
+└── index.ts - Main utilities barrel export
+```
+
+### Validators Extracted ✅
+- ✅ `validateContactForm()` - Moved from ContactMe.tsx to contact.validator.ts
+  - Validates: name, email, subject, message, captcha
+- ✅ `validateNoteForm()` - Moved from NewNote.tsx to note.validator.ts
+  - Validates: title, description
+
+### Constants Organized ✅
+- ✅ `server` - Server URL constant exported from constants/server.ts
+- ✅ Centralized access point for all application constants
+
+### Components Updated ✅
+- ✅ `src/features/contact/components/ContactMe.tsx` - Now imports validateContactForm
+- ✅ `src/features/scrapbook/components/NewNote.tsx` - Now imports validateNoteForm
+- ✅ `pages/scrapbook/index.tsx` - Simplified import to use @utils
+- ✅ `pages/scrapbook/[id]/edit.tsx` - Simplified import to use @utils
+- ✅ `pages/scrapbook/[id]/index.tsx` - Simplified import to use @utils
+
+### Import Configuration ✅
+- ✅ Added `@utils` alias to tsconfig.json (points to src/shared/utils)
+- ✅ Kept `@utils/*` alias for specific subdirectory imports
+- ✅ Enabled utils export in src/shared/index.ts
+
+### Usage Examples ✅
+```typescript
+// Import validators
+import { validateContactForm, validateNoteForm } from '@utils';
+import { validateContactForm } from '@utils/validators';
+
+// Import constants
+import { server } from '@utils';
+import { server } from '@utils/constants';
+
+// From shared barrel
+import { validateContactForm, server } from '@shared';
+```
+
+---
+
 **Remaining Work:**
-- Phase 6: Shared utilities organization (/src/shared/utils with constants, validators, helpers)
 - Phase 7: Full feature-based architecture completion with remaining pages (artistic.tsx, etc.)
+- Phase 8: Final cleanup and project optimization
