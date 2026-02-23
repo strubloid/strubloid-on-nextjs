@@ -55,35 +55,50 @@ const TimelineJobs: React.FC<TimelineJobsProps> = ({
         }
     }, [photoMap]);
 
-    // Setup Intersection Observer for tracking active item
+    // Setup effect to track which item is closest to center
     useEffect(() => {
-        observerRef.current = new IntersectionObserver(
-            (entries) => {
-                const intersectingEntries = entries.filter((entry) => entry.isIntersecting);
+        const handleCenterCheck = () => {
+            const centerX = window.innerWidth / 2;
+            let closestItem: TimelineItem | null = null;
+            let closestDistance = Infinity;
 
-                if (intersectingEntries.length > 0) {
-                    const itemId = intersectingEntries[0].target.getAttribute("data-item-id");
-                    if (itemId) {
-                        setActiveId(itemId);
-                        onActiveItemChange(sortedItems.find((item) => item.id === itemId) || null);
-                        // Update background for active item
-                        if (photoMap[itemId]) {
-                            onBackgroundChange(photoMap[itemId]);
-                        }
-                    }
+            itemRefs.current.forEach((element: HTMLDivElement, id: string) => {
+                const rect = element.getBoundingClientRect();
+                const itemCenterX = rect.left + rect.width / 2;
+                const distance = Math.abs(itemCenterX - centerX);
+
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestItem = sortedItems.find((item) => item.id === id) || null;
                 }
-                // Keep showing the last active item even when no items are in viewport
-            },
-            {
-                root: null,
-                threshold: 0.05, // More lenient threshold
-            }
-        );
+            });
 
-        return () => {
-            observerRef.current?.disconnect();
+            // Only activate if item is reasonably close to center (within 30% of viewport width)
+            if (closestDistance < window.innerWidth * 0.3) {
+                const itemId = closestItem?.id;
+                setActiveId(itemId || null);
+                onActiveItemChange(closestItem);
+                // Update background for active item
+                if (closestItem && photoMap[itemId]) {
+                    onBackgroundChange(photoMap[itemId]);
+                }
+            } else {
+                // Clear active item if no item is close enough to center
+                setActiveId(null);
+                onActiveItemChange(null);
+            }
         };
-    }, [items.length, onActiveItemChange, onBackgroundChange]);
+
+        // Check on scroll
+        const scrollHandler = () => {
+            requestAnimationFrame(handleCenterCheck);
+        };
+
+        window.addEventListener("scroll", scrollHandler);
+        return () => {
+            window.removeEventListener("scroll", scrollHandler);
+        };
+    }, [sortedItems, onActiveItemChange, onBackgroundChange, photoMap]);
 
     // Observe all timeline items
     useEffect(() => {
