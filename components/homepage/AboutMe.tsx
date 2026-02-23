@@ -88,6 +88,8 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
     const [pinnedSkill, setPinnedSkill] = React.useState<string | null>(null);
     // State to track if panel is closing (for immediate hide)
     const [isClosing, setIsClosing] = React.useState(false);
+    // Ref to track if matrix animation has already loaded (persists across component remounts)
+    const isLoadedRef = useRef<boolean>(false);
     const detailPanelRef = useRef<HTMLDivElement>(null);
     const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -196,6 +198,16 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         };
     }, []);
 
+    // Mark as loaded after matrix animation completes (only runs once)
+    useEffect(() => {
+        if (!isLoadedRef.current) {
+            const loadTimer = setTimeout(() => {
+                isLoadedRef.current = true;
+            }, 800 + 200); // Matrix duration + stagger delay buffer
+            return () => clearTimeout(loadTimer);
+        }
+    }, []);
+
     // Debug: Log which layout is being rendered
     React.useEffect(() => {
         console.log("📋 AboutMe Component Rendered | carousel:", carousel, "| skills count:", skills.length);
@@ -206,6 +218,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         threshold: 0.12,
         staggerDelay: 100,
         matrixDuration: 800,
+        skipOnceLoaded: true, // Prevent re-animation when scrolling back
     });
 
     // Separate scroll reveal just for the header
@@ -240,6 +253,13 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                         <span className="skill-card__category">Expertise</span>
                     </div>
                 </>
+            )}
+
+            {/* Background icon (grid layout only) */}
+            {!isCarousel && (
+                <div className="skill-card__background">
+                    <i className={skill.icon} />
+                </div>
             )}
 
             {/* Holographic glare overlay */}

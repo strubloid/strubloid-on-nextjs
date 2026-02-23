@@ -817,6 +817,28 @@ body {
           padding: 1px;
         }
 
+        // ── Background icon ────────────────────────────────────
+        &__background {
+          position: absolute;
+          top: 0;
+          right: -40px;
+          width: 280px;
+          height: 280px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.08;
+          pointer-events: none;
+          z-index: 2;
+          animation: backgroundFade 0.8s ease-out forwards;
+
+          i {
+            font-size: 280px;
+            color: #ffffff;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+          }
+        }
+
         // ── MTG Top Bar ─────────────────────────────────────────
         &__top-bar {
           flex-shrink: 0;

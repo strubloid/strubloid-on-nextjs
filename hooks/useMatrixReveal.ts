@@ -21,6 +21,8 @@ interface MatrixRevealOptions {
     color?: string;
     /** Font size for the matrix characters (px) */
     fontSize?: number;
+    /** Skip animation if already loaded (prevents re-triggering on scroll back) */
+    skipOnceLoaded?: boolean;
 }
 
 /**
@@ -42,6 +44,7 @@ export function useMatrixReveal<T extends HTMLElement = HTMLDivElement>(
         staggerDelay = 180,
         color = "#2D9B55",
         fontSize = 13,
+        skipOnceLoaded = false,
     } = options;
 
     // Keep mutable map of per-card state so we can cancel on un-intersect
@@ -161,6 +164,11 @@ export function useMatrixReveal<T extends HTMLElement = HTMLDivElement>(
 
                     if (entry.isIntersecting) {
                         // ── REVEAL ──
+                        // Skip animation if already revealed and skipOnceLoaded is true
+                        if (skipOnceLoaded && card.classList.contains("revealed")) {
+                            return;
+                        }
+
                         const delayStr = card.dataset.revealDelay;
                         const delay = delayStr ? parseInt(delayStr, 10) : 0;
 
@@ -203,22 +211,30 @@ export function useMatrixReveal<T extends HTMLElement = HTMLDivElement>(
                         }
 
                         // If the card was revealed, do a brief reverse matrix flash
+                        // But skip the reverse animation if skipOnceLoaded is true
                         if (card.classList.contains("revealed")) {
-                            card.classList.remove("revealed");
-                            card.classList.add("matrix-hiding");
+                            if (skipOnceLoaded) {
+                                // Keep the revealed state - don't remove the class or do anything
+                                // Card stays visible and static
+                                return;
+                            } else {
+                                // Run reverse animation (default behavior)
+                                card.classList.remove("revealed");
+                                card.classList.add("matrix-hiding");
 
-                            const canvas = createCanvas(card);
-                            const animId = runMatrix(canvas, () => {
-                                canvas.classList.add("matrix-canvas--fade");
-                                card.classList.remove("matrix-active", "matrix-hiding");
-                                setTimeout(() => {
-                                    canvas.remove();
-                                    const s = stateMap.get(card);
-                                    if (s) s.canvas = null;
-                                }, 400);
-                            });
+                                const canvas = createCanvas(card);
+                                const animId = runMatrix(canvas, () => {
+                                    canvas.classList.add("matrix-canvas--fade");
+                                    card.classList.remove("matrix-active", "matrix-hiding");
+                                    setTimeout(() => {
+                                        canvas.remove();
+                                        const s = stateMap.get(card);
+                                        if (s) s.canvas = null;
+                                    }, 400);
+                                });
 
-                            stateMap.set(card, { animId, timeout: null, canvas });
+                                stateMap.set(card, { animId, timeout: null, canvas });
+                            }
                         } else {
                             card.classList.remove("matrix-active", "matrix-hiding");
                             stateMap.set(card, { animId: null, timeout: null, canvas: null });
@@ -254,7 +270,7 @@ export function useMatrixReveal<T extends HTMLElement = HTMLDivElement>(
             });
             stateMap.clear();
         };
-    }, [threshold, rootMargin, staggerDelay, createCanvas, runMatrix]);
+    }, [threshold, rootMargin, staggerDelay, skipOnceLoaded, createCanvas, runMatrix]);
 
     useEffect(() => {
         const raf = requestAnimationFrame(() => {
