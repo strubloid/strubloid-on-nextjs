@@ -1,9 +1,6 @@
 import React from "react";
 import type { GetStaticProps, NextPage } from "next";
-import Header from "../components/homepage/Header";
-import Github from "../components/homepage/Github";
-import AboutMe from "../components/homepage/AboutMe";
-import Art from "../components/homepage/Art";
+import { Header, Github, AboutMe, Art } from "@features/home/components";
 import { getGithubProjects } from "@lib/services/github";
 import { getStrubloidData } from "@lib/services/strubloid";
 import { getFlickrData } from "@lib/services/flickr";

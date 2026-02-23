@@ -3,8 +3,8 @@
  * Centralized export point for home feature components, hooks, and types
  */
 
-// Components will be exported here as they are moved
-// export * from './components';
+// Components
+export * from './components';
 
 // Hooks will be exported here as they are organized
 // export * from './hooks';
