@@ -59,27 +59,28 @@ const TimelineJobs: React.FC<TimelineJobsProps> = ({
     useEffect(() => {
         const handleCenterCheck = () => {
             const centerX = window.innerWidth / 2;
-            let closestItem: TimelineItem | null = null;
-            let closestDistance = Infinity;
+            let result: { item: TimelineItem | null; distance: number } = { item: null, distance: Infinity };
 
             itemRefs.current.forEach((element: HTMLDivElement, id: string) => {
                 const rect = element.getBoundingClientRect();
                 const itemCenterX = rect.left + rect.width / 2;
                 const distance = Math.abs(itemCenterX - centerX);
 
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestItem = sortedItems.find((item) => item.id === id) || null;
+                if (distance < result.distance) {
+                    const foundItem = sortedItems.find((item) => item.id === id);
+                    if (foundItem) {
+                        result = { item: foundItem, distance };
+                    }
                 }
             });
 
             // Only activate if item is reasonably close to center (within 30% of viewport width)
-            if (closestDistance < window.innerWidth * 0.3) {
-                const itemId = closestItem?.id;
-                setActiveId(itemId || null);
-                onActiveItemChange(closestItem);
+            if (result.distance < window.innerWidth * 0.3 && result.item) {
+                const itemId = result.item.id;
+                setActiveId(itemId);
+                onActiveItemChange(result.item);
                 // Update background for active item
-                if (closestItem && photoMap[itemId]) {
+                if (photoMap[itemId]) {
                     onBackgroundChange(photoMap[itemId]);
                 }
             } else {
