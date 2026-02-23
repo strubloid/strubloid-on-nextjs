@@ -197,6 +197,8 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     return (
         <>
             <ScrollIndicator />
+            {/* Static Content Panel - Rendered outside section for proper fixed positioning */}
+            <TimelineContentPanel item={activeItem} />
             <section
                 ref={sectionRef}
                 className={styles["timeline-section"]}
@@ -260,9 +262,6 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                         </div>
                     ))}
                 </motion.div>
-
-                {/* Static Content Panel */}
-                <TimelineContentPanel item={activeItem} />
 
                 {/* Messages */}
                 <div className={styles["timeline-messages"]}>

@@ -568,27 +568,29 @@
   }
 }
 
-// Static Content Panel - Sticky panel for active timeline item
+// Static Content Panel - Fixed 4-corner layout for active timeline item
 .timeline-content-panel {
   position: sticky;
-  top: 20vh;
+  top: 0;
   left: 0;
-  right: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 100;
-  pointer-events: auto;
+  pointer-events: none;
   padding: 60px 80px;
-  max-width: 1200px;
-  margin: 0 auto;
 
   .content-header {
+    position: absolute;
+    top: 60px;
+    left: 80px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 40px;
+    max-width: 45%;
   }
 
   .content-year {
-    font-size: 3.5rem;
+    font-size: 4rem;
     font-weight: 900;
     background: linear-gradient(135deg, #FF6B9D 0%, #A8DADC 100%);
     -webkit-background-clip: text;
@@ -625,8 +627,11 @@
   }
 
   .content-right {
-    margin-bottom: 40px;
-    max-width: 600px;
+    position: absolute;
+    top: 60px;
+    right: 80px;
+    max-width: 40%;
+    text-align: right;
   }
 
   .content-position {
@@ -645,7 +650,10 @@
   }
 
   .content-skills {
-    margin-bottom: 40px;
+    position: absolute;
+    bottom: 60px;
+    left: 80px;
+    max-width: 45%;
 
     .skills-label {
       font-size: 0.75rem;
@@ -675,6 +683,7 @@
         box-shadow: 0 8px 24px rgba(255, 107, 157, 0.35);
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         letter-spacing: 0.5px;
+        pointer-events: auto;
 
         &:hover {
           transform: translateY(-4px) scale(1.05);
@@ -685,6 +694,11 @@
   }
 
   .content-highlights {
+    position: absolute;
+    bottom: 60px;
+    right: 80px;
+    max-width: 40%;
+
     .highlights-label {
       font-size: 0.75rem;
       font-weight: 900;
@@ -731,12 +745,54 @@
 
   @media (max-width: 1024px) {
     padding: 40px;
-    top: 15vh;
+
+    .content-header {
+      top: 40px;
+      left: 40px;
+      max-width: 100%;
+    }
+
+    .content-right {
+      top: 40px;
+      right: 40px;
+      max-width: 100%;
+      text-align: left;
+    }
+
+    .content-skills {
+      bottom: 40px;
+      left: 40px;
+      max-width: 100%;
+    }
+
+    .content-highlights {
+      bottom: 40px;
+      right: 40px;
+      max-width: 100%;
+    }
+
+    .content-year {
+      font-size: 3rem;
+    }
+
+    .content-title {
+      font-size: 1.8rem;
+    }
   }
 
   @media (max-width: 768px) {
     padding: 30px 20px;
-    top: 10vh;
+    height: auto;
+
+    .content-header,
+    .content-right,
+    .content-skills,
+    .content-highlights {
+      position: static;
+      max-width: 100%;
+      text-align: left;
+      margin-bottom: 40px;
+    }
 
     .content-year {
       font-size: 2.5rem;
@@ -744,6 +800,10 @@
 
     .content-title {
       font-size: 1.5rem;
+    }
+
+    .content-right {
+      margin-bottom: 40px;
     }
   }
 }
