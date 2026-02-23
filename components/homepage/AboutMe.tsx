@@ -255,11 +255,16 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                 </>
             )}
 
-            {/* Background icon (grid layout only) */}
+            {/* Background icon + foreground accent icon (grid layout only) */}
             {!isCarousel && (
-                <div className="skill-card__background">
-                    <i className={skill.icon} />
-                </div>
+                <>
+                    <div className="skill-card__background">
+                        <i className={skill.icon} />
+                    </div>
+                    <div className="skill-card__icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
+                        <i className={skill.icon} />
+                    </div>
+                </>
             )}
 
             {/* Holographic glare overlay */}
@@ -268,9 +273,11 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
             <div className="skill-card__edge-glow" />
 
             <div className="skill-card__content">
-                <div className="skill-card__icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
-                    <i className={skill.icon} />
-                </div>
+                {isCarousel && (
+                    <div className="skill-card__icon" style={{ color: ACCENT_MAP[skill.accent] ?? "var(--color-accent)" }}>
+                        <i className={skill.icon} />
+                    </div>
+                )}
                 <div className="skill-card__body">
                     <h5 className="skill-card__title">{skill.title}</h5>
                     <p className="skill-card__desc">
