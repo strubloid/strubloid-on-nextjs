@@ -13,22 +13,27 @@ interface Message {
 
 const TimelineMessages: React.FC<TimelineMessagesProps> = ({ scrollYProgress }) => {
     const messages: Message[] = [
-        { text: "IT is like a box for hackers, it will be a new mystery, that you will be having fun with it, Dance baby!", speaker: "Strubloid" },
-        { text: "Do you know I am more than just a number? Yeah!", speaker: "Strubloid" },
-        { text: "I know how to read X amount of languages and... speak too!", speaker: "Strubloid" },
-        { text: "Even guitar lyrics can be spoken by my guitar Ambrosia!", speaker: "Strubloid" },
-        { text: "English, Portuguese...", speaker: "Strubloid" },
-        { text: "Recently... Italian", speaker: "Strubloid" },
-        { text: "Japanese curious!", speaker: "Strubloid" },
+        { text: "IT is like a box for hackers, it will be a new mystery, that you will be having fun with it          ", speaker: "Strubloid" },
+        { text: "Do you know I am more than just a number?          ", speaker: "Strubloid" },
+
+        { text: "I know how to read few languages and... speak too!           ", speaker: "Strubloid" },
+        { text: "English, Portuguese, Nordestinês, French, Japanese, and Recently... Italian            ", speaker: "Strubloid" },
+
+        { text: "I also know a few machine languages:           ", speaker: "Strubloid" },
+        { text: "TypeScript , JavaScript, Nodejs , Python, PHP, Java, C, C++, C#, Bash             ", speaker: "Strubloid" },
+
+        { text: "Even the love language I know! usualy you will hear from my guitar Ambrosia!            ", speaker: "Strubloid" },
+
         { text: "Yeah, this is the guy who will be working for you!", speaker: "Strubloid" },
         { text: "If you want to get more details, keep scrolling down", speaker: "Strubloid" },
     ];
 
     // Messages start after timeline-wrapper animation finishes (delayed to avoid overlap)
-    const timelineFinishThreshold = 0.69;
-    const messageDuration = 0.091; // How long each message stays fully visible
-    const messageGap = 0.015; // Gap/spacing between messages
-    const messageWidth = messageDuration + messageGap;
+    const timelineFinishThreshold = 0.69; // Start messages after timeline finishes scrolling
+    const messageDuration = 0.028; // How long each message stays fully visible
+    const messageGap = 0.004; // Gap/spacing between messages
+    const messageBuffer = 0.035; // Extra scroll space to see accumulated words before fade out
+    const messageWidth = messageDuration + messageGap; // 0.04 per message = fits 9 messages in 0.35 range
 
     // Word-by-word rendering control
     const wordsPerBlock = 3; // Adjust this to control how many words appear together
@@ -48,7 +53,8 @@ const TimelineMessages: React.FC<TimelineMessagesProps> = ({ scrollYProgress }) 
                 const endScroll = timelineFinishThreshold + (messageIndex + 1) * messageWidth;
                 const messageDurationValue = endScroll - startScroll;
 
-                const opacity = useTransform(scrollYProgress, [startScroll, startScroll + 0.01, endScroll - 0.01, endScroll], [0, 1, 1, 0]);
+                // Extended opacity with buffer to keep words visible longer, then gradual fade out
+                const opacity = useTransform(scrollYProgress, [startScroll, startScroll + 0.01, endScroll + messageBuffer - 0.02, endScroll + messageBuffer], [0, 1, 1, 0]);
 
                 const shouldRender = useTransform(currentMessageIndex, (current) => current === messageIndex);
 

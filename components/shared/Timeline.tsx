@@ -157,7 +157,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
                 ref={sectionRef}
                 className={styles["timeline-section"]}
                 style={{
-                    height: `${-30 + itemCount * 400}vh`,
+                    height: `${-30 + itemCount * 1000}vh`,
                 }}
             >
                 {/* Sticky background image */}
