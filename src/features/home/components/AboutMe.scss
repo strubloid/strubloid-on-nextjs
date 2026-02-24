@@ -1463,15 +1463,16 @@ body {
       // Mobile: Simple blocks, no animations or effects
       @media (max-width: 991px) {
         .skill-card {
-          // Reset to simple block styling
-          all: revert;
+          // Reset to simple block styling (without breaking grid layout)
           display: block !important;
+          width: 100% !important;
           background: rgba(26, 20, 18, 0.7) !important;
           border: 1px solid rgba(224, 123, 76, 0.2) !important;
           border-radius: 8px !important;
           padding: 16px 14px !important;
           margin-bottom: 14px !important;
           cursor: pointer;
+          box-sizing: border-box !important;
           opacity: 1 !important;
           visibility: visible !important;
 
@@ -1537,6 +1538,18 @@ body {
           visibility: visible !important;
         }
 
+        .skill-card__link-label {
+          color: var(--color-accent) !important;
+          text-decoration: underline !important;
+          cursor: pointer !important;
+          font-weight: 600 !important;
+          transition: opacity 0.2s ease !important;
+
+          &:hover {
+            opacity: 0.8 !important;
+          }
+        }
+
         .skill-card__top-bar,
         .skill-card__bottom-bar,
         .skill-card__glare,
@@ -1557,8 +1570,8 @@ body {
           background: transparent !important;
 
           // Ensure all child elements are visible
-          * {
-            display: inherit !important;
+          div, h4, p, span, a {
+            display: block !important;
             opacity: 1 !important;
             visibility: visible !important;
           }

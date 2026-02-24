@@ -311,10 +311,16 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                     <p className="skill-card__desc">
                         {skill.description}
                         {skill.link && (
-                            <span className="skill-card__link-label">
+                            <a
+                                href={skill.link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="skill-card__link-label"
+                                onClick={(e) => e.stopPropagation()}
+                            >
                                 {" "}
                                 {skill.link.text} <i className="now-ui-icons ui-1_send" />
-                            </span>
+                            </a>
                         )}
                     </p>
                 </div>
