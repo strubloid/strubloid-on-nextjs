@@ -20,8 +20,8 @@
       "@utils/*": ["./src/shared/utils/*"],
       "@features/*": ["./src/features/*"],
       "@shared/*": ["./src/shared/*"],
-      "@data/*": ["./src/data/*"],
-      "@lib/*": ["./src/lib/*"],
+      "@backend/*": ["./backend/*"],
+      "@lib/*": ["./backend/*"],
       "@hooks/*": ["./src/shared/hooks/*"],
       "@components/*": ["./src/shared/components/*"],
       "@pages/*": ["./src/pages/*"]

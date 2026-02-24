@@ -7,7 +7,7 @@ import fs from "fs";
 import path from "path";
 import type { GithubCache } from "./github.types";
 
-const CACHE_FILE = path.join(process.cwd(), "src", "data", "github.json");
+const CACHE_FILE = path.join(process.cwd(), "backend", "data", "github.json");
 
 /**
  * Read GitHub cache from file

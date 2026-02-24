@@ -10,7 +10,7 @@ import type { FlickrPhoto, FlickrAlbum, FlickrCache } from "./flickr.types";
 
 // Configuration
 const ONE_HOUR_MS = 60 * 60 * 1000;
-const CACHE_FILE = path.join(process.cwd(), "src", "data", "flickr.json");
+const CACHE_FILE = path.join(process.cwd(), "backend", "data", "flickr.json");
 
 // Environment variables
 const API_KEY = process.env.NEXT_PUBLIC_STRUBLOID_FLICKR_KEY ?? "";

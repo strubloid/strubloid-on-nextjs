@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getGithubProjects } from "@lib/services/github";
-import type { GithubCache } from "@lib/services/github";
+import { getGithubProjects } from "../../../backend/services/github";
+import type { GithubCache } from "../../../backend/services/github";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<GithubCache | { error: string }>): Promise<void> {
     if (req.method !== "GET") {

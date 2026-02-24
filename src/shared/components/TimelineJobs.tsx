@@ -1,7 +1,6 @@
 import React, { useRef, useState, useMemo, useEffect } from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
 import styles from "./Timeline.module.scss";
-import facebookData from "@data/facebook.json";
 
 export interface TimelineItem {
     id: string;
@@ -21,6 +20,7 @@ interface TimelineJobsProps {
     scrollYProgress: MotionValue<number>;
     onActiveItemChange: (item: TimelineItem | null) => void;
     onBackgroundChange: (url: string) => void;
+    backgroundPhotos?: Array<{ id: string; url: string; title: string }>;
 }
 
 const TimelineJobs: React.FC<TimelineJobsProps> = ({
@@ -29,6 +29,7 @@ const TimelineJobs: React.FC<TimelineJobsProps> = ({
     scrollYProgress,
     onActiveItemChange,
     onBackgroundChange,
+    backgroundPhotos = [],
 }) => {
     const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
     const observerRef = useRef<IntersectionObserver | null>(null);
@@ -41,37 +42,37 @@ const TimelineJobs: React.FC<TimelineJobsProps> = ({
 
     // Create photo map with unique assignments, ensuring first item gets a different photo than initial
     const photoMap = useMemo(() => {
-        if (Object.keys(photoMapRef.current).length === 0 && facebookData.photos && facebookData.photos.length > 0) {
+        if (Object.keys(photoMapRef.current).length === 0 && backgroundPhotos && backgroundPhotos.length > 0) {
             const map: { [key: string]: string } = {};
             const usedIndices = new Set<number>();
 
             sortedItems.forEach((item, index) => {
-                let randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+                let randomIndex = Math.floor(Math.random() * backgroundPhotos.length);
                 let attempts = 0;
 
                 // For first item, avoid the initial load photo
                 while ((usedIndices.has(randomIndex) || (index === 0 && randomIndex === initialPhotoIndexRef.current)) && attempts < 5) {
-                    randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+                    randomIndex = Math.floor(Math.random() * backgroundPhotos.length);
                     attempts++;
                 }
 
                 usedIndices.add(randomIndex);
-                map[item.id] = facebookData.photos[randomIndex].url;
+                map[item.id] = backgroundPhotos[randomIndex].url;
             });
 
             photoMapRef.current = map;
         }
         return photoMapRef.current;
-    }, [sortedItems]);
+    }, [sortedItems, backgroundPhotos]);
 
     // Initialize background with a random photo on mount
     useEffect(() => {
-        if (!initialPhotoIndexRef.current && facebookData.photos && facebookData.photos.length > 0) {
-            const randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+        if (!initialPhotoIndexRef.current && backgroundPhotos && backgroundPhotos.length > 0) {
+            const randomIndex = Math.floor(Math.random() * backgroundPhotos.length);
             initialPhotoIndexRef.current = randomIndex;
-            onBackgroundChange(facebookData.photos[randomIndex].url);
+            onBackgroundChange(backgroundPhotos[randomIndex].url);
         }
-    }, [onBackgroundChange]);
+    }, [onBackgroundChange, backgroundPhotos]);
 
     // Setup effect to track which item is closest to center
     useEffect(() => {

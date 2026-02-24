@@ -20,6 +20,7 @@ export interface TimelineItem {
 interface TimelineProps {
     items: TimelineItem[];
     title?: string;
+    backgroundPhotos?: Array<{ id: string; url: string; title: string }>;
 }
 
 // Static Content Panel Component
@@ -66,7 +67,7 @@ const TimelineContentPanel: React.FC<{ item: TimelineItem | null }> = ({ item })
     );
 };
 
-const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
+const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience", backgroundPhotos = [] }) => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [activeItem, setActiveItem] = useState<TimelineItem | null>(null);
     const [backgroundUrl, setBackgroundUrl] = useState<string>("");
@@ -80,32 +81,27 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     const itemCount = items.length;
 
     // Function to get a random photo avoiding the last one shown
-    const getRandomPhoto = (facebookData: any) => {
-        if (!facebookData.photos || facebookData.photos.length === 0) return null;
+    const getRandomPhoto = () => {
+        if (!backgroundPhotos || backgroundPhotos.length === 0) return null;
 
-        let randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+        let randomIndex = Math.floor(Math.random() * backgroundPhotos.length);
         let attempts = 0;
 
         // Avoid picking the same photo as last time
         while (lastPhotoIndexRef.current !== null && randomIndex === lastPhotoIndexRef.current && attempts < 5) {
-            randomIndex = Math.floor(Math.random() * facebookData.photos.length);
+            randomIndex = Math.floor(Math.random() * backgroundPhotos.length);
             attempts++;
         }
 
         lastPhotoIndexRef.current = randomIndex;
-        return facebookData.photos[randomIndex].url;
+        return backgroundPhotos[randomIndex].url;
     };
 
     // Handler for message changes - updates background with new random photo
-    const handleMessageChange = async () => {
-        try {
-            const facebookData = await import("@data/facebook.json");
-            const newPhoto = getRandomPhoto(facebookData.default);
-            if (newPhoto) {
-                setBackgroundUrl(newPhoto);
-            }
-        } catch (error) {
-            console.error("Error loading facebook data:", error);
+    const handleMessageChange = () => {
+        const newPhoto = getRandomPhoto();
+        if (newPhoto) {
+            setBackgroundUrl(newPhoto);
         }
     };
 
