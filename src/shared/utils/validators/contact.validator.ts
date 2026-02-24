@@ -1,4 +1,4 @@
-import type { IContactInputs, IFormErrors } from "@types";
+import type { IContactInputs, IFormErrors } from "@shared-types";
 
 /**
  * Validates contact form inputs

@@ -43,7 +43,7 @@ src/
   - `@features/*` → `src/features/*`
   - `@shared/*` → `src/shared/*`
   - `@lib/*` → `src/lib/*`
-  - `@types/*` → `src/shared/types/*`
+  - `@shared-types/*` → `src/shared/types/*`
   - `@hooks/*` → `src/shared/hooks/*`
   - `@components/*` → `src/shared/components/*`
   - `@utils/*` → `src/shared/utils/*`

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import type { IGoogleKeyProps } from "@types";
+import type { IGoogleKeyProps } from "@shared-types";
 
 declare global {
     interface Window {
@@ -16,7 +16,7 @@ const MapComponent: React.FC = () => {
         if (!mapRef.current || !window.google) return;
 
         // Cork, Ireland - 10 Camden Court, Knaps Square coordinates
-        const location = { lat: 51.9010, lng: -8.4705 };
+        const location = { lat: 51.901, lng: -8.4705 };
 
         // Initialize map
         map.current = new window.google.maps.Map(mapRef.current, {
@@ -105,7 +105,8 @@ const renderMap = (status: Status) => {
                 <div style={{ textAlign: "center" }}>
                     <p>Unable to load map</p>
                     <p style={{ fontSize: "12px", marginTop: "8px" }}>
-                        Cork, Ireland<br />
+                        Cork, Ireland
+                        <br />
                         Camden Court, Knaps Square
                     </p>
                 </div>

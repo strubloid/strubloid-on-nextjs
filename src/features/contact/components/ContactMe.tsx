@@ -5,7 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { MapWrapper } from "./MapWrapper";
 import { server, validateContactForm } from "@utils";
 import { useScrollReveal } from "@hooks/animations";
-import type { IGoogleKeyProps, IContactInputs, IContactStatus, IFormErrors } from "@types";
+import type { IGoogleKeyProps, IContactInputs, IContactStatus, IFormErrors } from "@shared-types";
 
 const INITIAL_STATUS: IContactStatus = {
     submitted: false,
@@ -54,7 +54,6 @@ const ContactMe: React.FC<IGoogleKeyProps> = ({ googleKey }) => {
         setInputs((prev) => ({ ...prev, [e.target.id]: e.target.value }));
         setStatus(INITIAL_STATUS);
     };
-
 
     /** Trigger sending once validation passes */
     useEffect(() => {
