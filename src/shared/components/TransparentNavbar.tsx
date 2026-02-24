@@ -1,29 +1,65 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { Button, Collapse, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown, NavbarBrand, Navbar, NavItem, Nav } from "reactstrap";
 import StrubloidTooltip from "./StrubloidTooltip";
 
 const SCROLL_THRESHOLD = 500;
+const SWIPE_THRESHOLD = 50; // Minimum distance to trigger swipe
 
 const ScrollTransparentNavbar: React.FC = () => {
     const [collapseOpen, setCollapseOpen] = useState(false);
     const [navbarColor, setNavbarColor] = useState(" navbar-transparent");
+    const touchStartX = useRef<number>(0);
+    const touchStartY = useRef<number>(0);
 
     const updateNavbarColor = useCallback(() => {
         const scrollTop = document.documentElement.scrollTop;
         setNavbarColor(scrollTop > SCROLL_THRESHOLD ? "" : " navbar-transparent");
     }, []);
 
-    useEffect(() => {
-        updateNavbarColor();
-        window.addEventListener("scroll", updateNavbarColor);
-        return () => window.removeEventListener("scroll", updateNavbarColor);
-    }, [updateNavbarColor]);
-
     const toggleNavOpen = useCallback(() => {
         document.documentElement.classList.toggle("nav-open");
         setCollapseOpen((prev) => !prev);
     }, []);
+
+    // Handle swipe gestures for mobile
+    const handleTouchStart = useCallback((e: TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+        touchStartY.current = e.touches[0].clientY;
+    }, []);
+
+    const handleTouchEnd = useCallback((e: TouchEvent) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+
+        // Calculate swipe distance
+        const deltaX = touchStartX.current - touchEndX;
+        const deltaY = touchStartY.current - touchEndY;
+
+        // Only trigger swipe if horizontal movement is greater than vertical (prevent interference with scrolling)
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+            // Right to left swipe (positive deltaX) - open navbar
+            if (deltaX > 0 && !collapseOpen) {
+                toggleNavOpen();
+            }
+            // Left to right swipe (negative deltaX) - close navbar
+            if (deltaX < 0 && collapseOpen) {
+                toggleNavOpen();
+            }
+        }
+    }, [collapseOpen, toggleNavOpen]);
+
+    useEffect(() => {
+        updateNavbarColor();
+        window.addEventListener("scroll", updateNavbarColor);
+        document.addEventListener("touchstart", handleTouchStart as EventListener);
+        document.addEventListener("touchend", handleTouchEnd as EventListener);
+        return () => {
+            window.removeEventListener("scroll", updateNavbarColor);
+            document.removeEventListener("touchstart", handleTouchStart as EventListener);
+            document.removeEventListener("touchend", handleTouchEnd as EventListener);
+        };
+    }, [updateNavbarColor, handleTouchStart, handleTouchEnd]);
 
     return (
         <>
