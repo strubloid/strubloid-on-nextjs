@@ -3,46 +3,46 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 
 // Design System (2025 Organic & Warm)
-import "../src/shared/styles/global/_design-system.scss";
+import "../shared/styles/global/_design-system.scss";
 
 // Global SCSS (extracted from Now UI Kit Pro v1.3.0)
-import "../src/shared/styles/global/_variables.scss";
-import "../src/shared/styles/global/_buttons.scss";
-import "../src/shared/styles/global/_general_mixins.scss";
+import "../shared/styles/global/_variables.scss";
+import "../shared/styles/global/_buttons.scss";
+import "../shared/styles/global/_general_mixins.scss";
 import "semantic-ui-css/semantic.min.css";
 
-import "../src/shared/styles/global/_now-ui-icons.scss";
-import "../src/shared/styles/global/_typography.scss";
-import "../src/shared/styles/global/_alerts.scss";
-import "../src/shared/styles/global/_forms.scss";
-import "../src/shared/styles/global/_nav-pills-tabs.scss";
-import "../src/shared/styles/global/_dropdowns.scss";
-import "../src/shared/styles/global/_images.scss";
-import "../src/shared/styles/global/_modals.scss";
-import "../src/shared/styles/global/_tables.scss";
-import "../src/shared/styles/global/_info-media.scss";
-import "../src/shared/styles/global/_cards.scss";
-import "../src/shared/styles/global/_pages.scss";
-import "../src/shared/styles/global/_sections.scss";
-import "../src/shared/styles/global/_responsive.scss";
+import "../shared/styles/global/_now-ui-icons.scss";
+import "../shared/styles/global/_typography.scss";
+import "../shared/styles/global/_alerts.scss";
+import "../shared/styles/global/_forms.scss";
+import "../shared/styles/global/_nav-pills-tabs.scss";
+import "../shared/styles/global/_dropdowns.scss";
+import "../shared/styles/global/_images.scss";
+import "../shared/styles/global/_modals.scss";
+import "../shared/styles/global/_tables.scss";
+import "../shared/styles/global/_info-media.scss";
+import "../shared/styles/global/_cards.scss";
+import "../shared/styles/global/_pages.scss";
+import "../shared/styles/global/_sections.scss";
+import "../shared/styles/global/_responsive.scss";
 
 // Component SCSS from new feature-based locations
-import "../src/features/contact/components/ContactMe.scss";
-import "../src/features/contact/components/ContactMeHeader.scss";
-import "../src/shared/components/BasicHeader.scss";
-import "../src/shared/components/TransparentNavbar.scss";
-import "../src/shared/components/Footer.scss";
-import "../src/features/home/components/AboutMe.scss";
-import "../src/features/home/components/Art.scss";
-import "../src/features/home/components/Github.scss";
-import "../src/features/home/components/Header.scss";
+import "../features/contact/components/ContactMe.scss";
+import "../features/contact/components/ContactMeHeader.scss";
+import "../shared/components/BasicHeader.scss";
+import "../shared/components/TransparentNavbar.scss";
+import "../shared/components/Footer.scss";
+import "../features/home/components/AboutMe.scss";
+import "../features/home/components/Art.scss";
+import "../features/home/components/Github.scss";
+import "../features/home/components/Header.scss";
 
-import "../src/shared/styles/pages/artistic.scss";
+import "../shared/styles/pages/artistic.scss";
 
-import "../src/shared/styles/global/_fonts.scss";
-import "../src/shared/styles/global/_cool_effects.scss";
-import "../src/shared/styles/global/_quote.scss";
-import "../src/shared/styles/global/_basic.scss";
+import "../shared/styles/global/_fonts.scss";
+import "../shared/styles/global/_cool_effects.scss";
+import "../shared/styles/global/_quote.scss";
+import "../shared/styles/global/_basic.scss";
 
 import Layout from "@shared/components/Layout";
 

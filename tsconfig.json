@@ -24,11 +24,11 @@
       "@components/*": ["src/shared/components/*"],
       "@utils": ["src/shared/utils"],
       "@utils/*": ["src/shared/utils/*"],
-      "@pages/*": ["pages/*"],
+      "@pages/*": ["src/pages/*"],
       "@public/*": ["public/*"]
     },
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types/**/*.d.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
