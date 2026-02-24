@@ -10,6 +10,7 @@ const keys = [
   `NEXT_PUBLIC_RESEND_API_KEY=${process.env.NEXT_PUBLIC_RESEND_API_KEY}\n`,
   `NEXT_PUBLIC_GMAIL=${process.env.NEXT_PUBLIC_GMAIL}\n`,
   `NEXT_PUBLIC_MAIL=${process.env.NEXT_PUBLIC_MAIL}\n`,
+  `NEXT_PUBLIC_NODE_ENV=${process.env.NEXT_PUBLIC_NODE_ENV}\n`,
 ]
 
 // Tranforming into a string

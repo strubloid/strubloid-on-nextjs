@@ -18,7 +18,7 @@ const DebugHealthButton: React.FC = () => {
 
     // Only show in development
     if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_NODE_ENV !== "development") {
-        console.log('Not running')
+        console.log("Not running this on live");
         return null;
     }
 
