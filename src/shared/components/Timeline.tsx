@@ -125,7 +125,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience", backgr
                     }}
                 />
 
-                <TimelineJobs items={items} title={title} scrollYProgress={scrollYProgress} onActiveItemChange={setActiveItem} onBackgroundChange={setBackgroundUrl} />
+                <TimelineJobs items={items} title={title} scrollYProgress={scrollYProgress} onActiveItemChange={setActiveItem} onBackgroundChange={setBackgroundUrl} backgroundPhotos={backgroundPhotos} />
 
                 <TimelineMessages scrollYProgress={scrollYProgress} onMessageChange={handleMessageChange} />
             </section>
