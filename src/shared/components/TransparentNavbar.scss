@@ -572,7 +572,7 @@ $transition-timing: ease 0s;
     width: 300px;
     right: 0;
     z-index: 1032;
-    visibility: visible;
+    visibility: hidden;
     background: rgba(45, 155, 85, 0.15);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -763,6 +763,7 @@ $transition-timing: ease 0s;
     overflow: hidden;
 
     .navbar-collapse {
+      visibility: visible;
       transform: translate3d(0px, 0, 0);
     }
 
