@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import TransparentNavbar from "./TransparentNavbar";
 import ExternalImports from "./ExternalImports";
 import Footer from "./Footer";
+import DebugHealthButton from "./DebugHealthButton";
 import { useCustomCursor, useScrollProgress, useMatrixFallChars } from "@hooks/effects";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
@@ -54,6 +55,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
                 </button>
             )}
             <Footer />
+            <DebugHealthButton />
         </>
     );
 };
