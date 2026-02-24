@@ -87,6 +87,8 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
     const [pinnedSkill, setPinnedSkill] = React.useState<string | null>(null);
     // State to track if panel is closing (for immediate hide)
     const [isClosing, setIsClosing] = React.useState(false);
+    // State to track which skill is expanded on mobile (grid layout)
+    const [expandedSkill, setExpandedSkill] = React.useState<string | null>(null);
     // Ref to track if matrix animation has already loaded (persists across component remounts)
     const isLoadedRef = useRef<boolean>(false);
     const detailPanelRef = useRef<HTMLDivElement>(null);
@@ -212,16 +214,31 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         console.log("📋 AboutMe Component Rendered | carousel:", carousel, "| skills count:", skills.length);
     }, [carousel, skills.length]);
 
-    // Matrix reveal for skill cards (handles intersection + canvas)
+    // Detect if we're on mobile to use grid layout
+    const [isMobile, setIsMobile] = React.useState(false);
+    React.useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 992);
+        };
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    // Use grid layout on mobile, carousel on desktop
+    const effectiveCarousel = carousel && !isMobile;
+
+    // Matrix reveal for skill cards (completely skip on mobile for simpler experience)
     const matrixRef = useMatrixReveal<HTMLDivElement>({
         threshold: 0.12,
         staggerDelay: 100,
-        matrixDuration: 800,
-        skipOnceLoaded: true, // Prevent re-animation when scrolling back
+        matrixDuration: isMobile ? 0 : 800,
+        skipOnceLoaded: isMobile, // Skip on mobile, load on desktop
     });
 
-    // Separate scroll reveal just for the header
-    const headerRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2, reversible: true });
+    // Separate scroll reveal just for the header (disable on mobile)
+    const headerRevealRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2, reversible: true });
+    const headerRef = isMobile ? () => {} : headerRevealRef;
 
     const registerTilt = use3DTilt();
 
@@ -229,18 +246,30 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
         window.open(url, "_blank", "noopener,noreferrer");
     };
 
-    const renderCard = (skill: Skill, isCarousel: boolean = true) => (
+    const renderCard = (skill: Skill, isCarousel: boolean = true) => {
+        const isExpanded = !isCarousel && expandedSkill === skill.id;
+        const handleCardClick_Local = () => {
+            // On mobile grid, prioritize expand/collapse over link click
+            if (!isCarousel) {
+                setExpandedSkill(isExpanded ? null : skill.id);
+            } else if (skill.link) {
+                // On desktop carousel, open link
+                handleCardClick(skill.link.url);
+            }
+        };
+
+        return (
         <div
             key={skill.id}
             ref={registerTilt}
-            className={`skill-card${isCarousel ? " skill-card--carousel" : ""}${skill.link ? " skill-card--linked" : ""}`}
-            onClick={skill.link ? () => handleCardClick(skill.link!.url) : undefined}
-            role={skill.link ? "link" : undefined}
-            tabIndex={skill.link ? 0 : undefined}
+            className={`skill-card${isCarousel ? " skill-card--carousel" : ""}${skill.link ? " skill-card--linked" : ""}${isExpanded ? " skill-card--expanded" : ""}`}
+            onClick={handleCardClick_Local}
+            role={skill.link ? "link" : "button"}
+            tabIndex={skill.link || !isCarousel ? 0 : undefined}
             onKeyDown={
-                skill.link
+                skill.link || (!isCarousel && !skill.link)
                     ? (e) => {
-                          if (e.key === "Enter") handleCardClick(skill.link!.url);
+                          if (e.key === "Enter") handleCardClick_Local();
                       }
                     : undefined
             }
@@ -299,12 +328,53 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                     </div>
                 </>
             )}
+
+            {/* Mobile Grid: Show details below when expanded */}
+            {isExpanded && !isCarousel && (
+                <div className="skill-card__details">
+                    {/* Usage Timeline */}
+                    {skill.usages && skill.usages.length > 0 && (
+                        <div className="skill-card__usages">
+                            {skill.usages.map((usage, idx) => (
+                                <div key={idx} className="skill-card__usage-item">
+                                    <div className="skill-card__usage-header">
+                                        <h4 className="skill-card__usage-title">{usage.company || usage.project}</h4>
+                                        <span className="skill-card__usage-period">{usage.period}</span>
+                                    </div>
+                                    <p className="skill-card__usage-detail">{usage.detail}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Related Skills */}
+                    {skill.relatedSkills && skill.relatedSkills.length > 0 && (
+                        <div className="skill-card__related">
+                            <h4 className="skill-card__related-title">Combined with:</h4>
+                            <div className="skill-card__related-tags">
+                                {skill.relatedSkills.map((relatedSkill, idx) => (
+                                    <span key={idx} className="skill-card__tag">
+                                        {relatedSkill}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {skill.link && (
+                        <a href={skill.link.url} target="_blank" rel="noopener noreferrer" className="skill-card__link">
+                            {skill.link.text} <i className="now-ui-icons ui-1_send" />
+                        </a>
+                    )}
+                </div>
+            )}
         </div>
     );
+    };
 
-    // Grid layout (for about-me page)
-    if (!carousel) {
-        console.log("🎨 Rendering GRID layout (carousel=false)");
+    // Grid layout (for about-me page or mobile)
+    if (!effectiveCarousel) {
+        console.log("🎨 Rendering GRID layout (carousel=false or isMobile=true)");
         const leftSkills = skills.filter((_, i) => i % 2 === 0);
         const rightSkills = skills.filter((_, i) => i % 2 === 1);
 
@@ -324,12 +394,14 @@ const AboutMe: React.FC<AboutMeProps> = ({ skills, carousel = true }) => {
                         </Col>
                     </Row>
                     <Row className="skills-grid">
-                        <Col md="6" className="skills-column">
-                            {leftSkills.map((skill) => renderCard(skill, false))}
+                        <Col md={isMobile ? "12" : "6"} className="skills-column">
+                            {(isMobile ? skills : leftSkills).map((skill) => renderCard(skill, false))}
                         </Col>
-                        <Col md="6" className="skills-column">
-                            {rightSkills.map((skill) => renderCard(skill, false))}
-                        </Col>
+                        {!isMobile && (
+                            <Col md="6" className="skills-column">
+                                {rightSkills.map((skill) => renderCard(skill, false))}
+                            </Col>
+                        )}
                     </Row>
                 </Container>
             </div>
