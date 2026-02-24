@@ -46,16 +46,12 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
             {showNavbar && <TransparentNavbar />}
             <div className={`wrapper${mounted ? " page-mounted" : ""}`}>{children}</div>
             {scrollY > 300 && (
-                <button
-                    className="scroll-to-top"
-                    onClick={scrollToTop}
-                    aria-label="Scroll to top"
-                >
+                <button className="scroll-to-top" onClick={scrollToTop} aria-label="Scroll to top">
                     ↑
                 </button>
             )}
             <Footer />
-            <DebugHealthButton />
+            {(process.env.NEXT_PUBLIC_NODE_ENV === "development" || process.env.NEXT_PUBLIC_NODE_ENV === "stage") && <DebugHealthButton />}
         </>
     );
 };

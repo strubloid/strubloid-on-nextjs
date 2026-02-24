@@ -17,7 +17,7 @@ const DebugHealthButton: React.FC = () => {
     const [lastStatus, setLastStatus] = useState<HealthResponse | null>(null);
 
     // Only show in development
-    if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_NODE_ENV !== "development") {
+    if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_NODE_ENV !== "development" && process.env.NEXT_PUBLIC_NODE_ENV !== "stage") {
         console.log("Not running this on live");
         return null;
     }
