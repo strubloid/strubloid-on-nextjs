@@ -38,6 +38,7 @@ import "../features/home/components/Github.scss";
 import "../features/home/components/Header.scss";
 
 import "../shared/styles/pages/artistic.scss";
+import "../shared/styles/pages/website.scss";
 
 import "../shared/styles/global/_fonts.scss";
 import "../shared/styles/global/_cool_effects.scss";

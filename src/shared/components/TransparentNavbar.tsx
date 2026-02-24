@@ -34,10 +34,17 @@ const ScrollTransparentNavbar: React.FC = () => {
                         Rafael Mendes
                     </NavbarBrand>
                     <StrubloidTooltip target="navbar-brand">
-                        If you want to know more, keep checking the whole progress of the website on:{" "}
-                        <a href="https://github.com/strubloid/strubloid-on-nextjs" target="_blank" rel="noopener noreferrer">
-                            click here
-                        </a>
+                        <div style={{ marginBottom: "0.5rem" }}>
+                            If you want to know more, keep checking the whole progress of the website on:{" "}
+                            <a href="https://github.com/strubloid/strubloid-on-nextjs" target="_blank" rel="noopener noreferrer">
+                                click here
+                            </a>
+                        </div>
+                        <div style={{ paddingTop: "0.5rem", borderTop: "1px solid rgba(255,255,255,0.3)" }}>
+                            <Link href="/website" style={{ color: "#FFD700", textDecoration: "underline", fontWeight: "bold" }}>
+                                /Website
+                            </Link>
+                        </div>
                     </StrubloidTooltip>
                     <button onClick={toggleNavOpen} aria-expanded={collapseOpen} className="navbar-toggler">
                         <span className="navbar-toggler-bar top-bar" />

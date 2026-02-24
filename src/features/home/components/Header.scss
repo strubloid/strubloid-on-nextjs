@@ -564,7 +564,11 @@
     margin: 0 auto;
     text-align: center;
     position: relative;
-    top: 2%;
+    top: 7%;
+
+    @media (max-width: 1024px) {
+      top: 10px !important;
+    }
     padding: 0 200px;
     z-index: 10;
     pointer-events: auto;
@@ -617,6 +621,7 @@
     flex-wrap: wrap;
     position: relative;
     z-index: 10;
+    align-items: center;
 
     .nav-button {
       padding: 12px 28px;

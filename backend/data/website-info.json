@@ -1,0 +1,504 @@
+{
+  "projectName": "Strubloid - Rafael's Portfolio",
+  "projectDescription": "An interactive, creative portfolio website showcasing design innovations, professional experience, artistic work, and technical capabilities.",
+  "lastUpdated": "2026-02-24",
+
+  "pages": [
+    {
+      "id": "home",
+      "name": "Home",
+      "path": "/",
+      "description": "Landing page with hero section, background animation, and call-to-action",
+      "features": [
+        "Interactive background with parallax effect",
+        "Hero text with gradient animation",
+        "Quick navigation to other sections",
+        "Responsive design for all devices"
+      ],
+      "components": ["TransparentNavbar", "Layout", "Footer"]
+    },
+    {
+      "id": "about-me",
+      "name": "About Me",
+      "path": "/about-me",
+      "description": "Detailed timeline of professional experience and journey",
+      "features": [
+        "Interactive timeline with expandable details",
+        "Full-screen detail panel with asymmetric zone layout",
+        "Skill badges with hover animations",
+        "Company highlights and achievements",
+        "Scroll indicator chevrons"
+      ],
+      "components": ["Timeline", "TimelineJobs", "ScrollIndicator", "DetailPanel"],
+      "designInnovations": [
+        "Full-Screen Timeline Detail Panel",
+        "Animated Chevron Scroll Indicator"
+      ]
+    },
+    {
+      "id": "artistic",
+      "name": "Artistic",
+      "path": "/artistic",
+      "description": "Gallery of artistic and creative work, photos, and digital art",
+      "features": [
+        "Photo gallery with Flickr integration",
+        "Matrix-style text reveal animations",
+        "Custom cursor interactions",
+        "High-quality image loading",
+        "Responsive grid layout"
+      ],
+      "components": ["Layout", "Footer", "BrushTransition"],
+      "dataSource": "Flickr API + Facebook photos"
+    },
+    {
+      "id": "contact-me",
+      "name": "Contact Me",
+      "path": "/contact-me",
+      "description": "Contact form with validation and email integration",
+      "features": [
+        "Form validation with custom validators",
+        "reCAPTCHA integration",
+        "Email sending via SendGrid/Resend",
+        "Loading states and success feedback",
+        "Error handling and validation messages"
+      ],
+      "components": ["ContactMe", "Layout", "Footer"],
+      "integrations": ["SendGrid", "Resend", "Google reCAPTCHA"]
+    }
+  ],
+
+  "coreComponents": [
+    {
+      "name": "Timeline",
+      "file": "src/shared/components/Timeline.tsx",
+      "purpose": "Display interactive timeline of experiences with expandable details",
+      "features": [
+        "Timeline items with dates and metadata",
+        "Full-viewport detail panel expansion",
+        "Asymmetric zone layout for content distribution",
+        "Responsive collapse on mobile"
+      ],
+      "dependencies": ["Framer Motion", "React"]
+    },
+    {
+      "name": "ScrollIndicator",
+      "file": "src/shared/components/ScrollIndicator.tsx",
+      "purpose": "Show animated chevrons to guide users to scroll for more content",
+      "features": [
+        "Staggered animated chevrons",
+        "Gradient color text clipping",
+        "Auto-hide on scroll",
+        "Responsive sizing"
+      ],
+      "dependencies": ["Framer Motion", "React"]
+    },
+    {
+      "name": "DetailPanel",
+      "file": "src/shared/components/DetailPanel.tsx",
+      "purpose": "Modal-like panel showing detailed information about timeline items",
+      "features": [
+        "Full-viewport coverage",
+        "Content distribution across zones",
+        "Custom styling and animations"
+      ]
+    },
+    {
+      "name": "TransparentNavbar",
+      "file": "src/shared/components/TransparentNavbar.tsx",
+      "purpose": "Navigation bar with transparent background that adapts to content",
+      "features": [
+        "Responsive menu",
+        "Scroll-aware styling",
+        "Mobile hamburger menu"
+      ]
+    },
+    {
+      "name": "Footer",
+      "file": "src/shared/components/Footer.tsx",
+      "purpose": "Footer with links and information",
+      "features": [
+        "Social media links",
+        "Contact information",
+        "Navigation links"
+      ]
+    },
+    {
+      "name": "Layout",
+      "file": "src/shared/components/Layout.tsx",
+      "purpose": "Main layout wrapper for all pages",
+      "features": [
+        "Consistent structure across pages",
+        "Navigation integration",
+        "Footer integration"
+      ]
+    },
+    {
+      "name": "BrushTransition",
+      "file": "src/shared/components/BrushTransition.tsx",
+      "purpose": "Page transition animation with brush/paint effect",
+      "features": [
+        "Smooth page transitions",
+        "Visual polish and branding"
+      ]
+    },
+    {
+      "name": "DebugHealthButton",
+      "file": "src/shared/components/DebugHealthButton.tsx",
+      "purpose": "Debug utility for development environment",
+      "features": [
+        "Health check indicator",
+        "Development only (stage/dev)",
+        "Backend connection status"
+      ]
+    }
+  ],
+
+  "features": [
+    {
+      "name": "About Me Feature",
+      "directory": "src/features/about-me",
+      "description": "Contains logic for the about/timeline page"
+    },
+    {
+      "name": "Contact Feature",
+      "directory": "src/features/contact",
+      "components": ["ContactMe"],
+      "description": "Handles contact form and email integration"
+    },
+    {
+      "name": "Home Feature",
+      "directory": "src/features/home",
+      "description": "Landing page and hero section components"
+    }
+  ],
+
+  "hooks": [
+    {
+      "name": "useScrollProgress",
+      "file": "src/shared/hooks/effects/useScrollProgress.ts",
+      "purpose": "Track and expose scroll progress as a percentage",
+      "usage": "Used for scroll-based animations and indicators"
+    },
+    {
+      "name": "useMatrixFallChars",
+      "file": "src/shared/hooks/effects/useMatrixFallChars.ts",
+      "purpose": "Generate falling matrix-style characters for animations",
+      "usage": "Artistic page text reveal effects"
+    },
+    {
+      "name": "useCustomCursor",
+      "file": "src/shared/hooks/effects/useCustomCursor.ts",
+      "purpose": "Manage custom cursor styling and interactions",
+      "usage": "Artistic page interactive effects"
+    },
+    {
+      "name": "useMatrixReveal",
+      "file": "src/shared/hooks/animations/useMatrixReveal.ts",
+      "purpose": "Trigger matrix-style text reveal animation",
+      "usage": "Artistic page animations"
+    },
+    {
+      "name": "useCardReveal",
+      "file": "src/shared/hooks/animations/useCardReveal.ts",
+      "purpose": "Animate card elements on scroll or trigger",
+      "usage": "Gallery and timeline card animations"
+    },
+    {
+      "name": "useScrollReveal",
+      "file": "src/shared/hooks/animations/useScrollReveal.ts",
+      "purpose": "Reveal elements as they scroll into view",
+      "usage": "Progressive content reveal on pages"
+    }
+  ],
+
+  "apiEndpoints": [
+    {
+      "path": "/api/timeline",
+      "method": "GET",
+      "description": "Fetch timeline data (jobs and experiences)",
+      "dataSource": "backend/data/strubloid.json"
+    },
+    {
+      "path": "/api/health",
+      "method": "GET",
+      "description": "Health check endpoint for backend connectivity",
+      "response": { "status": "ok" }
+    },
+    {
+      "path": "/api/github",
+      "method": "GET",
+      "description": "Fetch GitHub user information and projects",
+      "dataSource": "backend/data/github.json"
+    },
+    {
+      "path": "/api/flickr",
+      "method": "GET",
+      "description": "Fetch photos from Flickr API",
+      "externalAPI": "Flickr SDK"
+    },
+    {
+      "path": "/api/background-photos",
+      "method": "GET",
+      "description": "Fetch background photos from multiple sources",
+      "sources": ["Flickr", "Facebook"]
+    },
+    {
+      "path": "/api/contact/send",
+      "method": "POST",
+      "description": "Send contact form email",
+      "integrations": ["SendGrid / Resend", "Google reCAPTCHA"],
+      "validation": "Contact form validator"
+    }
+  ],
+
+  "dataFiles": [
+    {
+      "name": "strubloid.json",
+      "path": "backend/data/strubloid.json",
+      "size": "~12KB",
+      "description": "Professional timeline data with jobs, experience, skills, and highlights",
+      "structure": {
+        "timeline": "Array of experience entries",
+        "timeline[].id": "Unique identifier",
+        "timeline[].year": "Year or date range",
+        "timeline[].title": "Job title or position",
+        "timeline[].company": "Company name",
+        "timeline[].description": "Detailed description",
+        "timeline[].skills": "Array of technical skills",
+        "timeline[].highlights": "Key achievements and highlights"
+      }
+    },
+    {
+      "name": "github.json",
+      "path": "backend/data/github.json",
+      "size": "~4KB",
+      "description": "GitHub profile data and repository information",
+      "structure": {
+        "user": "GitHub user profile",
+        "repositories": "Array of public repositories",
+        "stats": "GitHub statistics"
+      }
+    },
+    {
+      "name": "flickr.json",
+      "path": "backend/data/flickr.json",
+      "size": "~102KB",
+      "description": "Cached Flickr photos for artistic gallery",
+      "structure": {
+        "photos": "Array of photo metadata",
+        "photos[].id": "Photo ID",
+        "photos[].title": "Photo title",
+        "photos[].url": "Direct URL to image",
+        "photos[].description": "Photo description"
+      }
+    },
+    {
+      "name": "facebook.json",
+      "path": "backend/data/facebook.json",
+      "size": "~19KB",
+      "description": "Cached Facebook photos",
+      "structure": "Array of photo objects with metadata"
+    },
+    {
+      "name": "rafael.json",
+      "path": "backend/data/rafael.json",
+      "size": "~12KB",
+      "description": "Additional profile and personal information",
+      "structure": "User profile data with various sections"
+    },
+    {
+      "name": "design-innovations.json",
+      "path": "backend/data/design-innovations.json",
+      "size": "~7.6KB",
+      "description": "Documentation of design patterns and UI innovations",
+      "content": [
+        "Design innovations with technical details",
+        "Reusable design patterns",
+        "Color palette and animation easing",
+        "Future considerations"
+      ]
+    }
+  ],
+
+  "technicalStack": {
+    "frontend": {
+      "framework": "Next.js 15.3.5",
+      "uiLibrary": "React 18.2.0",
+      "styling": [
+        "SCSS/SASS 1.69.0",
+        "CSS Modules",
+        "Semantic UI CSS 2.5.0"
+      ],
+      "animationLibraries": [
+        "Framer Motion 12.34.2",
+        "GSAP 3.14.2"
+      ],
+      "componentLibraries": [
+        "Semantic UI React 2.1.0",
+        "Reactstrap 9.2.0"
+      ],
+      "specialEffects": [
+        "Rellax 1.12.1 (Parallax scrolling)"
+      ],
+      "typeScript": "5.9.3"
+    },
+    "backend": {
+      "runtime": "Node.js",
+      "framework": "Next.js API Routes",
+      "database": "MongoDB (Mongoose 8.0.0)"
+    },
+    "integrations": {
+      "emailService": [
+        "SendGrid (@sendgrid/mail 8.1.0)",
+        "Resend 6.9.2"
+      ],
+      "externalAPIs": [
+        "Flickr SDK 7.1.0",
+        "Google Maps React Wrapper 1.2.0",
+        "Google reCAPTCHA 3.1.0"
+      ]
+    },
+    "deployment": {
+      "platform": "Netlify",
+      "plugin": "@netlify/plugin-nextjs 5.0.0"
+    }
+  },
+
+  "designPatterns": [
+    {
+      "name": "Full-Viewport Zone Distribution",
+      "description": "Distribute content across absolute-positioned zones for detailed information display",
+      "usage": "Timeline detail panel on about-me page",
+      "benefits": [
+        "Uses full screen space efficiently",
+        "Maintains background visibility",
+        "Asymmetric balanced layout",
+        "Responsive collapse to flex on mobile"
+      ]
+    },
+    {
+      "name": "Gradient Color Coding",
+      "description": "Use brand gradient (Pink #FF6B9D → Cyan #A8DADC) for emphasis",
+      "usage": "Titles, CTAs, scroll indicators",
+      "benefits": [
+        "Consistent branding",
+        "Modern aesthetic",
+        "Eye-catching and intentional",
+        "Color-accessible design"
+      ]
+    },
+    {
+      "name": "Auto-Hide Overlay Components",
+      "description": "UI elements that appear on trigger and fade when condition changes",
+      "usage": "Scroll indicator chevrons",
+      "benefits": [
+        "Progressive disclosure",
+        "Non-intrusive for experienced users",
+        "Guided UX for new users",
+        "Improves user agency"
+      ]
+    },
+    {
+      "name": "Staggered Animations",
+      "description": "Sequential timing of animations with delays for visual rhythm",
+      "usage": "Scroll indicator chevrons, card reveals",
+      "benefits": [
+        "Natural, organic feel",
+        "Guides user attention",
+        "More engaging than simultaneous animations"
+      ]
+    }
+  ],
+
+  "colorPalette": {
+    "primary": {
+      "name": "Magenta Pink",
+      "hex": "#FF6B9D",
+      "usage": "Accents, highlights, primary CTAs, scroll indicators"
+    },
+    "secondary": {
+      "name": "Cyan Aqua",
+      "hex": "#A8DADC",
+      "usage": "Secondary accents, text highlights, gradient end"
+    },
+    "dark": {
+      "name": "Deep Navy",
+      "hex": "#0F1419",
+      "usage": "Background overlay, text shadows, dark backgrounds"
+    },
+    "text": {
+      "name": "Light Gray",
+      "hex": "#D8D8D8",
+      "usage": "Primary text color"
+    },
+    "glass": {
+      "name": "Semi-Transparent Glass",
+      "hex": "rgba(29, 53, 87, 0.98)",
+      "usage": "Glass-morphism effects"
+    },
+    "gradient": {
+      "description": "Primary gradient for emphasis",
+      "value": "135deg linear(#FF6B9D 0%, #A8DADC 100%)"
+    }
+  },
+
+  "performanceOptimizations": [
+    "Image optimization with Flickr and Facebook CDN",
+    "Static data caching in JSON files",
+    "Code splitting with Next.js dynamic imports",
+    "CSS Module scoping for zero conflicts",
+    "Lazy loading for photo galleries",
+    "Scroll-based animation with requestAnimationFrame"
+  ],
+
+  "responsiveBreakpoints": {
+    "mobile": {
+      "range": "<768px",
+      "adjustments": [
+        "Flexbox column layout for timeline details",
+        "Reduced padding (24px instead of 80px)",
+        "Smaller typography sizes",
+        "Single column gallery layout",
+        "Hamburger menu navigation"
+      ]
+    },
+    "tablet": {
+      "range": "768px-1024px",
+      "adjustments": [
+        "Responsive zone spacing",
+        "Adjusted padding (40px)",
+        "Two column gallery layouts",
+        "Optimized typography scaling"
+      ]
+    },
+    "desktop": {
+      "range": "1024px+",
+      "adjustments": [
+        "Full asymmetric zone layout",
+        "80px padding",
+        "Full typography expansion",
+        "Three+ column gallery layouts",
+        "Full navigation menu"
+      ]
+    }
+  },
+
+  "futureEnhancements": [
+    "Add dark mode variant",
+    "Parallax effect on timeline zones with mouse movement",
+    "Keyboard navigation for detail panel",
+    "Additional animation library with reusable patterns",
+    "Blog or case studies section",
+    "Project showcase with live demos",
+    "Search functionality across content",
+    "Multi-language support"
+  ],
+
+  "developmentEnvironment": {
+    "port": "8888",
+    "devCommand": "npm run dev",
+    "buildCommand": "npm run build",
+    "debugButton": "Visible in stage/development environments",
+    "healthCheckEndpoint": "/api/health"
+  }
+}

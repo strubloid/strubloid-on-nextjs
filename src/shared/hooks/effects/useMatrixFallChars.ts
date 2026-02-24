@@ -25,7 +25,7 @@ export function useMatrixFallChars() {
             { color: "#ff8000", glow: "rgba(255, 128, 0, 0.7)" }, // Orange
         ];
 
-        const interactiveSelectors = "button:not(.scroll-to-top):not(.flickr-gallery__arrow--next):not(.flickr-gallery__arrow--prev):not(.flickr-gallery__thumb):not(.detail-panel__close), .btn, .nav-link, .dropdown-toggle";
+        const interactiveSelectors = "button:not(.scroll-to-top):not(.flickr-gallery__arrow--next):not(.flickr-gallery__arrow--prev):not(.flickr-gallery__thumb):not(.detail-panel__close):not(.website-button):not(.website-tab-button):not(.navbar-toggler), .btn:not(.nav-link), .dropdown-toggle:not(.navbar-toggler)";
 
         const createCharacterWave = (target: HTMLElement) => {
             const rect = target.getBoundingClientRect();

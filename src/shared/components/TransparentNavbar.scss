@@ -573,18 +573,21 @@ $transition-timing: ease 0s;
     right: 0;
     z-index: 1032;
     visibility: visible;
-    background-color: #999;
+    background: rgba(45, 155, 85, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     overflow-y: visible;
     border-top: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
     text-align: left;
     max-height: none !important;
     transform: translate3d(300px, 0, 0);
     transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
 
     &:before {
-      background: linear-gradient(#f96332 0%, #000 80%);
-      opacity: 0.76;
-      filter: alpha(opacity=76);
+      background: linear-gradient(135deg, rgba(45, 155, 85, 0.1) 0%, rgba(232, 182, 49, 0.05) 100%);
+      opacity: 1;
+      filter: alpha(opacity=100);
       display: block;
       content: "";
       position: absolute;
@@ -596,19 +599,64 @@ $transition-timing: ease 0s;
     }
 
     .navbar-nav:not(.navbar-logo) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      .nav-item {
+        width: 100%;
+        max-width: 220px;
+      }
+
       .nav-link {
-        margin: 0 1rem;
-        margin-top: 0.3125rem;
+        margin: 1rem auto;
+        padding: 1rem 1.8rem !important;
+        border-radius: var(--radius-full);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: all 0.3s var(--ease-spring);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        font-size: 1rem;
 
         &:not(.btn) {
-          color: $btn-text-color !important;
+          color: #FFFFFF !important;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+
+          &:hover,
+          &:focus {
+            background: linear-gradient(135deg, var(--color-brazil-green), var(--color-brazil-gold));
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 24px rgba(45, 155, 85, 0.3);
+            transform: scale(1.05);
+            color: #FFFFFF !important;
+          }
         }
       }
     }
 
     .dropdown-menu {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      margin: 0.5rem 1rem !important;
+
       .dropdown-item {
-        color: $btn-text-color;
+        color: #FFFFFF;
+        border-radius: var(--radius-md);
+        transition: all 0.2s var(--ease-spring);
+
+        &:hover,
+        &:focus {
+          background: linear-gradient(135deg, var(--color-brazil-green), var(--color-brazil-gold)) !important;
+          color: #FFFFFF !important;
+          transform: translateX(4px);
+        }
       }
     }
   }
