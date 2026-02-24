@@ -802,9 +802,13 @@
   // Responsive — Tablet Portrait (768px – 1024px)
   // --------------------------------------------------------------------------
   @media (min-width: 768px) and (max-width: 1024px) {
+    .wrapper .page-header .page-header-image {
+      background-position: center;
+    }
+
     .rellax-text-container {
-      text-align: left;
-      padding: 0 190px;
+      text-align: center;
+      padding: 0 80px;
 
       .h1-seo {
         font-size: 2.6em;
@@ -820,12 +824,16 @@
   // Responsive — Tablet Landscape (768px – 1024px, landscape)
   // --------------------------------------------------------------------------
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .wrapper .page-header .page-header-image {
+      background-position: center;
+    }
+
     .rellax-text-container {
-      text-align: left;
-      padding: 0 180px;
+      text-align: center;
+      padding: 0 100px;
 
       .h1-seo {
-        font-size: 3.6em;
+        font-size: 2.4em;
       }
     }
   }
@@ -834,9 +842,14 @@
   // Responsive — Mobile Landscape (481px – 767px)
   // --------------------------------------------------------------------------
   @media (min-width: 481px) and (max-width: 767px) {
+    .wrapper .page-header .page-header-image {
+      background-position: center;
+      background-size: cover;
+    }
+
     .rellax-text-container {
-      padding: 0 150px;
-      left: 4%;
+      padding: 0 40px;
+      left: 0;
       top: 4%;
 
       .h1-seo {
@@ -862,25 +875,75 @@
   }
 
   // --------------------------------------------------------------------------
+  // Responsive — Large Portrait Monitors (flipped/vertical monitors)
+  // --------------------------------------------------------------------------
+  @media (max-aspect-ratio: 5/4) {
+    .wrapper .page-header .page-header-image {
+      background-position: center;
+    }
+
+    .rellax-text-container {
+      padding: 0 40px;
+      max-width: 100%;
+      margin-top: 50px;
+
+      .h1-seo {
+        font-size: 2.2em;
+      }
+    }
+
+    .hero-blob-1,
+    .hero-blob-2,
+    .hero-blob-3 {
+      display: none;
+    }
+  }
+
+  // --------------------------------------------------------------------------
   // Responsive — Mobile Portrait (320px – 480px)
   // --------------------------------------------------------------------------
   @media (min-width: 320px) and (max-width: 480px) {
+    .wrapper .page-header .page-header-image {
+      background-position: center;
+      background-size: cover;
+    }
+
+    .wrapper .page-header .page-header-city {
+      background-position: center;
+    }
+
     .rellax-text-container {
-      padding: 0 30px;
-      top: 8%;
+      padding: 0 20px;
+      top: 15%;
+      max-width: 100%;
+      margin-top: 50px;
 
       .h1-seo {
-        font-size: 2em;
-        letter-spacing: 0.2em;
+        font-size: 1.5em;
+        letter-spacing: 0.15em;
       }
 
       .hero-greeting {
-        font-size: 0.85em;
-        letter-spacing: 0.1em;
+        font-size: 0.75em;
+        letter-spacing: 0.08em;
       }
 
       .hero-tagline {
-        font-size: 0.85em;
+        font-size: 0.75em;
+        letter-spacing: 0.05em;
+      }
+    }
+
+    .header-nav-buttons {
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 25px;
+
+      .nav-button {
+        width: 100%;
+        max-width: 200px;
+        padding: 10px 20px;
+        font-size: 0.8em;
       }
     }
 
@@ -891,11 +954,15 @@
     }
 
     .scroll-indicator {
-      bottom: 20px;
+      bottom: 15px;
 
       .scroll-indicator-dot {
-        width: 20px;
-        height: 32px;
+        width: 18px;
+        height: 30px;
+      }
+
+      span {
+        font-size: 0.6em;
       }
     }
   }
