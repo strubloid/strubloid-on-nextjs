@@ -21,7 +21,7 @@ $btn-text-color: #FFFFFF;
 $navbar-transparent-bg: transparent;
 $navbar-transparent-text: #FFFFFF;
 $navbar-white-text: #2c2c2c;
-$navbar-white-hover: #f96332;
+$navbar-white-hover: #2c2c2c;
 
 $transition-duration: 300ms;
 $transition-timing: ease 0s;
@@ -205,6 +205,7 @@ $transition-timing: ease 0s;
   &:not(.btn-icon) .now-ui-icons {
     position: relative;
     top: 1px;
+    color:#2c2c2c;
   }
 }
 
@@ -414,7 +415,7 @@ $transition-timing: ease 0s;
           &:hover,
           &:focus {
             background-color: rgba(255, 255, 255, 0.2);
-            color: $navbar-transparent-text !important;
+            color: $navbar-transparent-text;
             box-shadow: none;
           }
 
@@ -468,7 +469,8 @@ $transition-timing: ease 0s;
 
           &:hover,
           &:focus {
-            background-color: rgba(222, 222, 222, 0.3);
+
+            background-color: rgba(78, 78, 78, 0.555);
             color: $navbar-white-hover;
             box-shadow: none;
           }
@@ -813,7 +815,7 @@ $transition-timing: ease 0s;
 
     .navbar-nav .nav-item .nav-link:hover,
     .navbar-nav .nav-item .nav-link:focus {
-      background-color: var(--color-sand);
+      background-color: var(--color-brazil-gold);
       border-radius: var(--radius-full);
       color: var(--color-accent-dark);
 
@@ -828,7 +830,7 @@ $transition-timing: ease 0s;
 
     .navbar-nav .nav-link.btn-default:hover,
     .navbar-nav .nav-link.btn-default:focus {
-      background-color: var(--color-sand);
+      background-color: var(--color-brazil-gold);
       color: #FFFFFF;
 
       i {
@@ -878,7 +880,7 @@ $transition-timing: ease 0s;
 
     &:hover,
     &:focus {
-      background-color: var(--color-sand) !important;
+      background-color: var(--color-brazil-gold) !important;
       color: var(--color-accent-dark) !important;
       transform: translateX(4px);
     }
