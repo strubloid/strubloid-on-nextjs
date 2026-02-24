@@ -3,7 +3,7 @@ import type { NextPage, GetStaticProps } from "next";
 import { AboutMe } from "@features/home/components";
 import { Timeline } from "@shared/components";
 import { getStrubloidData } from "@lib/services/strubloid";
-import { rafaelTimeline } from "../../data/rafael-timeline";
+import rafaelTimeline from "@data/rafael.json";
 import type { Skill } from "@lib/services/strubloid";
 
 interface AboutMePageProps {

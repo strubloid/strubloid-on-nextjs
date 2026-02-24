@@ -99,7 +99,7 @@ const Timeline: React.FC<TimelineProps> = ({ items, title = "Experience" }) => {
     // Handler for message changes - updates background with new random photo
     const handleMessageChange = async () => {
         try {
-            const facebookData = await import("../../../data/facebook.json");
+            const facebookData = await import("@data/facebook.json");
             const newPhoto = getRandomPhoto(facebookData.default);
             if (newPhoto) {
                 setBackgroundUrl(newPhoto);

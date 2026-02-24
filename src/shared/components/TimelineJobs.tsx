@@ -1,7 +1,7 @@
 import React, { useRef, useState, useMemo, useEffect } from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
 import styles from "./Timeline.module.scss";
-import facebookData from "../../../data/facebook.json";
+import facebookData from "@data/facebook.json";
 
 export interface TimelineItem {
     id: string;
