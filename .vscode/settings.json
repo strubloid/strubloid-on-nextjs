@@ -1,5 +1,110 @@
 {
-  "terminal.integrated.enablePersistentSessions": false,
-  "git.enableSmartCommit": false,
-  "git.confirmSync": true
+  // ===== EDITOR SETTINGS =====
+  "editor.minimap.enabled": false,
+  "editor.insertSpaces": true,
+  "editor.autoIndentOnPaste": true,
+  "editor.mouseWheelZoom": true,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.fastScrollSensitivity": 6,
+  "editor.accessibilityPageSize": 600,
+  "editor.accessibilitySupport": "off",
+
+  // ===== WORKBENCH SETTINGS =====
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.editor.pinnedTabSizing": "shrink",
+  "workbench.editor.labelFormat": "short",
+  "workbench.editor.showIcons": true,
+  "workbench.editor.highlightModifiedTabs": true,
+
+  // ===== FORMATTING SETTINGS =====
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+    
+  // Language-specific formatters
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode", 
+    "editor.formatOnSave": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
+  },
+  "[html]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  },
+
+  // ===== FILE SETTINGS =====
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 10000,
+  "files.trimTrailingWhitespaceInRegexAndStrings": false,
+
+  // ===== CODE INTELLIGENCE SETTINGS =====
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // ===== DIFF EDITOR SETTINGS =====
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  // ===== SECURITY & TRUST SETTINGS =====
+  "security.workspace.trust.startupPrompt": "never",
+  "security.workspace.trust.enabled": true,
+
+  // ===== TASK SETTINGS =====
+  "task.allowAutomaticTasks": "on",
+
+  // ===== AI & CHAT SETTINGS =====
+  "chat.agent.maxRequests": 80,
+  "chat.promptFilesRecommendations": {
+    "speckit.constitution": true,
+    "speckit.specify": true,
+    "speckit.plan": true,
+    "speckit.tasks": true,
+    "speckit.implement": true
+  },
+  "chat.tools.terminal.autoApprove": {
+    ".specify/scripts/bash/": true,
+    ".specify/scripts/powershell/": true,
+    "wget *": true,
+    "npm i": true,
+    "npm test": true,
+    "npm exec": true,
+    "bash": true,
+    "chmod +x": true,
+    "curl": true,
+    "ps": true,
+    "find": true,
+    "git ls-remote": true,
+    "mkdir": true
+  },
+  "chat.tools.urls.autoApprove": {
+    "https://www.all-guitar-chords.com": {
+      "approveRequest": false,
+      "approveResponse": true
+    }
+  },
+  "chat.viewSessions.orientation": "stacked",
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true,
+    ".claude/rules": true
+  },
+
+  // ===== CLAUDE CODE SETTINGS =====
+  "claudeCode.preferredLocation": "panel",
+  "claudeCode.selectedModel": "haiku",
+
+  // ===== GITHUB COPILOT SETTINGS =====
+  "github.copilot.nextEditSuggestions.enabled": true,
+
+  // ===== EXTENSION-SPECIFIC SETTINGS =====
+  "gitlens.ai.model": "vscode",
+  "inlineChat.defaultModel": "Claude Sonnet 4 (copilot)",
+  "liveServer.settings.donotShowInfoMsg": true
 }
