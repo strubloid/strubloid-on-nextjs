@@ -7,7 +7,7 @@ import fs from "fs";
 import path from "path";
 import type { StrubloidData } from "./strubloid.types";
 
-const DATA_FILE = path.join(process.cwd(), "data", "strubloid.json");
+const DATA_FILE = path.join(process.cwd(), "src", "data", "strubloid.json");
 
 /**
  * Load Strubloid profile data from JSON file
