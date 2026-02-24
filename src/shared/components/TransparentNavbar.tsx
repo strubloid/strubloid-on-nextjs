@@ -11,6 +11,7 @@ const ScrollTransparentNavbar: React.FC = () => {
     const [navbarColor, setNavbarColor] = useState(" navbar-transparent");
     const touchStartX = useRef<number>(0);
     const touchStartY = useRef<number>(0);
+    const scrollPositionRef = useRef<number>(0);
 
     const updateNavbarColor = useCallback(() => {
         const scrollTop = document.documentElement.scrollTop;
@@ -18,9 +19,21 @@ const ScrollTransparentNavbar: React.FC = () => {
     }, []);
 
     const toggleNavOpen = useCallback(() => {
+        const isOpening = !collapseOpen;
+
+        if (isOpening) {
+            // Save scroll position before opening menu
+            scrollPositionRef.current = window.scrollY || document.documentElement.scrollTop;
+        } else {
+            // Restore scroll position after closing menu
+            setTimeout(() => {
+                window.scrollTo(0, scrollPositionRef.current);
+            }, 0);
+        }
+
         document.documentElement.classList.toggle("nav-open");
         setCollapseOpen((prev) => !prev);
-    }, []);
+    }, [collapseOpen]);
 
     // Handle swipe gestures for mobile
     const handleTouchStart = useCallback((e: TouchEvent) => {
