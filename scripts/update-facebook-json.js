@@ -228,7 +228,7 @@ async function fetchUserAlbums(accessToken) {
 }
 
 /**
- * Fetch all photos from a Facebook album
+ * Fetch all photos from a Facebook album (with pagination)
  * Extracts the actual CDN image URLs (scontent.*.fna.fbcdn.net)
  * @param {string} albumIdentifier Album ID or identifier (with or without "a." prefix)
  * @param {string} accessToken
@@ -236,30 +236,47 @@ async function fetchUserAlbums(accessToken) {
  */
 async function fetchAlbumPhotos(albumIdentifier, accessToken) {
     try {
-        // Try the identifier as-is first
-        let response = await fetchFromFacebook(
-            `/${albumIdentifier}/photos?fields=id,images,name,created_time&limit=100`,
-            accessToken
-        );
+        const allPhotos = [];
+        let after = null;
+        let pageCount = 0;
+        const maxPages = 10; // Limit to 10 pages to avoid excessive API calls
 
-        if (!response.data || !Array.isArray(response.data)) {
-            return [];
-        }
-
-        return response.data.map(photo => {
-            // Extract the largest image source (the actual CDN URL)
-            let imageUrl = '';
-            if (photo.images && Array.isArray(photo.images) && photo.images.length > 0) {
-                // images are sorted by size (largest first)
-                imageUrl = photo.images[0].source || '';
+        while (pageCount < maxPages) {
+            let url = `/${albumIdentifier}/photos?fields=id,images,name,created_time&limit=100`;
+            if (after) {
+                url += `&after=${after}`;
             }
 
-            return {
-                fbid: photo.id,
-                title: photo.name || 'Photo',
-                url: imageUrl,
-            };
-        });
+            let response = await fetchFromFacebook(url, accessToken);
+
+            if (!response.data || !Array.isArray(response.data)) {
+                break;
+            }
+
+            // Process photos from this page
+            for (const photo of response.data) {
+                let imageUrl = '';
+                if (photo.images && Array.isArray(photo.images) && photo.images.length > 0) {
+                    imageUrl = photo.images[0].source || '';
+                }
+
+                allPhotos.push({
+                    fbid: photo.id,
+                    title: photo.name || 'Photo',
+                    url: imageUrl,
+                });
+            }
+
+            // Check if there are more pages
+            if (response.paging && response.paging.cursors && response.paging.cursors.after) {
+                after = response.paging.cursors.after;
+                pageCount++;
+            } else {
+                break;
+            }
+        }
+
+        return allPhotos;
     } catch (e) {
         console.warn(`⚠️  Could not fetch album ${albumIdentifier}: ${e.message}`);
         return [];
