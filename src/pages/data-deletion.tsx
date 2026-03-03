@@ -1,9 +1,8 @@
-import Layout from "../shared/components/Layout";
 import Head from "next/head";
 
 export default function DataDeletion() {
     return (
-        <Layout>
+        <>
             <Head>
                 <title>Data Deletion Policy | Strubloid</title>
                 <meta name="description" content="How to request data deletion from Strubloid." />
@@ -24,6 +23,6 @@ export default function DataDeletion() {
                 </ol>
                 <p>If you have any questions about our data deletion process, please do not hesitate to contact us.</p>
             </div>
-        </Layout>
+        </>
     );
 }

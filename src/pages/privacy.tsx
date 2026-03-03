@@ -1,9 +1,8 @@
-import Layout from "../shared/components/Layout";
 import Head from "next/head";
 
 export default function Privacy() {
     return (
-        <Layout>
+        <>
             <Head>
                 <title>Privacy Policy | Strubloid</title>
                 <meta name="description" content="Strubloid privacy policy." />
@@ -29,6 +28,6 @@ export default function Privacy() {
                     If you have any questions about this Privacy Policy, please contact us at <a href="mailto:mail@strubloid.com">Email</a>.
                 </p>
             </div>
-        </Layout>
+        </>
     );
 }

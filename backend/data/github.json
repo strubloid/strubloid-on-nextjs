@@ -1,5 +1,5 @@
 {
-  "timestamp": 1771953343393,
+  "timestamp": 1772539051900,
   "projects": [
     {
       "name": ".bash_aliases",
@@ -25,23 +25,23 @@
       "languages": [
         {
           "name": "C#",
-          "percentage": "51.4"
+          "percentage": "53.4"
         },
         {
           "name": "ShaderLab",
-          "percentage": "31.5"
+          "percentage": "30.3"
         },
         {
           "name": "HLSL",
-          "percentage": "6.5"
+          "percentage": "6.2"
         },
         {
           "name": "HTML",
-          "percentage": "5.5"
+          "percentage": "5.3"
         },
         {
           "name": "Wolfram Language",
-          "percentage": "5.0"
+          "percentage": "4.8"
         }
       ]
     },
